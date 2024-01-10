@@ -2,7 +2,7 @@
   <navbar>
 
   </navbar>
-  <h1>Hello</h1>
+  <h1>Hello you!</h1>
 </template>
 
 <script>
