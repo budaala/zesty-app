@@ -1,6 +1,6 @@
-﻿namespace zesty_api.Models
+﻿namespace zesty_api.Data.Entities
 {
-    public class Comment
+    public class CommentEntity
     {
         public int Id { get; set; }
         public int RecipeId { get; set; }
