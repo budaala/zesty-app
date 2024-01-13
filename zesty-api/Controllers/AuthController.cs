@@ -31,6 +31,9 @@ namespace zesty_api.Controllers
             user.Email = request.Email;
             user.Password = passwordHash;
 
+            //save to DB
+
+
             return Ok(user);
         }
 
@@ -39,12 +42,14 @@ namespace zesty_api.Controllers
         {
             if(user.Username != request.Username)
             {
-                return BadRequest("User not found");
+                return BadRequest("Username or password incorrect");
             }
+
+            //load form DB
 
             if(!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
             {
-                return BadRequest("Password is incorrect");
+                return BadRequest("Username or password incorrect");
             }
 
             string token = CreateToken(user);

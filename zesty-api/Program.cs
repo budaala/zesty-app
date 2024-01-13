@@ -4,8 +4,6 @@ using zesty_api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddTransient<Seed>();
 builder.Services.AddEndpointsApiExplorer();
@@ -14,7 +12,6 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-// builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
 
