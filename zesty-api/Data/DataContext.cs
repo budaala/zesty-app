@@ -29,11 +29,11 @@ namespace zesty_api.Data
         {
             builder.ToTable("Users");
             builder.HasKey(u => u.Id);
-            builder.Property(u => u.UserName).HasMaxLength(100).IsRequired();
-            builder.Property(u => u.PasswordHash).IsRequired();
+            builder.Property(u => u.Username).HasMaxLength(100).IsRequired();
+            builder.Property(u => u.Password).IsRequired();
             builder.Property(u => u.Email).IsRequired();
 
-            builder.HasIndex(u => u.UserName).IsUnique();
+            builder.HasIndex(u => u.Username).IsUnique();
             builder.HasIndex(u => u.Email).IsUnique();
         }
 

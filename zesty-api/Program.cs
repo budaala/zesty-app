@@ -14,7 +14,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddIdentityServices(builder.Configuration);
+// builder.Services.AddIdentityServices(builder.Configuration);
 
 var app = builder.Build();
 
