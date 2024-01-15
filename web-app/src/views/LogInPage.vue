@@ -1,5 +1,5 @@
 <template>
-    <div class="container-md">
+    <div class="container-md mt-5">
         <div class="row row-col-2">
             <div class="col m-2">
                 <log-in></log-in>
@@ -12,12 +12,11 @@
 </template>
 
 <script>
-import LogIn from './LogIn.vue';
-import Register from './Register.vue';
+import LogIn from '../components/LogIn.vue';
+import Register from '../components/Register.vue';
 
 export default {
     name: 'LogInPage',
-    props: ['swapComponent'],
     components: {
         LogIn,
         Register

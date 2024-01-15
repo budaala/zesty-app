@@ -1,36 +1,36 @@
 [{
     "id": 1,
     "name": "Brownie",
-    "image": "../src/assets/brownie.jpg",
+    "image": "./images/brownie.jpg",
     "description": "To jest pyszne brownie"
 },
 {
     "id": 2,
     "name": "Tiramisu",
-    "image": "../src/assets/tiramisu.jpg",
+    "image": "./images/tiramisu.jpg",
     "description": "Najlepsze tiramisu na świecie"
 },
 {
     "id": 3,
     "name": "Zupa pomidorowa",
-    "image": "../src/assets/zupa.jpg",
+    "image": "./images/zupa.jpg",
     "description": "Zupa pomidorowa typu krem"
 },
 {
     "id": 4,
-    "name": "Brownie 2",
-    "image": "../src/assets/brownie.jpg",
-    "description": "To jest pyszne brownie2"
+    "name": "Burrito",
+    "image": "./images/burrito.jpg",
+    "description": "Mega pyszne burrito"
 },
 {
     "id": 5,
-    "name": "Tiramisu 2",
-    "image": "../src/assets/tiramisu.jpg",
-    "description": "Najlepsze tiramisu na świecie 3"
+    "name": "Krokiety",
+    "image": "./images/krokiety.jpg",
+    "description": "Krokiecika?"
 },
 {
     "id": 6,
-    "name": "Zupa pomidorowa 4",
-    "image": "../src/assets/zupa.jpg",
-    "description": "Zupa pomidorowa typu krem 3"
+    "name": "Placki jogurtowe",
+    "image": "./images/placki-jogurtowe.jpg",
+    "description": "Znane takze jako pankaksy"
 }]

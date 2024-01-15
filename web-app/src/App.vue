@@ -1,15 +1,15 @@
 <template>
   <div>
-    <navbar :swapComponent="swapComponent"></navbar>
-    <component :is="currentComponent"></component>
+    <navbar></navbar>
+    <router-view/>
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue'
 import RecipeList from './components/RecipeList.vue'
-import LogInPage from './components/LogInPage.vue';
-import AddRecipe from './components/AddRecipe.vue';
+import LogInPage from './views/LogInPage.vue';
+import AddRecipe from './views/AddRecipePage.vue';
 
 export default {
   name: 'App',
@@ -18,17 +18,7 @@ export default {
     'Recipes': RecipeList,
     'LogInPage': LogInPage,
     'AddRecipe': AddRecipe
-  },
-  data() {
-    return {
-      currentComponent: 'Recipes', // Początkowy stan
-    };
-  },
-  methods: {
-    swapComponent(component) {
-      this.currentComponent = component;
-    }
-  },
+  }
 }
 </script>
 
@@ -58,14 +48,23 @@ h2 {
 }
 
 .btn-outline-zesty:hover {
-  color: #7D8A51 !important;
-  background-color: #f8f9fa !important;
-  border-color: #7D8A51 !important;
+  color: #f8f9fa !important;
+  background-color: #7D8A51 !important;
 }
 
 .btn-outline-zesty {
-  color: #f8f9fa !important;
-  background-color: #1A2A15 !important;
+  color: #1A2A15 !important;
+  background-color: #f8f9fa !important;
   border-color: #7D8A51 !important;
+  padding: 10px 20px !important;
+  text-align: center !important;
+  border-radius: 12px !important;
+  font-weight: 500 !important;
 }
+
+.form-control:focus {
+  border-color: #7D8A51 !important;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(125, 138, 81) !important;
+}
+
 </style>
