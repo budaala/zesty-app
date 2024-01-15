@@ -29,11 +29,15 @@ export default {
 #app {
   font-family: "Source Sans Pro", sans-serif !important;
   font-size: medium !important;
+  /* delete */
+  /* color : #f8f9fa !important;  */
 }
 
 body {
   position: relative;
+  /* change */
   background-color: #f8f9fa !important;
+  /* background-color: #343434 !important; */
 }
 
 h1 {
@@ -62,7 +66,7 @@ h2 {
   font-weight: 500 !important;
 }
 
-.form-control:focus {
+.form-control:focus, .form-select:focus {
   border-color: #7D8A51 !important;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(125, 138, 81) !important;
 }
@@ -71,6 +75,7 @@ h2 {
 {
     background-color: white;
     color: #1A2A15;
+    cursor: pointer;
 }
 
 .pagination > li > a:focus,
@@ -95,4 +100,12 @@ h2 {
     background-color: #7D8A51 !Important;
     border: solid 1px #7D8A51;
 }
+
+.alert-zesty {
+  color: #7D8A51 !important;
+  background-color: #7d8a513e !important;
+  border-color: #7D8A51 !important;
+  font-size: large;
+}
+
 </style>
