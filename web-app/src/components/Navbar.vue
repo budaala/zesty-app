@@ -14,6 +14,24 @@
                         <router-link class="nav-link" aria-current="page" to="/">Strona główna</router-link>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Śniadania</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Dania główne</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Desery</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Napoje</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Przekąski</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Inne</a>
+                    </li>
+                    <li class="nav-item">
                         <router-link class="nav-link" aria-current="page" to="/myRecipes">Moje przepisy</router-link>
                     </li>
                 </ul>
@@ -35,7 +53,7 @@ export default {
 
 <style scoped>
 .navbar {
-    background-color: #1a2a15f3 !important;
+    background-color: #7D8A51  !important;
 }
 .active-page {
     font-weight: 800 !important;
@@ -44,6 +62,15 @@ export default {
     font-family: "Spectral", serif !important;
     font-weight: 800 !important;
     font-size: 2rem !important;
+}
+
+.btn-outline-zesty {
+    background-color: #f8f9fa !important;
+    color: #1A2A15 !important;
+}
+.btn-outline-zesty:hover {
+    background-color: #1A2A15 !important;
+    color: #f8f9fa !important;
 }
 
 .logo {

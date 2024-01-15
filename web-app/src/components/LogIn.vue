@@ -44,7 +44,5 @@ export default {
 .btn-outline-zesty {
     display: block;
     width: 100%;
-    background-color: #1A2A15 !important;
-    color: #f8f9fa !important;
 }
 </style>
