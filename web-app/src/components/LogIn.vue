@@ -10,7 +10,7 @@
             <div class="d-flex justify-content-center">
                 <div class="col-lg-6 col-md-6">
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput">
+                        <input type="email" class="form-control" id="floatingInput" placeholder="Adres email">
                         <label for="floatingInput">Adres email</label>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
             <div class="d-flex justify-content-center">
                 <div class="col-lg-6 col-md-6">
                     <div class="form-floating">
-                        <input type="password" class="form-control" id="floatingPassword">
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Hasło">
                         <label for="floatingPassword">Hasło</label>
                     </div>
                 </div>
@@ -44,5 +44,7 @@ export default {
 .btn-outline-zesty {
     display: block;
     width: 100%;
+    background-color: #1A2A15 !important;
+    color: #f8f9fa !important;
 }
 </style>
