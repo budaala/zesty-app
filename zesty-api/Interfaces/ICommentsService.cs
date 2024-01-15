@@ -4,7 +4,9 @@ namespace zesty_api.Interfaces
 {
     public interface ICommentsService
     {
-        Comment AddComment(Comment comment);
-        //ICollection<Comment> GetComments(int Id);
+        Task<Comment> AddComment(Comment comment);
+        Task DeleteComment(int CommentId);
+        
+        Task<ICollection<Comment>> GetComments(int RecipeId);
     }
 }

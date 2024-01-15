@@ -14,38 +14,41 @@ namespace zesty_api.Controllers
         private readonly ICommentsService _commentsService;
         private readonly IBlobStorageService _blobStorageService;
 
-        public RecipesController( IBlobStorageService blobStorageService)
+        public RecipesController(IRecipesService recipesService, IRatingService ratingService, ICommentsService commentsService, IBlobStorageService blobStorageService)
         {
-            //_recipesService = recipesService;
-            //_ratingService = ratingService;
-            //_commentsService = commentsService;
+            _recipesService = recipesService;
+            _ratingService = ratingService;
+            _commentsService = commentsService;
             _blobStorageService = blobStorageService;
         }
 
         [HttpGet]
         public ActionResult<ICollection<Recipe>> GetAllRecipes()
         {
-            return Ok();
+            var recipes = _recipesService.GetAllRecipes();
+            return Ok(recipes);
         }
 
         [HttpGet("{id}")]
         public ActionResult<Recipe> GetRecipe(int RecipeId)
         {
-            return Ok();
+            var recipe = _recipesService.GetRecipe(RecipeId);
+            return Ok(recipe);
         }
 
         [HttpPost]
-        public ActionResult<Recipe> CreateRecipe([FromBody] Recipe recipe, IFormFile image)
+        public async Task<ActionResult> CreateRecipe([FromBody] Recipe recipe, IFormFile image)
         {
             if (image == null || image.Length == 0)
             {
-                return BadRequest("No file uploaded.");
+                recipe.ImageUrl = "https://zestyappimages.blob.core.windows.net/zestyappimages/placeholder.png";
             }
-
-            //var imageUrl = await _blobStorageService.UploadFile(image);
-
-            //recipe.ImageUrl = imageUrl;
-
+            else
+            {
+                var imageUrl = await _blobStorageService.UploadFile(image);
+                recipe.ImageUrl = imageUrl;
+            }
+            _recipesService.CreateRecipe(recipe);
 
             return Ok();
         }
@@ -53,61 +56,80 @@ namespace zesty_api.Controllers
         [HttpPut("{id}")]
         public ActionResult<Recipe> UpdateRecipe(int RecipeId, [FromBody] Recipe recipe)
         {
+            recipe.Id = RecipeId;
+            var updatedRecipe = _recipesService.UpdateRecipe(recipe);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public ActionResult<Recipe> DeleteRecipe(int RecipeId)
         {
+            _blobStorageService.DeleteFile(_recipesService.GetRecipe(RecipeId).ImageUrl);
+            _recipesService.DeleteRecipe(RecipeId);
             return Ok();
         }
 
         [HttpPost("{id}/rating")]
-        public ActionResult<Rating> AddRating(int RecipeId, [FromBody] Rating rating)
+        public ActionResult<Rating> AddRating([FromBody] Rating rating)
         {
+            _ratingService.AddRating(rating);
             return Ok();
         }
 
         [HttpGet("{id}/rating")]
-        public ActionResult<double> GetRating(int RecipeId)
+        public ActionResult<int> GetRating(int UserId)
         {
+            var averageRating = _ratingService.GetRating(UserId);
+            return Ok(averageRating);
+        }
 
-            double averageRating = 0;
+        [HttpGet("{id}/rating")]
+        public ActionResult<int> GetAverageRating(int recipeId)
+        {
+            var averageRating = _ratingService.GetAverageRating(recipeId);
             return Ok(averageRating);
         }
 
         [HttpPost("{id}/comments")]
-        public ActionResult<Comment> AddComment(int RecipeId, [FromBody] Comment comment)
+        public ActionResult<Comment> AddComment([FromBody] Comment comment)
         {
+            _commentsService.AddComment(comment);
             return Ok();
         }
 
-        [HttpPost("/photo")]
-        public async Task<ActionResult<string>> AddImage(IFormFile image)
+        [HttpDelete("{id}/comments")]
+        public ActionResult<Comment> DeleteComment(int commentId)
         {
-            if (image == null || image.Length == 0)
-            {
-                return BadRequest("No file uploaded.");
-            }
-
-            var imageUrl = await _blobStorageService.UploadFile(image);
-
-            return Ok(imageUrl);
+            _commentsService.DeleteComment(commentId);
+            return Ok();
         }
 
-        [HttpPost("/photo/delete")]
-        public async Task<ActionResult<string>> DeleteImage(string fileUrl)
+        [HttpGet("{id}/comments")]
+        public ActionResult<ICollection<Comment>> GetComments(int recipeId)
         {
-            await _blobStorageService.DeleteFile(fileUrl);
-
-            return Ok(fileUrl);
+            _commentsService.GetComments(recipeId);
+            return Ok();
         }
 
-
-        //[HttpGet("{id}/comments")]
-        //public ActionResult<ICollection<Comment>> GetComments(int RecipeId)
+        //[HttpPost("/photo")]
+        //public async Task<ActionResult<string>> AddImage(IFormFile image)
         //{
-        //    return Ok();
+        //    if (image == null || image.Length == 0)
+        //    {
+        //        return BadRequest("No file uploaded.");
+        //    }
+
+        //    var imageUrl = await _blobStorageService.UploadFile(image);
+
+        //    return Ok(imageUrl);
+        //}
+
+        //[HttpPost("/photo/delete")]
+        //public async Task<ActionResult<string>> DeleteImage(string fileUrl)
+        //{
+        //    await _blobStorageService.DeleteFile(fileUrl);
+
+        //    return Ok(fileUrl);
         //}
     }
 }

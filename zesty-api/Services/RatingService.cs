@@ -16,12 +16,17 @@ namespace zesty_api.Services
             this.db = db;
         }
 
-        public Rating AddRating(Rating rating)
+        public Task<Rating> AddRating(Rating rating)
         {
             throw new NotImplementedException();
         }
 
-        public double GetRating(int Id)
+        public Task<double> GetAverageRating(int recipeId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> GetRating(int UserId)
         {
             throw new NotImplementedException();
         }

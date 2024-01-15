@@ -7,7 +7,7 @@ namespace zesty_api.Interfaces
         ICollection<Recipe> GetAllRecipes();
         Recipe GetRecipe(int id);
         Recipe CreateRecipe(Recipe recipe);
-        Recipe UpdateRecipe(int id, Recipe recipe);
+        Recipe UpdateRecipe(Recipe recipe);
         Recipe DeleteRecipe(int id);
 
     }

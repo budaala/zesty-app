@@ -15,6 +15,9 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddTransient<IBlobStorageService, BlobStorageService>();
+builder.Services.AddTransient<ICommentsService, CommentsService>();
+builder.Services.AddTransient<IRatingService, RatingService>();
+builder.Services.AddTransient<IRecipesService, RecipesService>();
 
 var app = builder.Build();
 

@@ -43,7 +43,7 @@ namespace zesty_api.Services
             throw new NotImplementedException();
         }
 
-        public Recipe UpdateRecipe(int id, Recipe recipe)
+        public Recipe UpdateRecipe(Recipe recipe)
         {
             throw new NotImplementedException();
         }
