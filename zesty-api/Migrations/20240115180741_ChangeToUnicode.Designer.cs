@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using zesty_api.Data;
 
@@ -11,9 +12,11 @@ using zesty_api.Data;
 namespace zesty_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240115180741_ChangeToUnicode")]
+    partial class ChangeToUnicode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +36,8 @@ namespace zesty_api.Migrations
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasMaxLength(2000)
-                        .HasColumnType("NVARCHAR(MAX)");
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -64,7 +68,8 @@ namespace zesty_api.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR(MAX)");
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -119,7 +124,8 @@ namespace zesty_api.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR(MAX)");
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -128,11 +134,13 @@ namespace zesty_api.Migrations
 
                     b.Property<string>("Ingredients")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR(MAX)");
+                        .IsUnicode(true)
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Instructions")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR(MAX)");
+                        .IsUnicode(true)
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("MealTypeId")
                         .HasColumnType("int");
@@ -140,7 +148,8 @@ namespace zesty_api.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("NVARCHAR(MAX)");
+                        .IsUnicode(true)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

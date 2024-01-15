@@ -77,7 +77,6 @@ namespace zesty_api.Data
             entity.Property(r => r.RecipeId).IsRequired();
             entity.HasIndex(r => new { r.RecipeId, r.UserId }).IsUnique();
 
-
         }
 
         private void ConfigureComment(EntityTypeBuilder<CommentEntity> entity)

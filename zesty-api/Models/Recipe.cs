@@ -11,11 +11,9 @@
         public int UserId { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public ICollection<Comment> Comments { get; set; }
-        public ICollection<Rating> Ratings { get; set; }
+        public IFormFile Image { get; set; }
 
-
-        
-
+        //public ICollection<Comment> Comments { get; set; }
+        //public ICollection<Rating> Ratings { get; set; }
     }
 }

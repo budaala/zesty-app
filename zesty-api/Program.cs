@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using zesty_api;
 using zesty_api.Data;
+using zesty_api.Interfaces;
+using zesty_api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,12 +14,12 @@ builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddTransient<IBlobStorageService, BlobStorageService>();
 
 var app = builder.Build();
 
 if (args.Length == 1 && args[0].ToLower() == "seeddata")
     SeedData(app);
-
 void SeedData(IHost app)
 {
     var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
