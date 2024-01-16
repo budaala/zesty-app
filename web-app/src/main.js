@@ -3,17 +3,17 @@ import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
 import 'bootstrap/dist/css/bootstrap.css';
 
-import HomePage from '../src/views/HomePage.vue';
-import RecipeList from '../src/components/RecipeList.vue';
+import RecipeListPage from '../src/views/RecipeListPage.vue';
 import LogInPage from '../src/views/LogInPage.vue';
 import AddRecipe from '../src/views/AddRecipePage.vue';
 import MyRecipes from '../src/views/MyRecipesPage.vue';
 
 const routes = [
-    { path: '/', component: HomePage },
+    { path: '/', component: RecipeListPage },
     { path: '/logIn', component: LogInPage },
     { path: '/addRecipe', component: AddRecipe },
     { path: '/myRecipes', component: MyRecipes },
+    { name: "RecipeListPage", path: '/:recipeType', component: RecipeListPage, props: true },
 ];
 
 const router = createRouter({

@@ -1,5 +1,5 @@
 <template>
-    <div class="container-md mt-3">
+    <div class="container-md mt-3 mb-5">
         <h1>Twoje przepisy</h1>
         <RecipeList :recipes="pagedItems"></RecipeList>
         <nav v-show="totalPages > 1">
