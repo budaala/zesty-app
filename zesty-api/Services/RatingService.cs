@@ -16,19 +16,34 @@ namespace zesty_api.Services
             this.db = db;
         }
 
-        public Task<Rating> AddRating(Rating rating)
+        public Rating AddRating(Rating rating)
         {
-            throw new NotImplementedException();
+            var entity = RatingEntity.Create(rating.RecipeId, rating.UserId, rating.Value);
+            db.Ratings.Add(entity);
+            db.SaveChanges();
+            return MapToDTO(entity);
         }
 
-        public Task<double> GetAverageRating(int recipeId)
+        public double GetAverageRating(int recipeId)
         {
-            throw new NotImplementedException();
+            var ratings = db.Ratings.Where(r => r.RecipeId == recipeId);
+            var sum = 0;
+            foreach (var rating in ratings)
+            {
+                sum += rating.Value;
+            }
+            return sum / ratings.Count();
         }
 
-        public Task<int> GetRating(int UserId)
+        public int GetRating(int userId, int recipeId)
         {
-            throw new NotImplementedException();
+            var rating = db.Ratings.FirstOrDefault(r => r.UserId == userId && r.RecipeId == recipeId);
+            if (rating == null)
+            {
+                return 0;
+            }
+            return rating.Value;
+            
         }
 
         public static Rating MapToDTO(RatingEntity entity)

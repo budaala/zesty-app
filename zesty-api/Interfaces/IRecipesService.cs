@@ -4,11 +4,11 @@ namespace zesty_api.Interfaces
 {
     public interface IRecipesService
     {
-        ICollection<Recipe> GetAllRecipes();
-        Recipe GetRecipe(int id);
+        IEnumerable<Recipe> GetAllRecipes();
+        Recipe GetRecipe(int recipeId);
         Recipe CreateRecipe(Recipe recipe);
-        Recipe UpdateRecipe(Recipe recipe);
-        Recipe DeleteRecipe(int id);
+        Task UpdateRecipe(Recipe recipe);
+        Task DeleteRecipe(int recipeId);
 
     }
 }

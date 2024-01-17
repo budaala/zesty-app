@@ -23,7 +23,7 @@ namespace zesty_api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ICollection<Recipe>> GetAllRecipes()
+        public ActionResult<IEnumerable<Recipe>> GetAllRecipes()
         {
             var recipes = _recipesService.GetAllRecipes();
             return Ok(recipes);
@@ -77,9 +77,9 @@ namespace zesty_api.Controllers
         }
 
         [HttpGet("{id}/rating")]
-        public ActionResult<int> GetRating(int UserId)
+        public ActionResult<int> GetRating(int userId, int recipeId)
         {
-            var averageRating = _ratingService.GetRating(UserId);
+            var averageRating = _ratingService.GetRating(userId, recipeId);
             return Ok(averageRating);
         }
 
@@ -105,7 +105,7 @@ namespace zesty_api.Controllers
         }
 
         [HttpGet("{id}/comments")]
-        public ActionResult<ICollection<Comment>> GetComments(int recipeId)
+        public ActionResult<IEnumerable<Comment>> GetComments(int recipeId)
         {
             _commentsService.GetComments(recipeId);
             return Ok();

@@ -18,7 +18,7 @@ namespace zesty_api.Data.Entities
         public MealTypeEntity MealType { get; set; }
         public UserEntity User { get; set; }
 
-        public static RecipeEntity Create(int MealTypeId, string Title, string Description, string Ingredients)
+        public static RecipeEntity Create(int MealTypeId, string Title, string Description, string Ingredients, string Instructions, string ImageUrl, int UserId)
         {
             var entity = new RecipeEntity
             {
@@ -26,7 +26,10 @@ namespace zesty_api.Data.Entities
                 Title = Title,
                 Description = Description,
                 Ingredients = Ingredients,
-
+                Instructions = Instructions,
+                ImageUrl = ImageUrl,
+                UserId = UserId,
+                CreatedAt = DateTime.Now
             };
 
             return entity;

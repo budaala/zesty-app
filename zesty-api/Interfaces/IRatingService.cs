@@ -4,8 +4,8 @@ namespace zesty_api.Interfaces
 {
     public interface IRatingService
     {
-        Task<Rating> AddRating(Rating rating);
-        Task<int> GetRating(int UserId);
-        Task<double> GetAverageRating(int recipeId);
+        Rating AddRating(Rating rating);
+        int GetRating(int userId, int recipeId);
+        double GetAverageRating(int recipeId);
     }
 }

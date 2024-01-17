@@ -1,4 +1,5 @@
-﻿using zesty_api.Data;
+﻿using System.Reflection.Metadata.Ecma335;
+using zesty_api.Data;
 using zesty_api.Data.Entities;
 using zesty_api.Interfaces;
 using zesty_api.Models;
@@ -16,38 +17,46 @@ namespace zesty_api.Services
 
         public Recipe CreateRecipe(Recipe recipe)
         {
-            try
-            {
-                //db.Recipes.Add();
-                db.SaveChanges();
-                return recipe;
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
+            var recipeEntity = RecipeEntity.Create(recipe.MealTypeId, recipe.Title, recipe.Description, recipe.Ingredients, recipe.Instructions, recipe.ImageUrl, recipe.UserId );
+            db.Recipes.Add(recipeEntity);
+            db.SaveChanges();
+            return MapToDTO(recipeEntity);
+           
         }
 
-        public Recipe DeleteRecipe(int id)
+        public Task DeleteRecipe(int recipeId)
         {
-            throw new NotImplementedException();
+            var recipe = db.Recipes.Find(recipeId) ?? throw new Exception("Recipe not found");
+            db.Recipes.Remove(recipe);
+            db.SaveChanges();
+            return Task.CompletedTask;
+            
         }
 
-        public ICollection<Recipe> GetAllRecipes()
+        public IEnumerable<Recipe> GetAllRecipes()
         {
-            throw new NotImplementedException();
+            var recipes = db.Recipes.ToList();
+            return recipes.Select(MapToDTO);
         }
 
-        public Recipe GetRecipe(int id)
+        public Recipe GetRecipe(int recipeId)
         {
-            throw new NotImplementedException();
+            var recipe = db.Recipes.Find(recipeId) ?? throw new Exception("Recipe not found");
+            return MapToDTO(recipe); 
         }
 
-        public Recipe UpdateRecipe(Recipe recipe)
+        public Task UpdateRecipe(Recipe recipe)
         {
-            throw new NotImplementedException();
+            var recipeEntity = db.Recipes.Find(recipe.Id) ?? throw new Exception("Recipe not found");
+            recipeEntity.Title = recipe.Title;
+            recipeEntity.Description = recipe.Description;
+            recipeEntity.Ingredients = recipe.Ingredients;
+            recipeEntity.Instructions = recipe.Instructions;
+            recipeEntity.ImageUrl = recipe.ImageUrl;
+            db.SaveChanges();
+            return Task.CompletedTask;
+            
         }
-
 
         public static Recipe MapToDTO(RecipeEntity entity)
         {
@@ -61,7 +70,6 @@ namespace zesty_api.Services
                 Instructions = entity.Instructions,
                 CreatedAt = entity.CreatedAt,
                 ImageUrl = entity.ImageUrl,
-                //Comments = entity.Comments.Select(CommentsService.MapToDTO).ToList()
             };
         }
     }
