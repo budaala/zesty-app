@@ -561,6 +561,12 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
 # JetBrains Rider
 
 ### VisualStudio Patch ###
