@@ -57,7 +57,7 @@ export default {
 }
 .nav-link.active {
     font-size: large;
-    /* text-shadow: 0 0 5px #1A2A15; */
+    /* text-shadow: 0 0 5px #1A2A15;` */
 }
 .navbar-brand {
     font-family: "Spectral", serif !important;
