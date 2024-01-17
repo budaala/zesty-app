@@ -11,28 +11,28 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <router-link class="nav-link" aria-current="page" to="/">Strona główna</router-link>
+                        <router-link class="nav-link" active-class="active" aria-current="page" to="/">Strona główna</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Śniadania</a>
+                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { recipeType: 'breakfast' } }">Śniadania</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Dania główne</a>
+                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { recipeType: 'main' } }">Dania główne</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Desery</a>
+                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { recipeType: 'dessert' } }">Desery</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Napoje</a>
+                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { recipeType: 'drink' } }">Napoje</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Przekąski</a>
+                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { recipeType: 'snack' } }">Przekąski</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">Inne</a>
+                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { recipeType: 'other' } }">Inne</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" aria-current="page" to="/myRecipes">Moje przepisy</router-link>
+                        <router-link class="nav-link" active-class="active" aria-current="page" to="/myRecipes">Moje przepisy</router-link>
                     </li>
                 </ul>
                 <div class="d-flex">
@@ -55,8 +55,9 @@ export default {
 .navbar {
     background-color: #7D8A51  !important;
 }
-.active-page {
-    font-weight: 800 !important;
+.nav-link.active {
+    font-size: large;
+    /* text-shadow: 0 0 5px #1A2A15;` */
 }
 .navbar-brand {
     font-family: "Spectral", serif !important;
@@ -74,7 +75,7 @@ export default {
 }
 
 .logo {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
 }
 </style>

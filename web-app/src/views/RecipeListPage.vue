@@ -1,6 +1,7 @@
 <template>
-    <div class="container-md mt-3">
+    <div class="container-md mt-3 mb-5">
         <h1>Gotuj z Zesty!</h1>
+        <p>Przepisy z kategorii: {{ recipeType }}</p>
         <RecipeList :recipes="pagedItems"></RecipeList>
         <nav v-show="totalPages > 1">
             <ul class="pagination justify-content-center">
@@ -31,41 +32,34 @@ export default {
     components: {
         RecipeList
     },
+    props: ['recipeType'],
     data() {
         return {
             recipes: [],
             items: [],
-            // currentPage: 1,
-            // recipesPerPage: 3
         }
     },
-    // computed: {
-    //     totalPages() {
-    //         return Math.ceil(this.recipes.length / this.recipesPerPage);
-    //     },
-    //     pagedRecipes() {
-    //         const start = (this.currentPage - 1) * this.recipesPerPage;
-    //         const end = start + this.recipesPerPage;
-    //         return this.recipes.slice(start, end);
-    //     }
-    // },
     mounted() {
         this.loadRecipes();
+    },
+    watch: {
+        $route() {
+            this.loadRecipes();
+        },
     },
     methods: {
         async loadRecipes() {
             try {
                 this.recipes = await recipesService.loadRecipes();
-                this.items = this.recipes;
+                if (this.recipeType) {
+                    this.items = this.recipes.filter((recipe) => recipe.recipeType === this.recipeType);
+                } else {
+                    this.items = this.recipes;
+                }
             } catch (error) {
                 // Obsługa błędu
             }
         },
-        // goToPage(page) {
-        //     if (page >= 1 && page <= this.totalPages) {
-        //         this.currentPage = page;
-        //     }
-        // }
     }
 }
 </script>

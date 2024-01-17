@@ -1,5 +1,5 @@
 <template>
-    <div class="container-md mt-3">
+    <div class="container-md mt-3 mb-5">
         <button class="btn btn-outline-zesty mb-3" @click="loggedIn = !loggedIn">Symulator logowania i wylogowywania</button>
         <div v-if="loggedIn === false">
             <div class="alert alert-zesty" role="alert">
@@ -60,6 +60,7 @@
                                 <input class="form-control form-control-lg" type="file" id="recipeImage">
                                 <!-- <label for="recipeImage" class="form-label mt-0 mb-0"></label>  -->
                             </div>
+                            <button type="submit" class="btn btn-outline-zesty me-2">Podgląd</button>
                             <button type="submit" class="btn btn-outline-zesty">Dodaj przepis</button>
                         </div>
                     </div>
