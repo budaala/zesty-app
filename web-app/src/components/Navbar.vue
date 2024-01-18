@@ -11,10 +11,28 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <router-link class="nav-link" aria-current="page" to="/">Strona główna</router-link>
+                        <router-link class="nav-link" active-class="active" aria-current="page" to="/">Strona główna</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" aria-current="page" to="/myRecipes">Moje przepisy</router-link>
+                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { recipeType: 'breakfast' } }">Śniadania</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { recipeType: 'main' } }">Dania główne</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { recipeType: 'dessert' } }">Desery</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { recipeType: 'drink' } }">Napoje</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { recipeType: 'snack' } }">Przekąski</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { recipeType: 'other' } }">Inne</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" active-class="active" aria-current="page" to="/myRecipes">Moje przepisy</router-link>
                     </li>
                 </ul>
                 <div class="d-flex">
@@ -35,10 +53,11 @@ export default {
 
 <style scoped>
 .navbar {
-    background-color: #1a2a15f3 !important;
+    background-color: #7D8A51  !important;
 }
-.active-page {
-    font-weight: 800 !important;
+.nav-link.active {
+    font-size: large;
+    /* text-shadow: 0 0 5px #1A2A15;` */
 }
 .navbar-brand {
     font-family: "Spectral", serif !important;
@@ -46,8 +65,17 @@ export default {
     font-size: 2rem !important;
 }
 
+.btn-outline-zesty {
+    background-color: #f8f9fa !important;
+    color: #1A2A15 !important;
+}
+.btn-outline-zesty:hover {
+    background-color: #1A2A15 !important;
+    color: #f8f9fa !important;
+}
+
 .logo {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
 }
 </style>

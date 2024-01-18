@@ -7,120 +7,197 @@
                 <p class="card-text">Dołącz do społeczności Zesty</p>
                 <br>
             </div>
-            <!-- <div class="d-flex justify-content-center">
-                <div class="col-lg-6 col-md-6">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingUsername" placeholder="Username">
-                        <label for="floatingUsername">Username</label>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-center">
-                <div class="col-lg-6 col-md-6">
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="example@email.com">
-                        <label for="floatingInput">Adres email</label>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-center mb-3">
-                <div class="col-lg-6 col-md-6">
-                    <div class="form-floating">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Hasło">
-                        <label for="floatingPassword">Hasło</label>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-center">
-                <div class="col-lg-6 col-md-6">
-                    <div class="form-floating">
-                        <input type="password" class="form-control" id="floatingRepeatPassword" placeholder="Powtórz hasło">
-                        <label for="floatingRepeatPassword">Powtórz hasło</label>
-                    </div>
-                </div>
-            </div> -->
-            <form class="row g-3">
-                <div class="col-md-4">
-                    <label for="validationServer01" class="form-label">First name</label>
-                    <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <label for="validationServer02" class="form-label">Last name</label>
-                    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <label for="validationServerUsername" class="form-label">Username</label>
-                    <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend3">@</span>
-                        <input type="text" class="form-control is-invalid" id="validationServerUsername"
-                            aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
-                        <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                            Please choose a username.
+            <form @submit.prevent="register">
+                <div class="d-flex justify-content-center">
+                    <div class="col-lg-6 col-md-8 mb-3">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" v-model="form.username" @blur="setTouched('username')"
+                                :class="{ 'is-valid': isValid('username'), 'is-invalid': !isValid('username') && touched.username }"
+                                id="registerUsername" placeholder="Username">
+                            <label for="registerUsername">Nazwa użytkownika</label>
+                        </div>
+                        <div v-if="!isValid('username') && touched.username">
+                            <small class="text-danger">{{ message.username }}</small>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="validationServer03" class="form-label">City</label>
-                    <input type="text" class="form-control is-invalid" id="validationServer03"
-                        aria-describedby="validationServer03Feedback" required>
-                    <div id="validationServer03Feedback" class="invalid-feedback">
-                        Please provide a valid city.
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <label for="validationServer04" class="form-label">State</label>
-                    <select class="form-select is-invalid" id="validationServer04"
-                        aria-describedby="validationServer04Feedback" required>
-                        <option selected disabled value="">Choose...</option>
-                        <option>...</option>
-                    </select>
-                    <div id="validationServer04Feedback" class="invalid-feedback">
-                        Please select a valid state.
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <label for="validationServer05" class="form-label">Zip</label>
-                    <input type="text" class="form-control is-invalid" id="validationServer05"
-                        aria-describedby="validationServer05Feedback" required>
-                    <div id="validationServer05Feedback" class="invalid-feedback">
-                        Please provide a valid zip.
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="form-check">
-                        <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3"
-                            aria-describedby="invalidCheck3Feedback" required>
-                        <label class="form-check-label" for="invalidCheck3">
-                            Agree to terms and conditions
-                        </label>
-                        <div id="invalidCheck3Feedback" class="invalid-feedback">
-                            You must agree before submitting.
+                <div class="d-flex justify-content-center">
+                    <div class="col-lg-6 col-md-8 mb-3">
+                        <div class="form-floating">
+                            <input type="email" class="form-control" v-model="form.email" @blur="setTouched('email')"
+                                :class="{ 'is-valid': isValid('email'), 'is-invalid': !isValid('email') && touched.email }"
+                                id="registerEmail" placeholder="example@email.com">
+                            <label for="registerEmail">Adres email</label>
+                        </div>
+                        <div v-if="!isValid('email') && touched.email">
+                            <small class="text-danger">{{ message.email }}</small>
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <button class="btn btn-primary" type="submit">Submit form</button>
+                <div class="d-flex justify-content-center">
+                    <div class="col-lg-6 col-md-8 mb-3">
+                        <div class="form-floating">
+                            <input type="password" class="form-control" v-model="form.password"
+                                @blur="setTouched('password')"
+                                :class="{ 'is-valid': isValid('password'), 'is-invalid': !isValid('password') && touched.password }"
+                                id="registerPassword" placeholder="Hasło">
+                            <label for="registerPassword">Hasło</label>
+                            <div v-if="!isValid('password') && touched.password">
+                                <small class="text-danger">{{ message.password }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="col-lg-6 col-md-8 mb-3">
+                        <div class="form-floating">
+                            <input type="password" class="form-control" v-model="form.repeatPassword"
+                                @blur="setTouched('repeatPassword')"
+                                :class="{ 'is-valid': isValid('repeatPassword'), 'is-invalid': !isValid('repeatPassword') && touched.repeatPassword }"
+                                id="registerRepeatPassword" placeholder="Powtórz hasło">
+                            <label for="registerRepeatPassword">Powtórz hasło</label>
+                            <div v-if="!isValid('repeatPassword') && touched.repeatPassword">
+                                <small class="text-danger">{{ message.repeatPassword }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div v-if="formSubmitted" class="d-flex justify-content-center">
+                    <p :class="{ 'text-danger': registered === false, 'text-success': registered === true }">{{ message.all
+                    }}</p>
+                </div>
+                <div class="d-flex justify-content-center mb-4">
+                    <div class="col col-lg-6 col-md-8">
+                        <button type="submit" class="btn btn-outline-zesty" @click.prevent="validateInput()">Zarejestruj
+                            się</button>
+                    </div>
                 </div>
             </form>
-            <br>
-            <div class="d-flex justify-content-center mb-4">
-                <div class="col col-lg-4">
-                    <button type="submit" class="btn btn-outline-zesty">Zarejestruj się</button>
-                </div>
-            </div>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'Register'
+    name: 'Register',
+    data() {
+        return {
+            form: {
+                username: '',
+                email: '',
+                password: '',
+                repeatPassword: ''
+            },
+            touched: {
+                username: false,
+                email: false,
+                password: false,
+                repeatPassword: false
+            },
+            message: {
+                username: '',
+                email: '',
+                password: '',
+                repeatPassword: '',
+                all: ''
+            },
+            formSubmitted: false,
+            registered: false
+        }
+    },
+    methods: {
+        validateInput() {
+            this.formSubmitted = true;
+
+            if (this.isValid('username') && this.isValid('email') && this.isValid('password') && this.isValid('repeatPassword')) {
+                // rejestracja
+                this.registered = true;
+                this.message.all = 'Pomyślnie utworzono konto';
+            }
+            else {
+                for (let field in this.touched) {
+                    this.setTouched(field);
+                    this.isValid(field);
+                }
+                this.message.all = 'Wypełnij wszystkie pola poprawnie';
+            }
+
+        },
+        setTouched(field) {
+            this.touched[field] = true;
+        },
+        isValid(field) {
+            const { username, email, password, repeatPassword } = this.form;
+            switch (field) {
+                case 'username':
+                    return this.validateUsername(username);
+                case 'email':
+                    return this.validateEmail(email);
+                case 'password':
+                    return this.validatePassword(password);
+                case 'repeatPassword':
+                    return this.validateRepeatPassword(repeatPassword);
+                default:
+                    return true;
+            }
+
+        },
+        validateUsername(username) {
+            if (username.trim() === '' || username.length < 3) {
+                this.message.username = 'Nazwa użytkownika musi mieć co najmniej 3 znaki';
+                return false;
+            }
+            else if (username.length > 20) {
+                this.message.username = 'Nazwa użytkownika może mieć maksymalnie 20 znaków';
+                return false;
+            }
+            else if (username === 'username') {
+                // sprawdzenie z bazą danych
+                this.message.username = 'Nazwa użytkownika jest już zajęta';
+                return false;
+            }
+            return true;
+        },
+        validateEmail(email) {
+            if (email.trim() === '') {
+                this.message.email = 'Wypełnij to pole';
+                return false;
+            }
+            else if (email === 'email') {
+                // sprawdzenie z bazą danych
+                this.message.email = 'Konto z podanym adresem email już istnieje';
+                return false;
+            }
+            else if (!(email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) !== null)) {
+                this.message.email = 'Niepoprawny adres email';
+                return false;
+            }
+            return true;
+        },
+        validatePassword(password) {
+            if (password.trim() === '' || password.length < 8) {
+                this.message.password = 'Hasło musi mieć co najmniej 8 znaków';
+                return false;
+            }
+            else if (password.length > 20) {
+                this.message.password = 'Hasło może mieć maksymalnie 20 znaków';
+                return false;
+            }
+            return true;
+        },
+        validateRepeatPassword(repeatPassword) {
+            if (repeatPassword !== this.form.password) {
+                this.message.repeatPassword = 'Hasła nie są takie same';
+                return false;
+            }
+            else if (repeatPassword.trim() === '') {
+                this.message.repeatPassword = 'Wypełnij to pole';
+                return false;
+            }
+            return true;
+        },
+    }
 
 }
 </script>
@@ -129,6 +206,7 @@ export default {
 .btn-outline-zesty {
     display: block;
     width: 100%;
-    background-color: #1A2A15 !important;
-    color: #f8f9fa !important;
-}</style>
+}
+
+</style>
+

@@ -1,36 +1,42 @@
 [{
     "id": 1,
     "name": "Brownie",
+    "recipeType": "breakfast",
     "image": "./images/brownie.jpg",
     "description": "To jest pyszne brownie"
 },
 {
     "id": 2,
     "name": "Tiramisu",
+    "recipeType": "dessert",
     "image": "./images/tiramisu.jpg",
     "description": "Najlepsze tiramisu na świecie"
 },
 {
     "id": 3,
     "name": "Zupa pomidorowa",
+    "recipeType": "main",
     "image": "./images/zupa.jpg",
     "description": "Zupa pomidorowa typu krem"
 },
 {
     "id": 4,
     "name": "Burrito",
+    "recipeType": "",
     "image": "./images/burrito.jpg",
     "description": "Mega pyszne burrito"
 },
 {
     "id": 5,
     "name": "Krokiety",
+    "recipeType": "other",
     "image": "./images/krokiety.jpg",
     "description": "Krokiecika?"
 },
 {
     "id": 6,
     "name": "Placki jogurtowe",
+    "recipeType": "drink",
     "image": "./images/placki-jogurtowe.jpg",
     "description": "Znane takze jako pankaksy"
 }]

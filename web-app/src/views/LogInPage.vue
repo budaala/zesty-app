@@ -1,10 +1,10 @@
 <template>
-    <div class="container-md mt-5">
-        <div class="row row-col-2">
-            <div class="col m-2">
+    <div class="container-md mt-5 mb-5">
+        <div class="row row-col-lg-2 row-col-1 gx-4">
+            <div class="col">
                 <log-in></log-in>
             </div>
-            <div class="col m-2">
+            <div class="col">
                 <register></register>
             </div>
         </div>
