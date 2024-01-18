@@ -21,6 +21,7 @@ namespace zesty_api.Services
             var entity = RatingEntity.Create(rating.RecipeId, rating.UserId, rating.Value);
             db.Ratings.Add(entity);
             db.SaveChanges();
+            rating.Id = entity.Id;
             return MapToDTO(entity);
         }
 

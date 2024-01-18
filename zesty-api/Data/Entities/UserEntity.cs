@@ -13,5 +13,15 @@ namespace zesty_api.Data.Entities
         {
             return dbContext.Set<RecipeEntity>().Where(r => r.UserId == Id).ToList();
         }
+
+        public static UserEntity Create(string username, string email, string password)
+        {
+            return new UserEntity
+            {
+                Username = username,
+                Email = email,
+                Password = password
+            };
+        }
     }
 }

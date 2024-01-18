@@ -18,6 +18,7 @@ builder.Services.AddTransient<IBlobStorageService, BlobStorageService>();
 builder.Services.AddTransient<ICommentsService, CommentsService>();
 builder.Services.AddTransient<IRatingService, RatingService>();
 builder.Services.AddTransient<IRecipesService, RecipesService>();
+builder.Services.AddTransient<IAuthService, AuthService>();
 
 var app = builder.Build();
 

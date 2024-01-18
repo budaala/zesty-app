@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using zesty_api.Interfaces;
 using zesty_api.Models;
 
@@ -25,111 +26,189 @@ namespace zesty_api.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Recipe>> GetAllRecipes()
         {
-            var recipes = _recipesService.GetAllRecipes();
-            return Ok(recipes);
+            try
+            {
+                var recipes = _recipesService.GetAllRecipes();
+                return Ok(recipes);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message ?? ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Recipe> GetRecipe(int RecipeId)
+        public ActionResult<Recipe> GetRecipe(int id)
         {
-            var recipe = _recipesService.GetRecipe(RecipeId);
-            return Ok(recipe);
+            try
+            {
+                var recipe = _recipesService.GetRecipe(id);
+                return Ok(recipe);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message ?? ex.Message);
+            }
+            
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateRecipe([FromBody] Recipe recipe, IFormFile image)
+        public async Task<ActionResult> CreateRecipe([FromForm] string recipeJson, [FromForm]IFormFile image= null)
         {
-            if (image == null || image.Length == 0)
+            try
             {
-                recipe.ImageUrl = "https://zestyappimages.blob.core.windows.net/zestyappimages/placeholder.png";
-            }
-            else
-            {
-                var imageUrl = await _blobStorageService.UploadFile(image);
-                recipe.ImageUrl = imageUrl;
-            }
-            _recipesService.CreateRecipe(recipe);
+                var recipe = JsonConvert.DeserializeObject<Recipe>(recipeJson);
 
-            return Ok();
+                if (image == null || image.Length == 0)
+                {
+                    recipe.ImageUrl = "https://zestyappblob.blob.core.windows.net/zestyappimages/placeholder.png";
+                }
+                else
+                {
+                    var imageUrl = await _blobStorageService.UploadFile(image);
+                    recipe.ImageUrl = imageUrl;
+                }
+
+                _recipesService.CreateRecipe(recipe);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message ?? ex.Message);
+            }
         }
 
         [HttpPut("{id}")]
-        public ActionResult<Recipe> UpdateRecipe(int RecipeId, [FromBody] Recipe recipe)
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<Recipe>> UpdateRecipe(int id, [FromForm] string recipeJson, [FromForm] IFormFile image = null)
         {
-            recipe.Id = RecipeId;
-            var updatedRecipe = _recipesService.UpdateRecipe(recipe);
-            return Ok();
+            try
+            {
+                var recipe = JsonConvert.DeserializeObject<Recipe>(recipeJson);
+                var oldImageUrl = _recipesService.GetRecipe(id).ImageUrl;
+                if (image == null || image.Length == 0)
+                {
+                    recipe.ImageUrl = oldImageUrl;
+                }
+                else
+                {
+                    await _blobStorageService.DeleteFile(oldImageUrl);
+                    var newImageUrl = await _blobStorageService.UploadFile(image);
+                    recipe.ImageUrl = newImageUrl;
+                }
+                recipe.Id = id;
+            
+                var updatedRecipe = _recipesService.UpdateRecipe(recipe);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message ?? ex.Message);
+            }
+            
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Recipe> DeleteRecipe(int RecipeId)
+        public ActionResult<Recipe> DeleteRecipe(int id)
         {
-            _blobStorageService.DeleteFile(_recipesService.GetRecipe(RecipeId).ImageUrl);
-            _recipesService.DeleteRecipe(RecipeId);
-            return Ok();
+            try
+            {
+                _blobStorageService.DeleteFile(_recipesService.GetRecipe(id).ImageUrl);
+                _recipesService.DeleteRecipe(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message ?? ex.Message);
+            }
+            
         }
 
         [HttpPost("{id}/rating")]
-        public ActionResult<Rating> AddRating([FromBody] Rating rating)
+        public ActionResult<Rating> AddRating([FromBody] Rating rating, int id)
         {
-            _ratingService.AddRating(rating);
-            return Ok();
+            try
+            {
+                rating.RecipeId = id;
+                _ratingService.AddRating(rating);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message ?? ex.Message);
+            }    
         }
 
         [HttpGet("{id}/rating")]
-        public ActionResult<int> GetRating(int userId, int recipeId)
+        public ActionResult<int> GetRating(int id, [FromBody]int userId)
         {
-            var averageRating = _ratingService.GetRating(userId, recipeId);
-            return Ok(averageRating);
+            try
+            {
+                var averageRating = _ratingService.GetRating(userId, id);
+                return Ok(averageRating);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message ?? ex.Message);
+            }   
         }
 
-        [HttpGet("{id}/rating")]
-        public ActionResult<int> GetAverageRating(int recipeId)
+        [HttpGet("{id}/averagerating")]
+        public ActionResult<double> GetAverageRating(int id)
         {
-            var averageRating = _ratingService.GetAverageRating(recipeId);
-            return Ok(averageRating);
+            try
+            {
+                var averageRating = _ratingService.GetAverageRating(id);
+                return Ok(averageRating);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message ?? ex.Message);
+            }  
         }
 
         [HttpPost("{id}/comments")]
-        public ActionResult<Comment> AddComment([FromBody] Comment comment)
+        public ActionResult AddComment([FromBody] Comment comment, int id)
         {
-            _commentsService.AddComment(comment);
-            return Ok();
+            try
+            {   
+                comment.RecipeId = id;
+                _commentsService.AddComment(comment);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message ?? ex.Message);
+            }
         }
 
+
         [HttpDelete("{id}/comments")]
-        public ActionResult<Comment> DeleteComment(int commentId)
+        public ActionResult DeleteComment(int id)
         {
-            _commentsService.DeleteComment(commentId);
-            return Ok();
+            try
+            {
+                _commentsService.DeleteComment(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message ?? ex.Message);
+            }
         }
 
         [HttpGet("{id}/comments")]
-        public ActionResult<IEnumerable<Comment>> GetComments(int recipeId)
+        public ActionResult<IEnumerable<Comment>> GetComments(int id)
         {
-            _commentsService.GetComments(recipeId);
-            return Ok();
+            try
+            {
+                _commentsService.GetComments(id);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException.Message ?? ex.Message);
+            }
         }
-
-        //[HttpPost("/photo")]
-        //public async Task<ActionResult<string>> AddImage(IFormFile image)
-        //{
-        //    if (image == null || image.Length == 0)
-        //    {
-        //        return BadRequest("No file uploaded.");
-        //    }
-
-        //    var imageUrl = await _blobStorageService.UploadFile(image);
-
-        //    return Ok(imageUrl);
-        //}
-
-        //[HttpPost("/photo/delete")]
-        //public async Task<ActionResult<string>> DeleteImage(string fileUrl)
-        //{
-        //    await _blobStorageService.DeleteFile(fileUrl);
-
-        //    return Ok(fileUrl);
-        //}
     }
 }

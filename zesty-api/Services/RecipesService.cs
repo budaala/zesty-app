@@ -20,8 +20,8 @@ namespace zesty_api.Services
             var recipeEntity = RecipeEntity.Create(recipe.MealTypeId, recipe.Title, recipe.Description, recipe.Ingredients, recipe.Instructions, recipe.ImageUrl, recipe.UserId );
             db.Recipes.Add(recipeEntity);
             db.SaveChanges();
+            recipe.Id = recipeEntity.Id;
             return MapToDTO(recipeEntity);
-           
         }
 
         public Task DeleteRecipe(int recipeId)
@@ -35,7 +35,7 @@ namespace zesty_api.Services
 
         public IEnumerable<Recipe> GetAllRecipes()
         {
-            var recipes = db.Recipes.ToList();
+            var recipes = db.Recipes.ToList() ?? throw new Exception("We were not able to load recipes");
             return recipes.Select(MapToDTO);
         }
 
@@ -65,6 +65,7 @@ namespace zesty_api.Services
                 Id = entity.Id,
                 UserId = entity.UserId,
                 Title = entity.Title,
+                MealTypeId = entity.MealTypeId,
                 Description = entity.Description,
                 Ingredients = entity.Ingredients,
                 Instructions = entity.Instructions,

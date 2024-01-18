@@ -20,6 +20,7 @@ namespace zesty_api.Services
             var commentEntity = CommentEntity.Create(comment.RecipeId, comment.UserId, comment.Content);
             db.Comments.Add(commentEntity);
             db.SaveChanges();
+            comment.Id = commentEntity.Id;
             return MapToDTO(commentEntity);
         }
 

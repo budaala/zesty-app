@@ -6,7 +6,6 @@ namespace zesty_api.Interfaces
     {
         Comment AddComment(Comment comment);
         Task DeleteComment(int CommentId);
-        
         IEnumerable<Comment> GetComments(int RecipeId);
     }
 }
