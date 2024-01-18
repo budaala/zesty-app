@@ -1,7 +1,7 @@
 <template>
     <div class="container-md mt-3 mb-5">
         <h1>Gotuj z Zesty!</h1>
-        <p>Przepisy z kategorii: {{ recipeType }}</p>
+        <p>Przepisy z kategorii: {{ RecipeType }}</p>
         <RecipeList :recipes="pagedItems"></RecipeList>
         <nav v-show="totalPages > 1">
             <ul class="pagination justify-content-center">
@@ -32,7 +32,7 @@ export default {
     components: {
         RecipeList
     },
-    props: ['recipeType'],
+    props: ['RecipeType'],
     data() {
         return {
             recipes: [],
@@ -51,8 +51,8 @@ export default {
         async loadRecipes() {
             try {
                 this.recipes = await recipesService.loadRecipes();
-                if (this.recipeType) {
-                    this.items = this.recipes.filter((recipe) => recipe.recipeType === this.recipeType);
+                if (this.RecipeType) {
+                    this.items = this.recipes.filter((recipe) => recipe.RecipeType === this.RecipeType);
                 } else {
                     this.items = this.recipes;
                 }

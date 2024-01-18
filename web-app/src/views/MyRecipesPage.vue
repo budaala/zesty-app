@@ -44,7 +44,7 @@ export default {
         async loadRecipes() {
             try {
                 this.recipes = await recipesService.loadRecipes();
-                this.items = this.recipes.filter((recipe) => this.selectedRecipeIds.includes(recipe.id));
+                this.items = this.recipes.filter((recipe) => this.selectedRecipeIds.includes(recipe.Id));
             } catch (error) {
                 // Obsługa błędu
             }

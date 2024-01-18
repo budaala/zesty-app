@@ -1,13 +1,13 @@
 <template>
         <div class="card mb-3">
             <a @click="dosmth">
-            <img :src="image" class="card-img-top recipe-img" :alt="name">
-            <!-- <img :src="image" class="card-img-top recipe-img" :alt="name"> -->
+            <img :src="Image" class="card-img-top recipe-img" :alt="Title">
+            <!-- <img :src="Image" class="card-img-top recipe-img" :alt="name"> -->
 
                 <div class="card-body">
-                    <h2 class="card-title">{{ name }}</h2>
+                    <h2 class="card-title">{{ Title }}</h2>
                     <hr>
-                    <p class="card-text">{{ description }}</p>
+                    <p class="card-text">{{ Description }}</p>
                     <!-- <img src="../assets/logo.png" alt=""> -->
                     <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
                 </div>
@@ -19,14 +19,14 @@
 export default {
     name: 'RecipeCard',
     props: {
-        id: Number,
-        name: String,
-        description: String,
-        image: String
+        Id: Number,
+        Title: String,
+        Description: String,
+        Image: String
     },
     methods: {
         dosmth() {
-            console.log(this.name);
+            console.log(this.Title);
         }
     }
 }

@@ -1,42 +1,146 @@
-[{
-    "id": 1,
-    "name": "Brownie",
-    "recipeType": "breakfast",
-    "image": "./images/brownie.jpg",
-    "description": "To jest pyszne brownie"
-},
-{
-    "id": 2,
-    "name": "Tiramisu",
-    "recipeType": "dessert",
-    "image": "./images/tiramisu.jpg",
-    "description": "Najlepsze tiramisu na świecie"
-},
-{
-    "id": 3,
-    "name": "Zupa pomidorowa",
-    "recipeType": "main",
-    "image": "./images/zupa.jpg",
-    "description": "Zupa pomidorowa typu krem"
-},
-{
-    "id": 4,
-    "name": "Burrito",
-    "recipeType": "",
-    "image": "./images/burrito.jpg",
-    "description": "Mega pyszne burrito"
-},
-{
-    "id": 5,
-    "name": "Krokiety",
-    "recipeType": "other",
-    "image": "./images/krokiety.jpg",
-    "description": "Krokiecika?"
-},
-{
-    "id": 6,
-    "name": "Placki jogurtowe",
-    "recipeType": "drink",
-    "image": "./images/placki-jogurtowe.jpg",
-    "description": "Znane takze jako pankaksy"
-}]
+[
+    {
+        "Id": 1,
+        "Title": "Brownie",
+        "RecipeType": "breakfast",
+        "Description": "To jest pyszne brownie",
+        "Ingredients": "Mąka, kakao, cukier, jajka, masło, czekolada, proszek do pieczenia, sól",
+        "Instructions": "Wszystkie składniki połączyć i upiec",
+        "Image": "./images/brownie.jpg",
+        "AuthorId": 1,
+        "CreatedAt": "2019-01-01",
+        "Comments": [
+            {
+                "Id": 1,
+                "AuthorId": 1,
+                "Content": "Pyszne"
+            },
+            {
+                "Id": 2,
+                "AuthorId": 2,
+                "Content": "Nie lubie"
+            }
+        ],
+        "Ratings": 4.5
+    },
+    {
+        "Id": 2,
+        "Title": "Tiramisu",
+        "RecipeType": "dessert",
+        "Description": "Najlepsze tiramisu na świecie",
+        "Ingredients": "Mascarpone, jajka, kawa, cukier, biszkopty, kakao",
+        "Instructions": "Warstwowo układać biszkopty, kawę, krem z mascarpone i cukier. Posypać kakao.",
+        "Image": "./images/tiramisu.jpg",
+        "AuthorId": 1,
+        "CreatedAt": "2019-02-01",
+        "Comments": [
+            {
+                "Id": 3,
+                "AuthorId": 3,
+                "Content": "Uwielbiam!"
+            },
+            {
+                "Id": 4,
+                "AuthorId": 4,
+                "Content": "Bardzo proste do zrobienia"
+            }
+        ],
+        "Ratings": 4.8
+    },
+    {
+        "Id": 3,
+        "Title": "Zupa pomidorowa",
+        "RecipeType": "main",
+        "Description": "Zupa pomidorowa typu krem",
+        "Ingredients": "Pomidory, cebula, czosnek, bulion, śmietana, masło, bazylia, sól, pieprz",
+        "Instructions": "Pomidory podgotować z cebulą i czosnkiem, dodać bulion, zmiksować, dodać śmietanę i przyprawy.",
+        "Image": "./images/zupa.jpg",
+        "AuthorId": 2,
+        "CreatedAt": "2019-03-01",
+        "Comments": [
+            {
+                "Id": 5,
+                "AuthorId": 5,
+                "Content": "Idealna na zimę"
+            },
+            {
+                "Id": 6,
+                "AuthorId": 6,
+                "Content": "Trochę za kwasna"
+            }
+        ],
+        "Ratings": 4.2
+    },
+    {
+        "Id": 4,
+        "Title": "Sałatka grecka",
+        "RecipeType": "main",
+        "Description": "Tradycyjna sałatka grecka z dodatkiem oliwek, fetы i pomidorów",
+        "Ingredients": "Pomidory, ogórki, cebula, oliwki, feta, oliwa z oliwek, oregano, sól, pieprz",
+        "Instructions": "Pokroić warzywa, dodać pokrojone oliwki, feta i przyprawy, polać oliwą.",
+        "Image": "./images/burrito.jpg",
+        "AuthorId": 2,
+        "CreatedAt": "2019-04-01",
+        "Comments": [
+            {
+                "Id": 7,
+                "AuthorId": 7,
+                "Content": "Uwielbiam świeżość"
+            },
+            {
+                "Id": 8,
+                "AuthorId": 8,
+                "Content": "Zawsze robię na grill party"
+            }
+        ],
+        "Ratings": 4.6
+    },
+    {
+        "Id": 5,
+        "Title": "Kurczak curry",
+        "RecipeType": "snacks",
+        "Description": "Pikantne danie z kurczaka w sosie curry",
+        "Ingredients": "Kurczak, cebula, czosnek, pomidory, curry, mleczko kokosowe, przyprawy",
+        "Instructions": "Podsmażyć kurczaka z cebulą i czosnkiem, dodać pomidory, curry i mleczko kokosowe. Dusić do miękkości.",
+        "Image": "./images/krokiety.jpg",
+        "AuthorId": 1,
+        "CreatedAt": "2019-05-01",
+        "Comments": [
+            {
+                "Id": 9,
+                "AuthorId": 9,
+                "Content": "Bardzo aromatyczne"
+            },
+            {
+                "Id": 10,
+                "AuthorId": 10,
+                "Content": "Nieco za ostre dla mnie"
+            }
+        ],
+        "Ratings": 4.4
+    },
+    {
+        "Id": 6,
+        "Title": "Ciasto marchewkowe",
+        "RecipeType": "dessert",
+        "Description": "Delikatne ciasto marchewkowe z kremem śmietanowym",
+        "Ingredients": "Marchew, mąka, jajka, cukier, olej, orzechy, cynamon, proszek do pieczenia",
+        "Instructions": "Zetrzeć marchew, połączyć z pozostałymi składnikami, upiec. Udekorować kremem śmietanowym.",
+        "Image": "./images/placki-jogurtowe.jpg",
+        "AuthorId": 2,
+        "CreatedAt": "2019-06-01",
+        "Comments": [
+            {
+                "Id": 11,
+                "AuthorId": 11,
+                "Content": "Moje ulubione ciasto"
+            },
+            {
+                "Id": 12,
+                "AuthorId": 12,
+                "Content": "Idealne na urodziny"
+            }
+        ],
+        "Ratings": 4.7
+    }
+]
