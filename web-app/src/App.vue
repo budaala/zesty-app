@@ -59,7 +59,6 @@ h2 {
 .btn-outline-zesty {
   color: #f8f9fa !important;
   background-color: #1A2A15 !important;
-  border-color: #7D8A51 !important;
   padding: 10px 20px !important;
   text-align: center !important;
   border-radius: 12px !important;
