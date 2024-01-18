@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using zesty_api.Interfaces;
@@ -23,7 +24,7 @@ namespace zesty_api.Controllers
             _blobStorageService = blobStorageService;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public ActionResult<IEnumerable<Recipe>> GetAllRecipes()
         {
             try
