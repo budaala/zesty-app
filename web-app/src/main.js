@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import App from './App.vue';
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.bundle';
 
 import RecipeListPage from '../src/views/RecipeListPage.vue';
 import LogInPage from '../src/views/LogInPage.vue';
