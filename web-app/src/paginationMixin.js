@@ -2,8 +2,11 @@ export default {
     data() {
         return {
             currentPage: 1,
-            itemsPerPage: 3,
+            itemsPerPage: 9,
         };
+    },
+    created() {
+        this.currentPage = Number(this.$route.params.page) || 1;
     },
     computed: {
         totalPages() {
@@ -17,9 +20,17 @@ export default {
     },
     methods: {
         goToPage(page) {
+            // if (page >= 1 && page <= this.totalPages) {
+            //     this.currentPage = page;
+            // }
             if (page >= 1 && page <= this.totalPages) {
-                this.currentPage = page;
+                this.$router.push({ name: 'Recipes', params: { page: page } });
             }
+        },
+    },
+    watch: {
+        $route(to, from) {
+            this.currentPage = Number(to.params.page) || 1;
         },
     },
 };

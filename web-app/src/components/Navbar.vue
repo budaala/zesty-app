@@ -11,35 +11,59 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" aria-current="page" to="/">Strona główna</router-link>
+                        <router-link class="nav-link" active-class="active" aria-current="page" to="/">Strona
+                            główna</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { RecipeType: 'breakfast' } }">Śniadania</router-link>
+                        <router-link class="nav-link" active-class="active" aria-current="page"
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'breakfast' } }">Śniadania</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { RecipeType: 'main' } }">Dania główne</router-link>
+                        <router-link class="nav-link" active-class="active" aria-current="page"
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'main' } }">Dania główne</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { RecipeType: 'dessert' } }">Desery</router-link>
+                        <router-link class="nav-link" active-class="active" aria-current="page"
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'dessert' } }">Desery</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { RecipeType: 'drink' } }">Napoje</router-link>
+                        <router-link class="nav-link" active-class="active" aria-current="page"
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'drink' } }">Napoje</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { RecipeType: 'snack' } }">Przekąski</router-link>
+                        <router-link class="nav-link" active-class="active" aria-current="page"
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'snack' } }">Przekąski</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { RecipeType: 'other' } }">Inne</router-link>
+                        <router-link class="nav-link" active-class="active" aria-current="page"
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'other' } }">Inne</router-link>
                     </li>
                     <div class="vr" style="color:aliceblue"></div>
                     <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" aria-current="page" to="/myRecipes">Moje przepisy</router-link>
+                        <router-link class="nav-link" active-class="active" aria-current="page" to="/myRecipes">Moje
+                            przepisy</router-link>
                     </li>
                 </ul>
-                <div class="d-flex">
-                    <router-link class="btn btn-outline-zesty me-2" to="/addRecipe">Dodaj przepis</router-link>
-                    <!-- Jeśli zalogowany - ikonka konta, jeśli nie - przycisk zaloguj się / zarejestruj -->
-                    <router-link class="btn btn-outline-zesty" to="/logIn">Zaloguj się</router-link>
+                <div class="d-flex align-items-center">
+                    <div class="flex-column me-2">
+                        <router-link class="btn btn-outline-zesty me-2" to="/addRecipe">Dodaj przepis</router-link>
+                        <router-link class="btn btn-outline-zesty" to="/logIn" v-if="!loggedIn">Zaloguj się</router-link>
+                    </div>
+                    <div class="flex-column me-2" v-if="loggedIn">
+                        <div class="btn-group">
+                            <font-awesome-icon icon="user" class="user-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false" size="lg" />
+                            <div class="dropdown-menu">
+                                <div class="user-menu">
+                                    <div class="user-info">
+                                        <div class="user-name">Jan Kowalski</div>
+                                    </div>
+                                    <hr>
+                                    <button class="btn user-menu-btn btn-dismiss">Wyloguj się</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,18 +72,25 @@
 
 <script>
 export default {
-    name: 'Navbar'
+    name: 'Navbar',
+    data() {
+        return {
+            loggedIn: true
+        }
+    }
 }
 </script>
 
 <style scoped>
 .navbar {
-    background-color: #7D8A51  !important;
+    background-color: #7D8A51 !important;
 }
+
 .nav-link.active {
     font-size: large;
     /* text-shadow: 0 0 5px #1A2A15;` */
 }
+
 .navbar-brand {
     font-family: "Spectral", serif !important;
     font-weight: 800 !important;
@@ -70,6 +101,7 @@ export default {
     background-color: #f8f9fa !important;
     color: #1A2A15 !important;
 }
+
 .btn-outline-zesty:hover {
     background-color: #1A2A15 !important;
     color: #f8f9fa !important;
@@ -78,5 +110,61 @@ export default {
 .logo {
     width: 40px;
     height: 40px;
+}
+
+.user-icon {
+    cursor: pointer;
+    color: #f8f9fa !important;
+}
+
+.user-icon:hover,
+.user-icon:focus,
+.user-icon:active {
+    color: #1A2A15 !important;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 130% !important;
+    right: 10% !important;
+    width: 250px;
+    overflow: hidden;
+    background-color: white;
+    border: 1px solid #7D8A51 !important;
+}
+
+.user-menu {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.user-menu hr {
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background-color: #1A2A15;
+    margin: 15px 0 10px;
+}
+
+.user-menu-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 5px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-decoration: none;
 }
 </style>

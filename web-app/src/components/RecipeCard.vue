@@ -5,7 +5,7 @@
             <div class="card-body">
                 <h2 class="card-title">{{ Title }}</h2>
                 <hr>
-                <p class="card-text">{{ Description }}</p>
+                <p class="card-text text-truncate" >{{ Description }}</p>
                 <!-- <img src="../assets/logo.png" alt=""> -->
                 <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
             </div>
@@ -33,13 +33,17 @@ export default {
 
 <style scoped>
 .recipe-img {
-    height: 200px;
+    max-height: 200px;
     object-fit: cover;
 }
 
 .card-title, .card-text, .card a {
     text-decoration: none !important;
     color: #212529;
+}
+
+.card-body {
+    height: 170px;
 }
 
 .card:hover {

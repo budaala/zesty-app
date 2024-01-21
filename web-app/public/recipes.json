@@ -49,12 +49,12 @@
     },
     {
         "Id": 3,
-        "Title": "Zupa pomidorowa",
+        "Title": "Krem pomidorowy",
         "RecipeType": "main",
         "Description": "Zupa pomidorowa typu krem",
         "Ingredients": "Pomidory, cebula, czosnek, bulion, śmietana, masło, bazylia, sól, pieprz",
         "Instructions": "Pomidory podgotować z cebulą i czosnkiem, dodać bulion, zmiksować, dodać śmietanę i przyprawy.",
-        "Image": "./images/zupa.jpg",
+        "Image": "./images/krem-pomidorowy.jpg",
         "AuthorId": 2,
         "CreatedAt": "2019-03-01",
         "Comments": [
@@ -78,7 +78,7 @@
         "Description": "Tradycyjna sałatka grecka z dodatkiem oliwek, fetы i pomidorów",
         "Ingredients": "Pomidory, ogórki, cebula, oliwki, feta, oliwa z oliwek, oregano, sól, pieprz",
         "Instructions": "Pokroić warzywa, dodać pokrojone oliwki, feta i przyprawy, polać oliwą.",
-        "Image": "./images/burrito.jpg",
+        "Image": "./images/sałatka-grecka.jpg",
         "AuthorId": 2,
         "CreatedAt": "2019-04-01",
         "Comments": [
@@ -102,7 +102,7 @@
         "Description": "Pikantne danie z kurczaka w sosie curry",
         "Ingredients": "Kurczak, cebula, czosnek, pomidory, curry, mleczko kokosowe, przyprawy",
         "Instructions": "Podsmażyć kurczaka z cebulą i czosnkiem, dodać pomidory, curry i mleczko kokosowe. Dusić do miękkości.",
-        "Image": "./images/krokiety.jpg",
+        "Image": "./images/kurczak-curry.jpg",
         "AuthorId": 1,
         "CreatedAt": "2019-05-01",
         "Comments": [
@@ -126,7 +126,7 @@
         "Description": "Delikatne ciasto marchewkowe z kremem śmietanowym",
         "Ingredients": "Marchew, mąka, jajka, cukier, olej, orzechy, cynamon, proszek do pieczenia",
         "Instructions": "Zetrzeć marchew, połączyć z pozostałymi składnikami, upiec. Udekorować kremem śmietanowym.",
-        "Image": "./images/placki-jogurtowe.jpg",
+        "Image": "./images/ciasto-marchewkowe.jpg",
         "AuthorId": 2,
         "CreatedAt": "2019-06-01",
         "Comments": [
@@ -142,5 +142,221 @@
             }
         ],
         "Ratings": 4.7
+    },
+    {
+        "Id": 7,
+        "Title": "Pasta Carbonara",
+        "RecipeType": "main course",
+        "Description": "Klasyczna pasta carbonara z jajkiem, boczkiem i parmezanem",
+        "Ingredients": "Makaron, jajka, boczek, parmezan, czosnek, pieprz",
+        "Instructions": "Ugotować makaron, podsmażyć boczek z czosnkiem, dodać do ugotowanego makaronu wraz z jajkami i parmezanem.",
+        "Image": "./images/carbonara.jpg",
+        "AuthorId": 3,
+        "CreatedAt": "2019-07-01",
+        "Comments": [
+            {
+                "Id": 13,
+                "AuthorId": 13,
+                "Content": "Mój ulubiony obiad"
+            },
+            {
+                "Id": 14,
+                "AuthorId": 14,
+                "Content": "Proste, ale pyszne"
+            }
+        ],
+        "Ratings": 4.9
+    },
+    {
+        "Id": 8,
+        "Title": "Sałatka Caprese",
+        "RecipeType": "salad",
+        "Description": "Klasyczna sałatka Caprese z pomidorami, mozzarellą i bazylią",
+        "Ingredients": "Pomidory, mozzarella, bazyli, oliwa z oliwek, sól, pieprz",
+        "Instructions": "Pokroić pomidory i mozzarellę, ułożyć warstwowo z bazylią, skropić oliwą z oliwek, posolić i popieprzyć.",
+        "Image": "./images/salatka-caprese.jpg",
+        "AuthorId": 3,
+        "CreatedAt": "2019-08-01",
+        "Comments": [
+            {
+                "Id": 15,
+                "AuthorId": 15,
+                "Content": "Świeże i smaczne"
+            },
+            {
+                "Id": 16,
+                "AuthorId": 16,
+                "Content": "Idealne na letnie dni"
+            }
+        ],
+        "Ratings": 4.7
+    },
+    {
+        "Id": 9,
+        "Title": "Ratatouille",
+        "RecipeType": "main course",
+        "Description": "Klasyczne danie francuskie z warzyw",
+        "Ingredients": "Bakłażan, cukinia, pomidory, papryka, cebula, czosnek, zioła prowansalskie, oliwa z oliwek",
+        "Instructions": "Pokroić warzywa, dusić z ziołami i czosnkiem na oliwie, podawać na ciepło.",
+        "Image": "./images/ratatouille.jpg",
+        "AuthorId": 4,
+        "CreatedAt": "2019-09-01",
+        "Comments": [
+            {
+                "Id": 17,
+                "AuthorId": 17,
+                "Content": "Danie wegetariańskie, ale sycące"
+            },
+            {
+                "Id": 18,
+                "AuthorId": 18,
+                "Content": "Wspaniałe połączenie smaków"
+            }
+        ],
+        "Ratings": 4.6
+    },
+    {
+        "Id": 10,
+        "Title": "Krewetki w sosie czosnkowym",
+        "RecipeType": "seafood",
+        "Description": "Smażone krewetki w aromatycznym sosie czosnkowym",
+        "Ingredients": "Krewetki, czosnek, masło, czerwone papryczki, pietruszka, sól, pieprz",
+        "Instructions": "Smażyć krewetki na maśle z czosnkiem, dodać posiekaną papryczkę i pietruszkę, doprawić solą i pieprzem.",
+        "Image": "./images/krewetki.jpg",
+        "AuthorId": 4,
+        "CreatedAt": "2019-10-01",
+        "Comments": [
+            {
+                "Id": 19,
+                "AuthorId": 19,
+                "Content": "Pyszne danie na romantyczną kolację"
+            },
+            {
+                "Id": 20,
+                "AuthorId": 20,
+                "Content": "Czosnek dodaje wyjątkowego smaku"
+            }
+        ],
+        "Ratings": 4.8
+    },
+    {
+        "Id": 11,
+        "Title": "Sernik z owocami",
+        "RecipeType": "dessert",
+        "Description": "Delikatny sernik z dodatkiem sezonowych owoców",
+        "Ingredients": "Ser biały, jajka, cukier, mąka, owoce sezonowe, cukier waniliowy",
+        "Instructions": "Zmiksować składniki, wlać do formy, piec, udekorować sezonowymi owocami.",
+        "Image": "./images/sernik-z-owocami.jpg",
+        "AuthorId": 5,
+        "CreatedAt": "2019-11-01",
+        "Comments": [
+            {
+                "Id": 21,
+                "AuthorId": 21,
+                "Content": "Mój ulubiony sernik"
+            },
+            {
+                "Id": 22,
+                "AuthorId": 22,
+                "Content": "Idealny na każdą okazję"
+            }
+        ],
+        "Ratings": 4.9
+    },
+    {
+        "Id": 12,
+        "Title": "Ravioli z ricottą i szpinakiem",
+        "RecipeType": "main course",
+        "Description": "Pyszne ravioli z nadzieniem z ricotty i szpinaku",
+        "Ingredients": "Mąka, jajka, ricotta, szpinak, parmezan, masło, śmietana, gałka muszkatołowa",
+        "Instructions": "Zagnieść ciasto, przygotować farsz, formować ravioli, gotować i podawać z sosem śmietanowym.",
+        "Image": "./images/ravioli.jpg",
+        "AuthorId": 5,
+        "CreatedAt": "2019-12-01",
+        "Comments": [
+            {
+                "Id": 23,
+                "AuthorId": 23,
+                "Content": "Smak dzieciństwa"
+            },
+            {
+                "Id": 24,
+                "AuthorId": 24,
+                "Content": "Idealne danie na obiad"
+            }
+        ],
+        "Ratings": 4.7
+    },
+    {
+        "Id": 13,
+        "Title": "Tarta z malinami",
+        "RecipeType": "dessert",
+        "Description": "Letnia tarta z malinami i kremem migdałowym",
+        "Ingredients": "Mąka, masło, cukier, jajka, maliny, migdały, cukier puder",
+        "Instructions": "Przygotować ciasto, dodać maliny, piec, udekorować kremem migdałowym i malinami.",
+        "Image": "./images/tarta-z-malinami.jpg",
+        "AuthorId": 6,
+        "CreatedAt": "2020-01-01",
+        "Comments": [
+            {
+                "Id": 25,
+                "AuthorId": 25,
+                "Content": "Doskonała na letnie wieczory"
+            },
+            {
+                "Id": 26,
+                "AuthorId": 26,
+                "Content": "Maliny nadają świeżości"
+            }
+        ],
+        "Ratings": 4.8
+    },
+    {
+        "Id": 14,
+        "Title": "Kotlet schabowy",
+        "RecipeType": "main course",
+        "Description": "Tradycyjny polski kotlet schabowy z ziemniakami i surówką",
+        "Ingredients": "Schab, jajko, bułka tarta, ziemniaki, kapusta, marchew, cebula",
+        "Instructions": "Obtoczyć mięso w jajku i bułce, smażyć na patelni, podać z ziemniakami i surówką.",
+        "Image": "./images/kotlet-schabowy.jpg",
+        "AuthorId": 6,
+        "CreatedAt": "2020-02-01",
+        "Comments": [
+            {
+                "Id": 27,
+                "AuthorId": 27,
+                "Content": "Klasyczne danie polskiej kuchni"
+            },
+            {
+                "Id": 28,
+                "AuthorId": 28,
+                "Content": "Idealne dla miłośników mięsa"
+            }
+        ],
+        "Ratings": 4.5
+    },
+    {
+        "Id": 15,
+        "Title": "Koktajl tropikalny",
+        "RecipeType": "drink",
+        "Description": "Owocowy koktajl z tropikalnymi składnikami",
+        "Ingredients": "Banany, ananas, mango, jogurt naturalny, miód",
+        "Instructions": "Zmiksować wszystkie składniki, podać w wysokich szklankach.",
+        "Image": "./images/koktajl-tropikalny.jpg",
+        "AuthorId": 7,
+        "CreatedAt": "2020-03-01",
+        "Comments": [
+            {
+                "Id": 29,
+                "AuthorId": 29,
+                "Content": "Idealny na śniadanie"
+            },
+            {
+                "Id": 30,
+                "AuthorId": 30,
+                "Content": "Pyszne i orzeźwiające"
+            }
+        ],
+        "Ratings": 4.6
     }
 ]
