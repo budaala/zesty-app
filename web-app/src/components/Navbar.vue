@@ -31,6 +31,7 @@
                     <li class="nav-item">
                         <router-link class="nav-link" active-class="active" aria-current="page" :to="{ name: 'RecipeListPage', params: { RecipeType: 'other' } }">Inne</router-link>
                     </li>
+                    <div class="vr" style="color:aliceblue"></div>
                     <li class="nav-item">
                         <router-link class="nav-link" active-class="active" aria-current="page" to="/myRecipes">Moje przepisy</router-link>
                     </li>

@@ -27,7 +27,7 @@ import recipesService from '../recipesService.js';
 import paginationMixin from '../paginationMixin.js';
 
 export default {
-    name: 'HomePage',
+    name: 'RecipeListPage',
     mixins: [paginationMixin],
     components: {
         RecipeList
