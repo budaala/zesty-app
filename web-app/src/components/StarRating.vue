@@ -30,7 +30,7 @@
                     <p v-if="submitted">Dziękujemy za ocenę! Możesz teraz zamknąć ten modal.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-zesty btn-dismiss" data-bs-dismiss="modal">Anuluj</button>
+                    <button type="button" class="btn btn-dismiss" data-bs-dismiss="modal">Anuluj</button>
                     <button type="button" class="btn btn-outline-zesty" @click.prevent="submitRating()">Oceń</button>
                 </div>
             </div>
@@ -102,12 +102,5 @@ export default {
     cursor: pointer;
 }
 
-.btn-dismiss {
-    background-color: #9d0616 !important;
-    border-color: #64030d !important;
-}
 
-.btn-dismiss:hover {
-    background-color: #64030d !important;
-}
 </style>

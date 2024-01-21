@@ -5,11 +5,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faStar } from '@fortawesome/free-solid-svg-icons'
-import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons'
-import { faStarHalfAlt } from '@fortawesome/free-solid-svg-icons'
+import { faUser} from '@fortawesome/free-solid-svg-icons'
 
-library.add(faStar, faStarRegular, faStarHalfAlt)
+library.add(faUser)
 
 
 import RecipeListPage from '../src/views/RecipeListPage.vue';
