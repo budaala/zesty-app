@@ -1,7 +1,7 @@
 <template>
     <div class="container-md mt-3 mb-5">
         <h1>Gotuj z Zesty!</h1>
-        <p>Przepisy z kategorii: {{ RecipeType }}</p>
+        <!-- <p>Przepisy z kategorii: {{ RecipeType }}</p> -->
         <RecipeList :recipes="pagedItems"></RecipeList>
         <nav v-show="totalPages > 1">
             <ul class="pagination justify-content-center">

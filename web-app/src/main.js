@@ -23,8 +23,9 @@ const routes = [
     { path: '/logIn', component: LogInPage },
     { path: '/addRecipe', component: AddRecipe },
     { path: '/myRecipes', component: MyRecipes },
-    { name: "RecipePage", path: '/:Id', component: Recipe, props: route => ({ Id: Number(route.params.Id) }) },
+    { name: "RecipePage", path: '/recipes/id=:Id', component: Recipe, props: route => ({ Id: Number(route.params.Id) }) },
     { name: "RecipeListPage", path: '/:RecipeType', component: RecipeListPage, props: true },
+    { path: '/recipes/:page', name: 'Recipes', component: RecipeListPage }
 ];
 
 const router = createRouter({

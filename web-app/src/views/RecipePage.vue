@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col mb-5">
-                        <router-link to="/" class="btn btn-outline-zesty">Wróć</router-link>
+                        <button @click="$router.go(-1)" class="btn btn-outline-zesty">Poprzednia strona</button>
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
