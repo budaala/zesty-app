@@ -24,13 +24,7 @@
                                     </div>
                                     <div class="col text-center">
                                         <p>Ocena: </p>
-                                        <div class="star-rating">
-                                        <span v-for="n in max">&star;</span>
-                                            <div class="star-rating_thisRecipe" :style="{width: getRating + '%'}">
-                                                <span v-for="n in max">&starf;</span>
-                                            </div>
-                                        </div>
-                                        <span class="m-2">{{ recipe.Ratings }}</span>
+                                        <star-rating :max="max" :rating="recipe.Ratings"></star-rating>
                                     </div>
                                     <div class="col text-center">
                                         <p>Typ dania:</p>
@@ -107,9 +101,11 @@
 
 <script>
 import recipesService from '../recipesService.js';
+import StarRating from '../components/StarRating.vue';
 
 export default {
     name: 'RecipePage',
+    components: {StarRating},
     props: {
         Id: {
             type: Number
@@ -117,11 +113,6 @@ export default {
         max: {
             type: Number,
             default: 5
-        }
-    },
-    computed: {
-        getRating() {
-            return (this.recipe.Ratings / this.max)* 100;
         }
     },
     data() {
@@ -203,19 +194,6 @@ img {
     color: #7D8A51 !important;
 }
 
-.star-rating {
-    display: inline-block;
-    color: #7D8A51;
-    font-size: 1.2rem;
-    position: relative;
-}
 
-.star-rating .star-rating_thisRecipe {
-    position: absolute;
-    top: 0;
-    width: 80%;
-    overflow: hidden;
-    white-space: nowrap;
 
-}
 </style>
