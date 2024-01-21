@@ -14,7 +14,7 @@
                             <input type="text" class="form-control" v-model="form.username" @blur="setTouched('username')"
                                 :class="{ 'is-valid': isValid('username'), 'is-invalid': !isValid('username') && touched.username }"
                                 id="registerUsername" placeholder="Username">
-                            <label for="registerUsername">Nazwa użytkownika</label>
+                            <label class="text-truncate" for="registerUsername">Nazwa użytkownika</label>
                         </div>
                         <div v-if="!isValid('username') && touched.username">
                             <small class="text-danger">{{ message.username }}</small>

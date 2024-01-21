@@ -7,17 +7,17 @@
 
 <script>
 import Navbar from './components/Navbar.vue'
-import RecipeList from './components/RecipeList.vue'
+import RecipeListPage from './views/RecipeListPage.vue'
 import LogInPage from './views/LogInPage.vue';
-import AddRecipe from './views/AddRecipePage.vue';
+import AddRecipePage from './views/AddRecipePage.vue';
 
 export default {
   name: 'App',
   components: {
     'Navbar': Navbar,
-    'Recipes': RecipeList,
+    'RecipeListPage': RecipeListPage,
     'LogInPage': LogInPage,
-    'AddRecipe': AddRecipe
+    'AddRecipePage': AddRecipePage
   }
 }
 </script>
@@ -49,6 +49,11 @@ h1 {
 h2 {
   font-family: "Spectral", serif !important;
   color: #7D8A51 !important;
+}
+
+h3 {
+  font-family: "Spectral", serif !important;
+  color: #1A2A15 !important;
 }
 
 .btn-outline-zesty:hover {
@@ -107,4 +112,7 @@ h2 {
   font-size: large;
 }
 
+.r-link {
+    color: #1A2A15 !important;
+}
 </style>
