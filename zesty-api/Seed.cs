@@ -20,15 +20,15 @@ namespace zesty_api
                  {
                      new UserEntity
                      {
-                         UserName = "test",
+                         Username = "test",
                          Email = "test@test",
-                         PasswordHash = "test"
+                         Password = "test"
                      },
                      new UserEntity
                      {
-                         UserName = "test2",
+                         Username = "test2",
                          Email = "test2@test",
-                         PasswordHash = "test2"
+                         Password = "test2"
                      }
                  };
 

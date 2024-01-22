@@ -12,8 +12,6 @@ namespace zesty_api.Data
 
         }
 
-        
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -29,11 +27,10 @@ namespace zesty_api.Data
         {
             builder.ToTable("Users");
             builder.HasKey(u => u.Id);
-            builder.Property(u => u.UserName).HasMaxLength(100).IsRequired();
-            builder.Property(u => u.PasswordHash).IsRequired();
+            builder.Property(u => u.Username).HasMaxLength(100).IsRequired();
+            builder.Property(u => u.Password).IsRequired();
             builder.Property(u => u.Email).IsRequired();
-
-            builder.HasIndex(u => u.UserName).IsUnique();
+            builder.HasIndex(u => u.Username).IsUnique();
             builder.HasIndex(u => u.Email).IsUnique();
         }
 
@@ -76,7 +73,6 @@ namespace zesty_api.Data
             entity.Property(r => r.UserId).IsRequired();
             entity.Property(r => r.RecipeId).IsRequired();
             entity.HasIndex(r => new { r.RecipeId, r.UserId }).IsUnique();
-
 
         }
 
