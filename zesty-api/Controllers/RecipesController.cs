@@ -48,13 +48,12 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
-            
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateRecipe([FromForm] string recipeJson, [FromForm]IFormFile image= null)
+        public async Task<ActionResult> CreateRecipe([FromForm] string recipeJson, [FromForm]IFormFile image = null)
         {
             try
             {
@@ -62,12 +61,12 @@ namespace zesty_api.Controllers
 
                 if (image == null || image.Length == 0)
                 {
-                    recipe.ImageUrl = "https://zestyappblob.blob.core.windows.net/zestyappimages/placeholder.png";
+                    recipe!.ImageUrl = "https://zestyappblob.blob.core.windows.net/zestyappimages/placeholder.png";
                 }
                 else
                 {
                     var imageUrl = await _blobStorageService.UploadFile(image);
-                    recipe.ImageUrl = imageUrl;
+                    recipe!.ImageUrl = imageUrl;
                 }
 
                 _recipesService.CreateRecipe(recipe);
@@ -75,7 +74,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
 
@@ -89,13 +88,13 @@ namespace zesty_api.Controllers
                 var oldImageUrl = _recipesService.GetRecipe(id).ImageUrl;
                 if (image == null || image.Length == 0)
                 {
-                    recipe.ImageUrl = oldImageUrl;
+                    recipe!.ImageUrl = oldImageUrl;
                 }
                 else
                 {
                     await _blobStorageService.DeleteFile(oldImageUrl);
                     var newImageUrl = await _blobStorageService.UploadFile(image);
-                    recipe.ImageUrl = newImageUrl;
+                    recipe!.ImageUrl = newImageUrl;
                 }
                 recipe.Id = id;
             
@@ -104,7 +103,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
             
         }
@@ -120,7 +119,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
             
         }
@@ -136,7 +135,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }    
         }
 
@@ -150,7 +149,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }   
         }
 
@@ -164,7 +163,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }  
         }
 
@@ -179,7 +178,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
 
@@ -194,7 +193,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
 
@@ -208,7 +207,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
     }
