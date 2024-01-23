@@ -82,6 +82,5 @@ export default {
 </script>
 
 <style scoped>
-.r-link {
-    color: #1A2A15 !important;
-}</style>
+
+</style>

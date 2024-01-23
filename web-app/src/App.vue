@@ -1,23 +1,23 @@
 <template>
   <div>
     <navbar></navbar>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue'
-import RecipeList from './components/RecipeList.vue'
+import RecipeListPage from './views/RecipeListPage.vue'
 import LogInPage from './views/LogInPage.vue';
-import AddRecipe from './views/AddRecipePage.vue';
+import AddRecipePage from './views/AddRecipePage.vue';
 
 export default {
   name: 'App',
   components: {
     'Navbar': Navbar,
-    'Recipes': RecipeList,
+    'RecipeListPage': RecipeListPage,
     'LogInPage': LogInPage,
-    'AddRecipe': AddRecipe
+    'AddRecipePage': AddRecipePage
   }
 }
 </script>
@@ -51,6 +51,11 @@ h2 {
   color: #7D8A51 !important;
 }
 
+h3 {
+  font-family: "Spectral", serif !important;
+  color: #1A2A15 !important;
+}
+
 .btn-outline-zesty:hover {
   color: #f8f9fa !important;
   background-color: #7D8A51 !important;
@@ -65,39 +70,36 @@ h2 {
   font-weight: 500 !important;
 }
 
-.form-control:focus, .form-select:focus {
+.form-control:focus,
+.form-select:focus {
   border-color: #7D8A51 !important;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(125, 138, 81) !important;
 }
 
-.pagination > li > a
-{
-    background-color: white;
-    color: #1A2A15;
-    cursor: pointer;
+.pagination>li>a {
+  background-color: white;
+  color: #1A2A15;
+  cursor: pointer;
 }
 
-.pagination > li > a:focus,
-.pagination > li > a:hover,
-.pagination > li > span:focus,
-.pagination > li > span:hover
-{
-    color: #5a5a5a;
-    background-color: #eee;
-    border-color: #ddd;
+.pagination>li>a:focus,
+.pagination>li>a:hover,
+.pagination>li>span:focus,
+.pagination>li>span:hover {
+  color: #5a5a5a;
+  background-color: #eee;
+  border-color: #ddd;
 }
 
-.pagination > .active > a
-{
-    color: white;
-    background-color: #7D8A51 !Important;
-    border: solid 1px #7D8A51 !Important;
+.pagination>.active>a {
+  color: white;
+  background-color: #7D8A51 !Important;
+  border: solid 1px #7D8A51 !Important;
 }
 
-.pagination > .active > a:hover
-{
-    background-color: #7D8A51 !Important;
-    border: solid 1px #7D8A51;
+.pagination>.active>a:hover {
+  background-color: #7D8A51 !Important;
+  border: solid 1px #7D8A51;
 }
 
 .alert-zesty {
@@ -107,4 +109,21 @@ h2 {
   font-size: large;
 }
 
+.r-link {
+  color: #1A2A15 !important;
+}
+
+.btn-dismiss {
+  background-color: #9d0616 !important;
+  border-color: #64030d !important;
+  color: #f8f9fa !important;
+  padding: 10px 20px !important;
+  text-align: center !important;
+  border-radius: 12px !important;
+  font-weight: 500 !important;
+}
+
+.btn-dismiss:hover {
+  background-color: #64030d !important;
+}
 </style>
