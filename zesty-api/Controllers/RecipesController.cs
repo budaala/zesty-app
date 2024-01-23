@@ -24,7 +24,7 @@ namespace zesty_api.Controllers
             _blobStorageService = blobStorageService;
         }
 
-        [HttpGet, Authorize]
+        [HttpGet]
         public ActionResult<IEnumerable<Recipe>> GetAllRecipes()
         {
             try
@@ -34,7 +34,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
 
