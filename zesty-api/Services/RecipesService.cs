@@ -1,4 +1,5 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata.Ecma335;
 using zesty_api.Data;
 using zesty_api.Data.Entities;
 using zesty_api.Interfaces;
@@ -35,19 +36,23 @@ namespace zesty_api.Services
 
         public IEnumerable<Recipe> GetAllRecipes()
         {
-            var recipes = db.Recipes.ToList() ?? throw new Exception("We were not able to load recipes");
+            var recipes = db.Recipes.Include(r => r.MealType).Include(r => r.User).ToList() ?? throw new Exception("We were not able to load recipes");
             return recipes.Select(MapToDTO);
         }
 
         public Recipe GetRecipe(int recipeId)
         {
-            var recipe = db.Recipes.Find(recipeId) ?? throw new Exception("Recipe not found");
+            var recipe = db.Recipes
+                .Include(r => r.MealType)
+                .Include(r => r.User)
+                .SingleOrDefault(r => r.Id == recipeId) ?? throw new Exception("Recipe not found");
             return MapToDTO(recipe); 
         }
 
         public Task UpdateRecipe(Recipe recipe)
         {
             var recipeEntity = db.Recipes.Find(recipe.Id) ?? throw new Exception("Recipe not found");
+            recipeEntity.MealTypeId = recipe.MealTypeId;
             recipeEntity.Title = recipe.Title;
             recipeEntity.Description = recipe.Description;
             recipeEntity.Ingredients = recipe.Ingredients;
@@ -64,8 +69,10 @@ namespace zesty_api.Services
             {
                 Id = entity.Id,
                 UserId = entity.UserId,
+                Username = entity.User.Username ?? "",
                 Title = entity.Title,
                 MealTypeId = entity.MealTypeId,
+                MealTypeName = entity.MealType.Name ?? "",
                 Description = entity.Description,
                 Ingredients = entity.Ingredients,
                 Instructions = entity.Instructions,

@@ -54,7 +54,7 @@ namespace zesty_api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateRecipe([FromForm] string recipeJson, [FromForm]IFormFile image= null)
+        public async Task<ActionResult<Recipe>> CreateRecipe([FromForm] string recipeJson, [FromForm]IFormFile image = null)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace zesty_api.Controllers
                 }
 
                 _recipesService.CreateRecipe(recipe);
-                return Ok();
+                return Ok(recipe);
             }
             catch (Exception ex)
             {

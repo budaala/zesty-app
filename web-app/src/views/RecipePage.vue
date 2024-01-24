@@ -39,7 +39,7 @@
                                         <li class="list-group-item"
                                             v-for="(ingredient, index) in recipe.Ingredients.split(',')">
                                             <input class="form-check-input me-1" type="checkbox" value=""
-                                                :id="'checkbox' + index">
+                                                :id="'checkbox' + index" @change="$event.target.blur()">
                                             <label class="form-check-label stretched-link" :for="'checkbox' + index">{{
                                                 ingredient }}</label>
                                         </li>
