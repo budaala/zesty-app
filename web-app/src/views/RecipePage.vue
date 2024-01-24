@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="col text-center">
                                         <p>Ocena: </p>
-                                        <star-rating :max="max" :rating="loadAverageRating(recipe.id)"></star-rating>
+                                        <star-rating :max="max" :rating="recipe.averageRating"></star-rating>
                                     </div>
                                     <div class="col text-center">
                                         <p>Typ dania:</p>
@@ -133,9 +133,10 @@ export default {
                 imageUrl: '',
                 userId: 0,
                 username: '',
-                createdAt: ''
+                createdAt: '',
+                averageRating: 0,
             },
-            averageRating: 0,
+            // averageRating: 0,
             comments: []
         }
     },
@@ -148,7 +149,7 @@ export default {
                 let recipes = await recipesService.LoadAllRecipes();
                 let routeId = Number(this.$route.params.Id);
                 this.recipe = recipes.find((recipe) => recipe.id === routeId);
-                this.averageRating = await this.loadAverageRating(this.recipe.id);
+                this.recipe.averageRating = await this.loadAverageRating(this.recipe.id);
             } catch (error) {
                 // Obsługa błędu
             }
