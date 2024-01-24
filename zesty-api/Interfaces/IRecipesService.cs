@@ -9,6 +9,6 @@ namespace zesty_api.Interfaces
         Recipe CreateRecipe(Recipe recipe);
         Task UpdateRecipe(Recipe recipe);
         Task DeleteRecipe(int recipeId);
-
+        IEnumerable<MealType> GetMealTypes();
     }
 }

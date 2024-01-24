@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import userService from "../userService.js";
 
 export default {
     name: 'LogInPage',
@@ -96,12 +97,13 @@ export default {
             }
 
         },
-        validateInput() {
+        async validateInput() {
             if (this.isNotEmpty('email') && this.isNotEmpty('password')) {
                 // walidacja z bazą danych
                 this.loggedIn = true;
                 this.validInput = false;
                 this.message.all = 'Pomyślnie zalogowano.';
+                await this.logIn();
             }
             else {
                 for (let field in this.touched) {
@@ -112,7 +114,21 @@ export default {
                 this.message.all = 'Wypełnij wszystkie pola aby się zalogować.';
             }
         },
-
+        async logIn() {
+            try {
+                // console.log('Próba logowania...'+ this.form.email + ' ' + this.form.password);
+                var token = await userService.login(this.form.email, this.form.password);
+                localStorage.setItem('token', token);
+                console.log('Zalogowano ' + token);
+                this.$router.push({ name: 'RecipeListPage' });
+            } catch (error) {
+                console.log(error);
+            }
+        },
+        logOut() {
+            localStorage.removeItem('token');
+            this.$router.push({ name: 'RecipeListPage' });
+        }
     }
 }
 </script>
@@ -124,3 +140,19 @@ export default {
 }
 
 </style>
+
+
+
+<!-- import axios from 'axios';
+
+const apiClient = axios.create();
+
+apiClient.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token'); // Or get the token from Vuex
+    if (token) {
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+}); -->
