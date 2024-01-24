@@ -11,6 +11,14 @@ using zesty_api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+        builder.WithOrigins("*")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
+
 builder.Services.AddControllers();
 builder.Services.AddTransient<Seed>();
 builder.Services.AddEndpointsApiExplorer();
@@ -45,6 +53,8 @@ builder.Services.AddTransient<IRecipesService, RecipesService>();
 builder.Services.AddTransient<IAuthService, AuthService>();
 
 var app = builder.Build();
+
+app.UseCors();
 
 if (args.Length == 1 && args[0].ToLower() == "seeddata")
     SeedData(app);
