@@ -83,19 +83,25 @@
                             <div class="mb-3">
                                 <div class="form-floating mb-3">
                                     <input class="form-control form-control-lg" type="file" id="recipeImage"
-                                        accept="image/*" @change="handleFileUpload"
-                                        :class="{ 'is-valid': isValid('Image') || (isImage === false && touched.Image), 'is-invalid': !isValid('Image') && touched.Image }"
-                                        @blur="setTouched('Image')" />
+                                        accept="image/*" @change="handleFileUpload" :class="{
+                                            'is-valid': isValid('Image') && isImage,
+                                            'is-invalid': !isValid('Image') && touched.Image,
+                                            'is-warning': !isImage && touched.Image
+                                        }" @blur="setTouched('Image')" />
                                     <!-- <label for="recipeImage">Wybierz zdjęcie</label> -->
-                                    <div v-if="(!isValid('Image') || isImage === false) && touched.Image">
+                                    <div v-if="(!isValid('Image') || !isImage) && touched.Image">
                                         <small
-                                            :class="{ 'text-danger': !isValid('Image'), 'text-warning': isImage === false }">{{
+                                            :class="{ 'text-danger': !isValid('Image'), 'text-warning': !isImage }">{{
                                                 message.Image }}</small>
                                     </div>
                                 </div>
                             </div>
-
-                            <button type="submit" class="btn btn-outline-zesty">
+                            <div v-if="formSubmitted">
+                                <p :class="{'text-danger': !addedRecipe, 'text-success': addedRecipe}">
+                                    {{ message.all }}
+                                </p>
+                            </div>
+                            <button type="submit" class="btn btn-outline-zesty" @click.prevent="validateForm">
                                 Dodaj przepis
                             </button>
                         </div>
@@ -134,10 +140,13 @@ export default {
                 Description: '',
                 Ingredients: '',
                 Instructions: '',
-                Image: ''
+                Image: '',
+                all: ''
             },
-            isValidImage: false,
-            isImage: true
+            isValidImage: true,
+            isImage: false,
+            formSubmitted: false,
+            addedRecipe: false
         };
     },
     methods: {
@@ -145,6 +154,19 @@ export default {
             this.touched[field] = true;
         },
         validateForm() {
+            this.formSubmitted = true;
+
+            if (this.isValid('recipeTitle') && this.isValid('recipeType') && this.isValid('Description') && this.isValid('Ingredients') && this.isValid('Instructions') && this.isValid('Image')){
+                this.addedRecipe = true;
+                this.message.all = 'Pomyślnie dodano przepis';
+            }
+            else {
+                for (let field in this.touched) {
+                    this.setTouched(field);
+                    this.isValid(field);
+                }
+                this.message.all = 'Wypełnij wszystkie pola poprawnie';
+            }
             const { recipeTitle, recipeType, Description, Ingredients, Instructions, Image } = this.form;
 
             const isValidRecipeTitle = this.validateRecipeTitle(recipeTitle);
@@ -223,41 +245,48 @@ export default {
             }
             return true;
         },
-        validateImage(Image) {
-            if (this.isValidImage === false) {
-                this.message.Image = 'Wybierz plik graficzny. Dozwolone formaty: jpg, jpeg, png.';
+        validateImage() {
+            if (!this.isValidImage) {
+                this.message.Image = 'Nieprawidłowy format pliku. Dozwolone formaty: jpg, jpeg, png.';
+                this.isImage = false;
                 return false;
-            }
-            else if (!this.isImage) {
-                this.message.Image = 'Plik nie został przesłany.';
+            } else if (this.form.Image) {
+                this.isImage = true;
+                this.message.Image = 'Plik załadowany poprawnie.';
+                return true;
+            } else {
+                this.isImage = false;
+                this.message.Image = 'Nie wybrano pliku, ale formularz można przesłać.';
                 return true;
             }
-            return true;
         },
         handleFileUpload(event) {
             const file = event.target.files[0];
-
-            if (!file) {
-                this.message.Image = 'Nie wybrano pliku.';
-                this.isImage = false;
-                return;
-            }
-
             const allowedTypes = ['image/jpg', 'image/jpeg', 'image/png'];
 
-            if (!allowedTypes.includes(file.type)) {
-                this.message.Image = 'Nieprawidłowy format pliku. Dozwolone są tylko obrazy (jpg, jpeg, png).';
+            if (!file) {
+                this.isValidImage = true;
+                this.isImage = false;
+                this.message.Image = 'Nie wybrano pliku, ale formularz można przesłać.';
+                return;
+            }
+            else if (!allowedTypes.includes(file.type)) {
                 this.isValidImage = false;
                 return;
             }
-
+            
+            this.isImage = true;
             this.isValidImage = true;
             this.form.Image = file; // Przypisz plik do formularza, jeśli jest poprawny
+            this.validateImage();
+
         },
     }
 };
 </script>
 
 <style scoped>
-/* Dodaj style, jeśli są wymagane */
+.is-warning {
+    border-color: #ffc107;
+}
 </style>
