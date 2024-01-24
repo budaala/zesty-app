@@ -16,27 +16,27 @@
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" active-class="active" aria-current="page"
-                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'breakfast' } }">Śniadania</router-link>
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'Śniadania' } }">Śniadania</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" active-class="active" aria-current="page"
-                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'main' } }">Dania główne</router-link>
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'Dania główne' } }">Dania główne</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" active-class="active" aria-current="page"
-                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'dessert' } }">Desery</router-link>
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'Desery' } }">Desery</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" active-class="active" aria-current="page"
-                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'drink' } }">Napoje</router-link>
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'Napoje' } }">Napoje</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" active-class="active" aria-current="page"
-                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'snack' } }">Przekąski</router-link>
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'Przekąski' } }">Przekąski</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" active-class="active" aria-current="page"
-                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'other' } }">Inne</router-link>
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'Inne' } }">Inne</router-link>
                     </li>
                     <div class="vr" style="color:aliceblue"></div>
                     <li class="nav-item">

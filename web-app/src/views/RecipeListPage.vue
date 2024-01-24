@@ -50,14 +50,15 @@ export default {
     methods: {
         async loadRecipes() {
             try {
-                this.recipes = await recipesService.loadRecipes();
+                this.recipes = await recipesService.LoadAllRecipes();
                 if (this.RecipeType) {
-                    this.items = this.recipes.filter((recipe) => recipe.RecipeType === this.RecipeType);
+                    this.items = this.recipes.filter((recipe) => recipe.MealTypeName === this.RecipeType);
                 } else {
                     this.items = this.recipes;
                 }
             } catch (error) {
-                // Obsługa błędu
+                console.error('Error loading recipes:', error);
+                this.error = 'Failed to load recipes. Please try again later.';
             }
         },
     }

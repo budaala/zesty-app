@@ -11,6 +11,14 @@
 //     },
 // };
 
+import axios from "axios";
+const $http = axios.create({
+    baseURL: "https://localhost:7200/api",
+    headers: {
+        "Content-type": "application/json"
+    }
+});
+
 const loadRecipes = async () => {
     try {
         const response = await fetch('/recipes.json');
@@ -25,6 +33,20 @@ const loadRecipes = async () => {
     }
 };
 
+const LoadAllRecipes = async () => {
+    try {
+        const response = await $http.get('/recipes');
+        console.log(response.data);
+        return response.data;
+        } catch (error) {
+        console.error('Error loading data:', error);
+        return [];
+        }
+}
+
+
+
 export default {
     loadRecipes,
+    LoadAllRecipes
 };
