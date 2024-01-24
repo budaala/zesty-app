@@ -67,6 +67,17 @@ const getRecipe = async (recipeId) => {
     }
 }
 
+
+const DeleteRecipe = async (recipeId) => {
+    console.log(recipeId);
+}
+
+const EditRecipe = async (recipeId, recipeJson, image) => {
+    console.log(recipeJson);
+    console.log(recipeId);
+    console.log(image);
+}
+
 const addRating = async (recipeId, rating, userId) => {
     try {
         const ratingData = {
@@ -105,18 +116,20 @@ const checkUserRating = async (recipeId, userId) => {
     }
 }
 
-=======
-const DeleteRecipe = async (recipeId) => {
-  
+const AddRecipe = async (recipeJson, image) => {
+    console.log(recipeJson);
+    console.log(image);
 }
-
 
 export default {
     loadRecipes,
     LoadAllRecipes,
     LoadAverageRating,
+    getRecipe,
+    DeleteRecipe,
+    EditRecipe,
+    AddRecipe,
     addRating,
     getMealTypes,
     checkUserRating
-    getRecipe
 };

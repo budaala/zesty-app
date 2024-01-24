@@ -97,6 +97,8 @@
 </template>
 
 <script>
+import recipesService from '../recipesService.js';
+
 export default {
     name: 'RecipeForm',
     props: {
@@ -116,7 +118,8 @@ export default {
             formSubmitted: false,
             addedRecipe: false,
             isImage: false,
-            isValidImage: false,
+            isValidImage: true,
+            recipeId: 0,
             touched: {
                 recipeTitle: false,
                 recipeType: false,
@@ -146,10 +149,11 @@ export default {
             if (this.isValid('recipeTitle') && this.isValid('recipeType') && this.isValid('Description') && this.isValid('Ingredients') && this.isValid('Instructions') && this.isValid('Image')) {
                 if (this.editMode) {
                     // this.$emit('edit-recipe', this.form);
-                    
+                    this.updateRecipe();
                 } else {
                     // this.$emit('add-recipe', this.form);
                     this.addedRecipe = true;
+                    this.addRecipe();
                     this.message.all = 'Pomyślnie dodano przepis';
                 }
             }
@@ -241,15 +245,15 @@ export default {
         validateImage() {
             if (!this.isValidImage) {
                 this.message.Image = 'Nieprawidłowy format pliku. Dozwolone formaty: jpg, jpeg, png.';
-                this.isImage = false;
+                // this.isImage = false;
                 return false;
             } else if (this.form.Image) {
-                this.isImage = true;
+                // this.isImage = true;
                 this.message.Image = 'Plik załadowany poprawnie.';
                 return true;
-            } else {
-                this.isImage = false;
-                this.message.Image = 'Nie wybrano pliku, ale formularz można przesłać.';
+            } else if (!this.isImage && this.isValidImage) {
+                // this.isImage = false;
+                this.message.Image = 'Nie wybrano pliku, ale formularz może zostać przesłany.';
                 return true;
             }
         },
@@ -257,28 +261,58 @@ export default {
             const file = event.target.files[0];
             const allowedTypes = ['image/jpg', 'image/jpeg', 'image/png'];
 
-            if (!file) {
+            if (file) {
+                if (!allowedTypes.includes(file.type)) {
+                    this.isValidImage = false;
+                    this.isImage = false;
+                    return;
+                }
+            }
+            else {
                 this.isValidImage = true;
                 this.isImage = false;
-                this.message.Image = 'Nie wybrano pliku, ale formularz można przesłać.';
                 return;
             }
-            else if (!allowedTypes.includes(file.type)) {
-                this.isValidImage = false;
-                return;
-            }
-
+            
             this.isImage = true;
             this.isValidImage = true;
             this.form.Image = file; // Przypisz plik do formularza, jeśli jest poprawny
             this.validateImage();
-
         },
+        updateRecipe() {
+            const apiData = this.getApiData();
+            this.editRecipe(apiData);
+            // console.log(apiData);
+            // console.log(this.recipeId);
+        },
+        addRecipe() {
+            const apiData = this.getApiData();
+            // console.log(apiData);
+            this.addRecipeApi(apiData);
+        },
+        async editRecipe(apiData) {
+            await recipesService.EditRecipe(this.recipeId, apiData, this.form.Image);
+        },
+        async addRecipeApi(apiData) {
+            await recipesService.AddRecipe(apiData, this.form.Image);
+        },
+        getApiData() {
+            const apiData = {
+                title: this.form.recipeTitle,
+                mealTypeName: this.form.recipeType,
+                description: this.form.Description,
+                ingredients: this.form.Ingredients,
+                instructions: this.form.Instructions
+            };
+            return apiData;
+        }
+
     },
     watch: {
         recipe: {
             handler(newRecipe) {
                 if (newRecipe) {
+                    this.recipeId = newRecipe.id;
                     this.form.recipeTitle = newRecipe.title;
                     this.form.recipeType = newRecipe.mealTypeName;
                     this.form.Description = newRecipe.description;
@@ -293,6 +327,6 @@ export default {
 </script>
 
 <style> .is-warning {
-    border-color: #ffc107;
-}
+     border-color: #ffc107;
+ }
 </style>
