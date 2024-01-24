@@ -1,13 +1,11 @@
 <template>
     <div class="card mb-3">
-        <router-link @click="dosmth" :to="{ name: 'RecipePage', params: { Id: Id } }">
+        <router-link :to="{ name: 'RecipePage', params: { Id: Id } }">
             <img :src="Image" class="card-img-top recipe-img" :alt="Title">
             <div class="card-body">
                 <h2 class="card-title">{{ Title }}</h2>
                 <hr>
                 <p class="card-text text-truncate" >{{ Description }}</p>
-                <!-- <img src="../assets/logo.png" alt=""> -->
-                <!-- <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p> -->
             </div>
         </router-link>
     </div>
@@ -22,11 +20,6 @@ export default {
         Title: String,
         Description: String,
         Image: String
-    },
-    methods: {
-        dosmth() {
-            console.log(typeof this.Id);
-        }
     }
 }
 </script>

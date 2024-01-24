@@ -1,7 +1,8 @@
 <template>
     <div class="container-md mt-3 mb-5">
         <h1>Gotuj z Zesty!</h1>
-        <!-- <p>Przepisy z kategorii: {{ RecipeType }}</p> -->
+        <h2 v-if="RecipeType">{{ RecipeType }}</h2>
+        <p v-if="!items.length">Nie znaleźliśmy przepisów w tej kategorii. <RouterLink class="r-link" to="/">Przejdź do strony głównej</RouterLink></p>
         <RecipeList :recipes="pagedItems"></RecipeList>
         <nav v-show="totalPages > 1">
             <ul class="pagination justify-content-center">
@@ -52,7 +53,7 @@ export default {
             try {
                 this.recipes = await recipesService.LoadAllRecipes();
                 if (this.RecipeType) {
-                    this.items = this.recipes.filter((recipe) => recipe.MealTypeName === this.RecipeType);
+                    this.items = this.recipes.filter((recipe) => recipe.mealTypeName === this.RecipeType);
                 } else {
                     this.items = this.recipes;
                 }
