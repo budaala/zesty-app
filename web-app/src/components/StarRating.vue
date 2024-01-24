@@ -1,4 +1,5 @@
 <template>
+    <div v-if="rating != 0">
     <div class="star-rating">
         <span class="star-rating-openModal" data-bs-toggle="modal" data-bs-target="#star-rating-modal">
             <span v-for="n in max">&star;</span>
@@ -36,6 +37,10 @@
             </div>
         </div>
     </div>
+</div>
+<div v-else>
+    <p>Brak ocen</p>
+</div>
 </template>
 
 <script>

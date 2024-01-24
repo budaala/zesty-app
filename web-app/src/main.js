@@ -15,6 +15,7 @@ import LogInPage from '../src/views/LogInPage.vue';
 import AddRecipe from '../src/views/AddRecipePage.vue';
 import MyRecipes from '../src/views/MyRecipesPage.vue';
 import Recipe from '../src/views/RecipePage.vue';
+import EditRecipe from '../src/views/EditRecipePage.vue';
 
 const routes = [
     { path: '/', component: RecipeListPage },
@@ -23,7 +24,8 @@ const routes = [
     { path: '/myRecipes', component: MyRecipes },
     { name: "RecipePage", path: '/recipes/id=:Id', component: Recipe, props: route => ({ Id: Number(route.params.Id) }) },
     { name: "RecipeListPage", path: '/:RecipeType', component: RecipeListPage, props: true },
-    { path: '/recipes/:page', name: 'Recipes', component: RecipeListPage }
+    { path: '/recipes/:page', name: 'Recipes', component: RecipeListPage },
+    { name: "EditRecipePage", path: '/editRecipe/id=:Id', component: EditRecipe, props: route => ({ Id: Number(route.params.Id) })}
 ];
 
 const router = createRouter({

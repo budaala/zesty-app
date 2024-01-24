@@ -28,13 +28,12 @@ namespace zesty_api.Services
         public double GetAverageRating(int recipeId)
         {
             var ratings = db.Ratings.Where(r => r.RecipeId == recipeId);
-            double sum = 0;
-            double length = ratings.Count();
+            var sum = 0;
             foreach (var rating in ratings)
             {
                 sum += rating.Value;
             }
-            double average = sum / length;
+            double average = sum / ratings.Count();
             return average;
         }
 
