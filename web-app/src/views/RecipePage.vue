@@ -28,6 +28,7 @@
                                         <!-- <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Anuluj</button> -->
                                         <button type="button" class="btn btn-dismiss" @click="deleteRecipe">Usuń przepis</button>
+                                        <p v-if="recipeDeleted">Recipe deleted :p</p>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +159,8 @@ export default {
                 averageRating: 0,
             },
             // averageRating: 0,
-            comments: []
+            comments: [],
+            recipeDeleted: false,
         }
     },
     mounted() {
@@ -193,6 +195,7 @@ export default {
         },
         async deleteRecipe() {
             await recipesService.DeleteRecipe(this.recipe.id);
+            this.recipeDeleted = true;
         }
     }
 }
