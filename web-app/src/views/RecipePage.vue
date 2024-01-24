@@ -6,10 +6,31 @@
                     <div class="col mb-5">
                         <button @click="$router.go(-1)" class="btn btn-outline-zesty">Poprzednia strona</button>
                     </div>
-                    <div v-if="userId===3" class="col">
+                    <div v-if="recipe.userId === 3" class="col">
                         <div class="d-flex flex-row-reverse">
-                            <button class="btn btn-dismiss" type="button">Usuń</button>
-                            <button class="btn btn-outline-zesty me-2" type="button">Edytuj</button>
+                            <button class="btn btn-dismiss" type="button" data-bs-toggle="modal"
+                                data-bs-target="#confirmDeleteModal">Usuń</button>
+                            <button class="btn btn-outline-zesty me-2" type="button" @click="editRecipe">Edytuj</button>
+                        </div>
+                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h2 class="fs-5" id="exampleModalLabel">Potwierdź działanie</h2>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Czy na pewno chcesz usunąć ten przepis?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!-- <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Anuluj</button> -->
+                                        <button type="button" class="btn btn-dismiss" @click="deleteRecipe">Usuń przepis</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,7 +132,7 @@ import StarRating from '../components/StarRating.vue';
 
 export default {
     name: 'RecipePage',
-    components: {StarRating},
+    components: { StarRating },
     props: {
         Id: {
             type: Number
@@ -155,17 +176,23 @@ export default {
             }
         },
         formattedDate(date) {
-            var formatDate =  new Date(date);
+            var formatDate = new Date(date);
             return `${formatDate.getFullYear()}-${formatDate.getMonth() + 1}-${formatDate.getDate()}`;
         },
-        async loadAverageRating(recipeId){
-            try{
+        async loadAverageRating(recipeId) {
+            try {
                 var aaverageRating = await recipesService.LoadAverageRating(recipeId);
                 console.log(aaverageRating);
                 return aaverageRating;
             } catch (error) {
                 // Obsługa błędu
             }
+        },
+        editRecipe() {
+            this.$router.push({ name: 'EditRecipePage', params: { Id: this.recipe.id } });
+        },
+        async deleteRecipe() {
+            await recipesService.DeleteRecipe(this.recipe.id);
         }
     }
 }
@@ -214,8 +241,4 @@ img {
 
 #starIcon {
     color: #7D8A51 !important;
-}
-
-
-
-</style>
+}</style>

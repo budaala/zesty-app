@@ -48,7 +48,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
             
         }
@@ -75,7 +75,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
 
@@ -104,7 +104,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
             
         }
@@ -120,7 +120,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
             
         }
@@ -136,7 +136,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }    
         }
 
@@ -150,7 +150,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }   
         }
 
@@ -164,7 +164,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }  
         }
 
@@ -179,7 +179,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
 
@@ -194,7 +194,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
 
@@ -208,7 +208,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
     }
