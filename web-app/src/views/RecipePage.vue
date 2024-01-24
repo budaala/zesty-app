@@ -11,16 +11,16 @@
                     <div class="col-lg-12 col-md-12">
                         <div class="row row-cols-1 row-cols-lg-2 mb-4">
                             <div class="col">
-                                <h1>{{ recipe.Title }}</h1>
+                                <h1>{{ recipe.title }}</h1>
                                 <hr class="mb-0">
                                 <div class="d-flex justify-content-between p-1 mb-0">
                                     <div class="col text-center">
                                         <p>Data utworzenia:</p>
-                                        <p class="binded-data-frame">{{ recipe.CreatedAt }}</p>
+                                        <p class="binded-data-frame">{{ formattedDate(recipe.createdAt) }}</p>
                                     </div>
                                     <div class="col text-center">
                                         <p>Autor:</p>
-                                        <p class="binded-data-frame">{{ recipe.AuthorId }}</p>
+                                        <p class="binded-data-frame">{{ recipe.username }}</p>
                                     </div>
                                     <div class="col text-center">
                                         <p>Ocena: </p>
@@ -28,7 +28,7 @@
                                     </div>
                                     <div class="col text-center">
                                         <p>Typ dania:</p>
-                                        <p class="binded-data-frame">{{ recipe.RecipeType }}</p>
+                                        <p class="binded-data-frame">{{ recipe.mealTypeName }}</p>
                                     </div>
                                 </div>
                                 <hr class="mb-4 mt-0">
@@ -37,7 +37,7 @@
                                     <!-- <p>{{ recipe.Ingredients.split(",") }}</p> -->
                                     <ul class="list-group mb-4">
                                         <li class="list-group-item"
-                                            v-for="(ingredient, index) in recipe.Ingredients.split(',')">
+                                            v-for="(ingredient, index) in recipe.ingredients.split(',')">
                                             <input class="form-check-input me-1" type="checkbox" value=""
                                                 :id="'checkbox' + index" @change="$event.target.blur()">
                                             <label class="form-check-label stretched-link" :for="'checkbox' + index">{{
@@ -47,7 +47,7 @@
                                     <h2>Instrukcje</h2>
                                     <!-- <p>{{ recipe.Instructions }}</p> -->
                                     <ol class="list-group list-group-numbered mb-4">
-                                        <li class="list-group-item" v-for="instruction in recipe.Instructions.split('. ')">
+                                        <li class="list-group-item" v-for="instruction in recipe.instructions.split('. ')">
                                             {{ instruction }}
                                         </li>
                                     </ol>
@@ -55,9 +55,9 @@
 
                             </div>
                             <div class="col text-center">
-                                <img :src="recipe.Image" class="img-fluid mb-2" :alt="recipe.Title">
+                                <img :src="recipe.imageUrl" class="img-fluid mb-2" :alt="recipe.title">
                                 <h2>Opis przepisu</h2>
-                                <p>{{ recipe.Description }}</p>
+                                <p>{{ recipe.description }}</p>
                             </div>
                         </div>
                         <hr>
@@ -70,7 +70,7 @@
                                             <!-- <p>{{ recipe.Comments }}</p> -->
                                             <div class="card-body">
                                                 <div class="card-title">
-                                                    <h5>Dodane przez: {{ comment.AuthorId }}</h5>
+                                                    <h5>Dodane przez: {{ comment.username }}</h5>
                                                 </div>
                                                 <p class="card-text fst-italic p-2">
                                                     {{ comment.Content }}
@@ -118,15 +118,16 @@ export default {
     data() {
         return {
             recipe: {
-                Id: 0,
-                Title: '',
-                RecipeType: '',
-                Description: '',
-                Ingredients: '',
-                Instructions: '',
-                Image: '',
-                AuthorId: 0,
-                CreatedAt: '',
+                id: 0,
+                title: '',
+                mealTypeName: '',
+                description: '',
+                ingredients: '',
+                instructions: '',
+                imageUrl: '',
+                userId: 0,
+                username: '',
+                createdAt: '',
                 Comments: [],
                 Ratings: 0
             },
@@ -138,12 +139,16 @@ export default {
     methods: {
         async loadRecipe() {
             try {
-                let recipes = await recipesService.loadRecipes();
+                let recipes = await recipesService.LoadAllRecipes();
                 let routeId = Number(this.$route.params.Id);
-                this.recipe = recipes.find((recipe) => recipe.Id === routeId);
+                this.recipe = recipes.find((recipe) => recipe.id === routeId);
             } catch (error) {
                 // Obsługa błędu
             }
+        },
+        formattedDate(date) {
+            var formatDate =  new Date(date);
+            return `${formatDate.getFullYear()}-${formatDate.getMonth() + 1}-${formatDate.getDate()}`;
         }
     }
 }
