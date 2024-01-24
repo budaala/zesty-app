@@ -58,7 +58,10 @@ const LoadAverageRating = async (recipeId) => {
 }
 
 
+
+
 export default {
     loadRecipes,
-    LoadAllRecipes
+    LoadAllRecipes,
+    LoadAverageRating
 };
