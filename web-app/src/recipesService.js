@@ -11,6 +11,8 @@
 //     },
 // };
 
+// ala url http://localhost:5033/api
+
 import axios from "axios";
 const $http = axios.create({
     baseURL: "https://localhost:7200/api",
