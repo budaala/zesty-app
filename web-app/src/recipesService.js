@@ -46,6 +46,16 @@ const LoadAllRecipes = async () => {
         }
 }
 
+const LoadAverageRating = async (recipeId) => {
+    try {
+        const response = await $http.get(`/recipes/${recipeId}/averagerating`);
+        console.log(response.data);
+        return response.data;
+        } catch (error) {
+        console.error('Error loading data:', error);
+        return [];
+        }
+}
 
 
 export default {

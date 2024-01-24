@@ -24,7 +24,7 @@
                                     </div>
                                     <div class="col text-center">
                                         <p>Ocena: </p>
-                                        <star-rating :max="max" :rating="recipe.Ratings"></star-rating>
+                                        <star-rating :max="max" :rating="loadAverageRating(recipe.id)"></star-rating>
                                     </div>
                                     <div class="col text-center">
                                         <p>Typ dania:</p>
@@ -127,10 +127,10 @@ export default {
                 imageUrl: '',
                 userId: 0,
                 username: '',
-                createdAt: '',
-                Comments: [],
-                Ratings: 0
+                createdAt: ''
             },
+            averageRating: 0,
+            comments: []
         }
     },
     mounted() {
@@ -142,6 +142,7 @@ export default {
                 let recipes = await recipesService.LoadAllRecipes();
                 let routeId = Number(this.$route.params.Id);
                 this.recipe = recipes.find((recipe) => recipe.id === routeId);
+                this.averageRating = await this.loadAverageRating(this.recipe.id);
             } catch (error) {
                 // Obsługa błędu
             }
@@ -149,6 +150,15 @@ export default {
         formattedDate(date) {
             var formatDate =  new Date(date);
             return `${formatDate.getFullYear()}-${formatDate.getMonth() + 1}-${formatDate.getDate()}`;
+        },
+        async loadAverageRating(recipeId){
+            try{
+                var aaverageRating = await recipesService.LoadAverageRating(recipeId);
+                console.log(aaverageRating);
+                return aaverageRating;
+            } catch (error) {
+                // Obsługa błędu
+            }
         }
     }
 }
