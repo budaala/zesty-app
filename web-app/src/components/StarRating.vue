@@ -32,7 +32,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dismiss" data-bs-dismiss="modal">Anuluj</button>
-                    <button type="button" class="btn btn-outline-zesty" @click.prevent="submitRating()">Oceń</button>
+                    <button type="button" class="btn btn-outline-zesty" @click.prevent="submitRating()" :disabled="userHasRated">Oceń</button>
                 </div>
             </div>
         </div>
@@ -44,8 +44,11 @@
 </template>
 
 <script>
+import recipesService from '../recipesService.js';
+
 export default {
     name: "StarRating",
+    emits: ['addRating'],
     props: {
         max: {
             type: Number,
@@ -54,13 +57,22 @@ export default {
         rating: {
             type: Number,
             default: 0
-        }
+        },
+        recipeId: {
+            type: Number,
+            default: 0
+        },
     },
     data() {
         return {
             userRating: 0,
-            submitted: false
+            submitted: false,
+            userHasRated: false
         }
+    },
+    async mounted() {
+    const userRating = await this.checkUserRating(this.recipeId);
+    this.userHasRated = userRating !== 0;
     },
     computed: {
         getRatingWidth() {
@@ -76,8 +88,16 @@ export default {
             this.userRating = Number(index) + 1;
         },
         submitRating() {
-            console.log(this.userRating);
+            this.$emit('addRating', this.userRating);
             this.submitted = true;
+            this.checkUserRating(this.recipeId);
+        },
+        async checkUserRating(recipeId) {
+            console.log(recipeId + ' recipeID');
+            var userRating = recipesService.checkUserRating(recipeId, 3);
+            this.userHasRated = userRating !== 0;
+            console.log(userRating);
+            return userRating;
         }
     }
 }

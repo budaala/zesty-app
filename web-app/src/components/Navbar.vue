@@ -75,7 +75,7 @@ export default {
     name: 'Navbar',
     data() {
         return {
-            loggedIn: true
+            loggedIn: false
         }
     }
 }
