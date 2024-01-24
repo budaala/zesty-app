@@ -30,6 +30,10 @@ namespace zesty_api.Services
             var ratings = db.Ratings.Where(r => r.RecipeId == recipeId);
             double sum = 0;
             double length = ratings.Count();
+            if (length == 0)
+            {
+                return 0;
+            }
             foreach (var rating in ratings)
             {
                 sum += rating.Value;
