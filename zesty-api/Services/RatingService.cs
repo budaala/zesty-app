@@ -33,7 +33,8 @@ namespace zesty_api.Services
             {
                 sum += rating.Value;
             }
-            return sum / ratings.Count();
+            double average = sum / ratings.Count();
+            return average;
         }
 
         public int GetRating(int userId, int recipeId)
