@@ -40,20 +40,31 @@ const LoadAllRecipes = async () => {
         const response = await $http.get('/recipes');
         console.log(response.data);
         return response.data;
-        } catch (error) {
+    } catch (error) {
         console.error('Error loading data:', error);
         return [];
-        }
+    }
 }
 
 const LoadAverageRating = async (recipeId) => {
     try {
         const response = await $http.get(`/recipes/${recipeId}/averagerating`);
         return response.data;
-        } catch (error) {
+    } catch (error) {
         console.error('Error loading data:', error);
         return [];
-        }
+    }
+}
+
+const getRecipe = async (recipeId) => {
+    try {
+        const response = await $http.get(`/recipes/${recipeId}`);
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error loading data:', error);
+        return [];
+    }
 }
 
 const addRating = async (recipeId, rating, userId) => {
@@ -94,7 +105,10 @@ const checkUserRating = async (recipeId, userId) => {
     }
 }
 
-
+=======
+const DeleteRecipe = async (recipeId) => {
+  
+}
 
 
 export default {
@@ -104,4 +118,5 @@ export default {
     addRating,
     getMealTypes,
     checkUserRating
+    getRecipe
 };

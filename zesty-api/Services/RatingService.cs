@@ -38,7 +38,7 @@ namespace zesty_api.Services
             {
                 sum += rating.Value;
             }
-            double average = sum / length;
+            double average = sum / ratings.Count();
             return average;
         }
 

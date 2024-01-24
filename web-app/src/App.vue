@@ -124,6 +124,7 @@ h3 {
 }
 
 .btn-dismiss:hover {
+  border-color: #64030d !important;
   background-color: #64030d !important;
 }
 </style>
