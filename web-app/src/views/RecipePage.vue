@@ -24,7 +24,7 @@
                                     </div>
                                     <div class="col text-center">
                                         <p>Ocena: </p>
-                                        <star-rating :max="max" :rating="recipe.averageRating"></star-rating>
+                                        <star-rating :max="max" :rating="recipe.averageRating" :recipeId="recipe.id" @addRating="handleAddRating"></star-rating>
                                     </div>
                                     <div class="col text-center">
                                         <p>Typ dania:</p>
@@ -113,7 +113,11 @@ export default {
         max: {
             type: Number,
             default: 5
-        }
+        },
+        recipeId: {
+            type: Number,
+            default: 0
+        },
     },
     data() {
         return {
@@ -130,7 +134,6 @@ export default {
                 createdAt: '',
                 averageRating: 0,
             },
-            // averageRating: 0,
             comments: []
         }
     },
@@ -145,7 +148,7 @@ export default {
                 this.recipe = recipes.find((recipe) => recipe.id === routeId);
                 this.recipe.averageRating = await this.loadAverageRating(this.recipe.id);
             } catch (error) {
-                // Obsługa błędu
+                console.log(error);
             }
         },
         formattedDate(date) {
@@ -155,10 +158,18 @@ export default {
         async loadAverageRating(recipeId){
             try{
                 var aaverageRating = await recipesService.LoadAverageRating(recipeId);
-                console.log(aaverageRating);
                 return aaverageRating;
             } catch (error) {
-                // Obsługa błędu
+                console.log(error);
+            }
+        },
+        async handleAddRating(rating) {
+            try {
+                console.log('handleAddRating was called with rating: ' + rating);
+                await recipesService.addRating(this.recipe.id, rating, 3);
+                this.recipe.averageRating = await this.loadAverageRating(this.recipe.id);
+            } catch(error) {
+                console.log(error);
             }
         }
     }
