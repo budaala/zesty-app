@@ -6,6 +6,12 @@
                     <div class="col mb-5">
                         <button @click="$router.go(-1)" class="btn btn-outline-zesty">Poprzednia strona</button>
                     </div>
+                    <div v-if="userId===3" class="col">
+                        <div class="d-flex flex-row-reverse">
+                            <button class="btn btn-dismiss" type="button">Usuń</button>
+                            <button class="btn btn-outline-zesty me-2" type="button">Edytuj</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="d-flex justify-content-center">
                     <div class="col-lg-12 col-md-12">
