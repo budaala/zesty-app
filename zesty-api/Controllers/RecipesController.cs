@@ -48,7 +48,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
             
         }
@@ -75,7 +75,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
 
@@ -104,7 +104,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
             
         }
@@ -120,7 +120,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
             
         }
@@ -136,21 +136,21 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }    
         }
 
-        [HttpGet("{id}/rating")]
-        public ActionResult<int> GetRating(int id, [FromBody]int userId)
+        [HttpGet("{recipeId}/rating/{userId}")]
+        public ActionResult<int> GetRating(int recipeId, int userId)
         {
             try
             {
-                var averageRating = _ratingService.GetRating(userId, id);
+                var averageRating = _ratingService.GetRating(userId, recipeId);
                 return Ok(averageRating);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }   
         }
 
@@ -164,7 +164,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }  
         }
 
@@ -179,7 +179,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
 
@@ -194,7 +194,7 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
 
@@ -208,7 +208,22 @@ namespace zesty_api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.InnerException.Message ?? ex.Message);
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
+            }
+        }
+
+        //get meal types
+        [HttpGet("mealtypes")]
+        public ActionResult<IEnumerable<MealType>> GetMealTypes()
+        {
+            try
+            {
+                var mealTypes = _recipesService.GetMealTypes();
+                return Ok(mealTypes);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.InnerException?.Message ?? ex.Message);
             }
         }
     }

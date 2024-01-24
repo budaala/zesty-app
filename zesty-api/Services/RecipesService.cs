@@ -63,6 +63,12 @@ namespace zesty_api.Services
             
         }
 
+        public IEnumerable<MealType> GetMealTypes()
+        {
+            var mealTypes = db.MealTypes.ToList() ?? throw new Exception("We were not able to load meal types");
+            return mealTypes.Select(MapToDTO);
+        }
+
         public static Recipe MapToDTO(RecipeEntity entity)
         {
             return new Recipe
@@ -78,6 +84,15 @@ namespace zesty_api.Services
                 Instructions = entity.Instructions,
                 CreatedAt = entity.CreatedAt,
                 ImageUrl = entity.ImageUrl,
+            };
+        }
+
+        public static MealType MapToDTO(MealTypeEntity entity)
+        {
+            return new MealType
+            {
+                Id = entity.Id,
+                Name = entity.Name
             };
         }
     }
