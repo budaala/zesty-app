@@ -120,7 +120,7 @@ export default {
                 var token = await userService.login(this.form.email, this.form.password);
                 localStorage.setItem('token', token);
                 console.log('Zalogowano ' + token);
-                this.$router.push({ name: 'RecipeListPage' });
+                this.$router.push({ path: '/' });
             } catch (error) {
                 console.log(error);
             }

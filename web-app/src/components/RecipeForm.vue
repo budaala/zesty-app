@@ -206,10 +206,10 @@ export default {
             return true;
         },
         validateRecipeType(recipeType) {
-            // if (recipeType.trim() === '') {
-            //     this.message.recipeType = 'Wybierz kategorię';
-            //     return false;
-            // }
+            if (recipeType === "") {
+                this.message.recipeType = 'Wybierz kategorię';
+                return false;
+            }
             return true;
         },
         validateDescription(Description) {
