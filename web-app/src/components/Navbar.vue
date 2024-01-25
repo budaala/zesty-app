@@ -18,8 +18,8 @@
                         <router-link class="nav-link" active-class="active" aria-current="page"
                             :to="{ name: 'RecipeListPage', params: { RecipeType: mealType.name } }">{{ mealType.name }}</router-link>
                     </li>
-                    <div class="vr" style="color:aliceblue"></div>
-                    <li class="nav-item">
+                    <div class="vr" style="color:aliceblue" v-if="loggedIn"></div>
+                    <li class="nav-item" v-if="loggedIn">
                         <router-link class="nav-link" active-class="active" aria-current="page" to="/myRecipes">Moje
                             przepisy</router-link>
                     </li>

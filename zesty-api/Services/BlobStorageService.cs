@@ -44,6 +44,10 @@ namespace zesty_api.Services
         {
             try
             {
+                if(fileUrl == "https://zestyappblob.blob.core.windows.net/zestyappimages/placeholder.png")
+                {
+                    return;
+                }
                 var blobServiceClient = new BlobServiceClient(_connectionString);
                 var blobContainerClient = blobServiceClient.GetBlobContainerClient(_containerName);
 
