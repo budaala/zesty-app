@@ -1,4 +1,10 @@
 <template>
+    <Alert v-if="recipeAdded" :type="'success'" :message="'Przepis został dodany.'"></Alert>
+    <Alert v-else-if="recipeAdded === false" :type="'danger'" :message="'Nie udało się dodać przepisu.'"></Alert>
+
+    <Alert v-if="recipeEdited" :type="'success'" :message="'Przepis został zedytowany.'"></Alert>
+    <Alert v-else-if="recipeEdited === false" :type="'danger'" :message="'Nie udało się zedytować przepisu.'"></Alert>
+
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-center">
@@ -24,8 +30,8 @@
                                     :class="{ 'is-valid': isValid('recipeType'), 'is-invalid': !isValid('recipeType') && touched.recipeType }"
                                     id="floatingSelect" aria-label="Floating label select example">
                                     <option value="" selected>Wybierz kategorię</option>
-                                    <option v-for="mealType in mealTypes" :key="mealType.id"
-                                        :value="mealType.id">{{ mealType.name }}</option>
+                                    <option v-for="mealType in mealTypes" :key="mealType.id" :value="mealType.id">{{
+                                        mealType.name }}</option>
                                 </select>
                                 <label for="floatingSelect">Kategoria</label>
                                 <div v-if="!isValid('recipeType') && touched.recipeType">
@@ -79,12 +85,11 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="formSubmitted">
-                        <p :class="{ 'text-danger': !addedRecipe, 'text-success': addedRecipe }">
-                            {{ message.all }}
-                        </p>
+                    <div v-if="validateForm === false">
+                        <small class="text-danger">{{ message.all }}</small>
                     </div>
-                    <button type="submit" class="btn btn-outline-zesty" @click.prevent="validateForm">
+                    <button type="submit" class="btn btn-outline-zesty" @click.prevent="validateForm"
+                        :disabled="recipeAdded || recipeEdited"  :style="{ cursor: isLoading ? 'wait' : 'default' }">
                         {{ editMode ? 'Edytuj przepis' : 'Dodaj przepis' }} </button>
                 </div>
             </div>
@@ -94,9 +99,13 @@
 
 <script>
 import recipesService from '../recipesService.js';
+import Alert from '../components/Alert.vue';
 
 export default {
     name: 'RecipeForm',
+    components: {
+        Alert
+    },
     props: {
         recipe: Object,
         editMode: Boolean
@@ -111,8 +120,8 @@ export default {
                 Instructions: '',
                 Image: ''
             },
-            formSubmitted: false,
-            addedRecipe: false,
+            recipeAdded: null,
+            recipeEdited: null,
             isImage: false,
             isValidImage: true,
             recipeId: 0,
@@ -130,10 +139,10 @@ export default {
                 Description: '',
                 Ingredients: '',
                 Instructions: '',
-                Image: '',
-                all: ''
+                Image: ''
             },
-            mealTypes: []
+            mealTypes: [],
+            isLoading: false
         }
     },
     mounted() {
@@ -143,18 +152,13 @@ export default {
         setTouched(field) {
             this.touched[field] = true;
         },
-        validateForm() {
-            this.formSubmitted = true;
-
+        async validateForm() {
+            this.isLoading = true;
             if (this.isValid('recipeTitle') && this.isValid('recipeType') && this.isValid('Description') && this.isValid('Ingredients') && this.isValid('Instructions') && this.isValid('Image')) {
                 if (this.editMode) {
-                    // this.$emit('edit-recipe', this.form);
                     this.updateRecipe();
                 } else {
-                    // this.$emit('add-recipe', this.form);
-                    this.addedRecipe = true;
                     this.addRecipe();
-                    this.message.all = 'Pomyślnie dodano przepis';
                 }
             }
             else {
@@ -162,18 +166,22 @@ export default {
                     this.setTouched(field);
                     this.isValid(field);
                 }
+                this.isLoading = false;
                 this.message.all = 'Wypełnij wszystkie pola poprawnie';
+                return false;
             }
-            const { recipeTitle, recipeType, Description, Ingredients, Instructions, Image } = this.form;
+            this.isLoading = false;
+            return true;
+            // const { recipeTitle, recipeType, Description, Ingredients, Instructions, Image } = this.form;
 
-            const isValidRecipeTitle = this.validateRecipeTitle(recipeTitle);
-            const isValidRecipeType = this.validateRecipeType(recipeType);
-            const isValidDescription = this.validateDescription(Description);
-            const isValidIngredients = this.validateIngredients(Ingredients);
-            const isValidInstructions = this.validateInstructions(Instructions);
-            const isValidImage = this.validateImage(Image);
+            // const isValidRecipeTitle = this.validateRecipeTitle(recipeTitle);
+            // const isValidRecipeType = this.validateRecipeType(recipeType);
+            // const isValidDescription = this.validateDescription(Description);
+            // const isValidIngredients = this.validateIngredients(Ingredients);
+            // const isValidInstructions = this.validateInstructions(Instructions);
+            // const isValidImage = this.validateImage(Image);
 
-            return isValidRecipeTitle && isValidRecipeType && isValidDescription && isValidIngredients && isValidInstructions && isValidImage;
+            // return isValidRecipeTitle && isValidRecipeType && isValidDescription && isValidIngredients && isValidInstructions && isValidImage;
         },
         isValid(field) {
             const { recipeTitle, recipeType, Description, Ingredients, Instructions, Image } = this.form;
@@ -273,7 +281,7 @@ export default {
                 this.isImage = false;
                 return;
             }
-            
+
             this.isImage = true;
             this.isValidImage = true;
             this.form.Image = file; // Przypisz plik do formularza, jeśli jest poprawny
@@ -282,20 +290,19 @@ export default {
         updateRecipe() {
             const apiData = this.getApiData();
             this.editRecipe(apiData);
-            // console.log(apiData);
-            // console.log(this.recipeId);
-            this.$router.push({ name: 'RecipePage', params: { id: this.recipeId } });
+            setTimeout(() => {
+                this.$router.push({ name: 'RecipePage', params: { id: this.recipeId } });
+            }, 4000);
         },
         addRecipe() {
             const apiData = this.getApiData();
-            // console.log(apiData);
             this.addRecipeApi(apiData);
         },
         async editRecipe(apiData) {
-            await recipesService.EditRecipe(this.recipeId, apiData, this.form.Image);
+            this.recipeEdited = await recipesService.EditRecipe(this.recipeId, apiData, this.form.Image);
         },
         async addRecipeApi(apiData) {
-            await recipesService.AddRecipe(apiData, this.form.Image);
+            this.recipeAdded = await recipesService.AddRecipe(apiData, this.form.Image);
         },
         getApiData() {
             const apiData = {
@@ -307,13 +314,12 @@ export default {
             };
             return apiData;
         },
-        async getMealTypes()
-        {
+        async getMealTypes() {
             this.mealTypes = await recipesService.getMealTypes();
             console.log(this.mealTypes);
             // return this.mealTypes;
         }
-    
+
 
     },
     watch: {

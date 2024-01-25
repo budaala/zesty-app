@@ -1,17 +1,8 @@
 <template>
     <div class="container mt-3 mb-5">
-        <div v-if="recipeDeleted">
-            <Alert :type="'success'" :message="'Przepis został pomyślnie usunięty. Strona zostanie odświeżona. '"></Alert>
-        </div>
-        <!-- <div v-if="recipeEdited">
-            <Alert :type="'success'" :message="'Zmiany zostały naniesione.'"></Alert>
-        </div> -->
-        <div v-if="ratingAdded">
-            <Alert :type="'success'" :message="'Ocena została dodana. Strona zostanie odświeżona. '"></Alert>
-        </div>
-        <div v-if="!recipe">
-            <Alert :type="'danger'" :message="'Nie znaleziono przepisu.'"></Alert>
-        </div>
+            <Alert v-if="recipeDeleted" :type="'success'" :message="'Przepis został pomyślnie usunięty. Strona zostanie odświeżona. '"></Alert>
+            <Alert v-if="ratingAdded" :type="'success'" :message="'Ocena została dodana. Strona zostanie odświeżona. '"></Alert>
+            <Alert v-if="!recipe" :type="'danger'" :message="'Nie znaleziono przepisu.'"></Alert>
         <div v-else class="card">
             <div class="card-body">
                 <div class="row">
