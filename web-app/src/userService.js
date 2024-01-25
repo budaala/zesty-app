@@ -24,7 +24,10 @@ const login = async (username, password) => {
 const register = async (username, password, email) => {
     try {
         const response = await $http.post('/auth/register', { username, password, email });
-        return response.data;
+        if(response.status === 200){
+            return true;
+        }
+        return false;
     } catch (error) {
         console.error('Error loading data:', error);
         return [];

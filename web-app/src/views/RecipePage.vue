@@ -101,7 +101,7 @@
                                                     <h5>Dodane przez: {{ comment.username }}</h5>
                                                 </div>
                                                 <p class="card-text fst-italic p-2">
-                                                    {{ comment.Content }}
+                                                    {{ comment.content }}
                                                 </p>
                                             </div>
                                         </div>
@@ -112,10 +112,10 @@
                                 <div class="d-flex flex-column p-0">
                                     <h3>Dodaj własny komentarz</h3>
                                     <textarea style="height: 100px" class="form-control mb-2" placeholder="Dodaj komentarz"
-                                        aria-label="Dodaj komentarz" aria-describedby="buttonAddComment"></textarea>
+                                        aria-label="Dodaj komentarz" aria-describedby="buttonAddComment" v-model="commentText"></textarea>
                                     <span class="d-flex flex-row-reverse">
                                         <button class="btn btn-outline-zesty" type="button"
-                                            id="buttonAddComment">Dodaj</button>
+                                            id="buttonAddComment" @click="addComment(commentText)">Dodaj</button>
                                     </span>
                                 </div>
                             </div>
@@ -161,10 +161,11 @@ export default {
                 username: '',
                 createdAt: '',
                 averageRating: 0,
+                Comments: []
             },
             // averageRating: 0,
-            comments: [],
             recipeDeleted: false,
+            commentText: ''
         }
     },
     mounted() {
@@ -177,6 +178,7 @@ export default {
                 let routeId = Number(this.$route.params.Id);
                 this.recipe = recipes.find((recipe) => recipe.id === routeId);
                 this.recipe.averageRating = await this.loadAverageRating(this.recipe.id);
+                this.loadComments();
             } catch (error) {
                 console.log(error);
             }
@@ -208,6 +210,23 @@ export default {
         async deleteRecipe() {
             await recipesService.DeleteRecipe(this.recipe.id);
             this.recipeDeleted = true;
+        },
+        async loadComments() {
+            try{
+                let comments = await recipesService.loadComments(this.recipe.id);
+                this.recipe.Comments = comments;
+            } catch(error) {
+                console.log(error);
+            }
+        },
+        async addComment(comment) {
+            try{
+                await recipesService.addComment(this.recipe.id, comment);
+                this.commentText = '';
+                this.loadRecipe();
+            } catch(error) {
+                console.log(error);
+            }
         }
     }
 }
