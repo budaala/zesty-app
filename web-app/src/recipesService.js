@@ -71,8 +71,10 @@ const getRecipe = async (recipeId) => {
 const DeleteRecipe = async (recipeId) => {
     try {
         const response = await $http.delete(`/recipes/${recipeId}`);
-        if(response.status === 200)
+        if(response.status === 200) {
+            alert('Pomyślnie usunięto przepis!');
             return true;
+        }
         else
             return false;
     } catch (error) {
@@ -93,10 +95,14 @@ const EditRecipe = async (recipeId, recipeJson, image) => {
                 'Content-Type': 'multipart/form-data'
             }
         });
-        if(response.status === 200)
+        if(response.status === 200) {
+            alert('Pomyślnie zedytowano przepis!');
             return true;
-        else
+        }
+        else {
+            alert('Nie udało się zedytować przepisu!');
             return false;
+        }
     } catch (error) {
         console.error('Error loading data:', error);
         return [];
@@ -117,8 +123,10 @@ const AddRecipe = async (recipeJson, image) => {
                 'Content-Type': 'multipart/form-data'
             }
         });
-        if(response.status === 200)
+        if(response.status === 200) {
+            alert('Pomyślnie dodano przepis!');
             return true;
+        }
         else
             return false;
     } catch (error) {
@@ -135,8 +143,10 @@ const addRating = async (recipeId, rating, userId) => {
             userId: userId
         };
         const response = await $http.post(`/recipes/${recipeId}/rating`, ratingData);
-        if(response.status === 200)
+        if(response.status === 200) {
+            alert('Pomyślnie dodano ocenę!');
             return true;
+        }
         else
             return false;
     } catch (error) {
@@ -186,8 +196,10 @@ const addComment = async (recipeId, comment) => {
         };
         console.log(commentData);
         const response = await $http.post(`/recipes/${recipeId}/comments`, commentData);
-        if(response.status === 200)
+        if(response.status === 200) {
+            alert('Pomyślnie dodano komentarz!');
             return true;
+        }
         else
             return false;
     } catch (error) {

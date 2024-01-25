@@ -26,18 +26,20 @@
                         <div class="form-floating">
                             <input type="password" class="form-control" v-model="form.password"
                                 @blur="setTouched('password')"
-                                :class="{'is-invalid': !isNotEmpty('password') && touched.password }"
-                                id="logInPassword" placeholder="Hasło" required>
+                                :class="{ 'is-invalid': !isNotEmpty('password') && touched.password }" id="logInPassword"
+                                placeholder="Hasło" required>
                             <label for="logInPassword">Hasło</label>
                         </div>
                         <div v-if="!isNotEmpty('password') && touched.password">
-                                <small class="text-danger">{{ message.password }}</small>
-                            </div>
+                            <small class="text-danger">{{ message.password }}</small>
+                        </div>
                     </div>
                 </div>
                 <br>
-                <div v-if="validInput === false" class="d-flex justify-content-center">
-                    <p class="text-danger">{{ message.all }}</p>
+                <div v-if="validInput === true || validInput === false" class="d-flex justify-content-center">
+                    <p :class="{ 'text-danger': validInput === false, 'text-success': validInput === true }">{{ message.all
+                    }}
+                    </p>
                 </div>
                 <div class="d-flex justify-content-center mb-4">
                     <div class="col col-lg-6 col-md-8">
@@ -58,9 +60,10 @@ export default {
     data() {
         return {
             validInput: {
-                type: Boolean
+                type: Boolean,
+                default: null
             },
-            loggedIn: false,
+            loggedIn: null,
             message: {
                 username: '',
                 password: '',
@@ -99,9 +102,6 @@ export default {
         },
         async validateInput() {
             if (this.isNotEmpty('username') && this.isNotEmpty('password')) {
-                // walidacja z bazą danych
-                this.validInput = false;
-                this.message.all = 'Pomyślnie zalogowano.';
                 await this.logIn();
             }
             else {
@@ -116,10 +116,19 @@ export default {
         async logIn() {
             try {
                 this.loggedIn = await userService.login(this.form.username, this.form.password);
-                console.log(this.loggedIn);
-                this.$router.push({ path: '/'});
+                // console.log(this.loggedIn);
+                if (this.loggedIn === true) {
+                    this.validInput = true;
+                    this.message.all = 'Pomyślnie zalogowano.';
+                    this.$router.push({ path: '/' });
+                }
+                else {
+                    this.validInput = false;
+                    this.message.all = 'Niepoprawna nazwa użytkownika lub hasło.';
+                }
             } catch (error) {
-                
+                this.validInput = false;
+                this.message.all = 'Niepoprawna nazwa użytkownika lub hasło.';
                 console.log(error);
             }
         },
@@ -136,5 +145,4 @@ export default {
     display: block;
     width: 100%;
 }
-
 </style>

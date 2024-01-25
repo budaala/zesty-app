@@ -116,7 +116,6 @@ export default {
                 var response = await this.register();
                 if(response === true)
                 {
-                    this.message.all = 'Zarejestrowano pomyślnie';
                     // this.form = {
                     //     username: '',
                     //     email: '',
@@ -124,6 +123,7 @@ export default {
                     //     repeatPassword: ''
                     // };
                     this.registered = true;
+                    this.$router.go();
                 }
                 else
                 {
