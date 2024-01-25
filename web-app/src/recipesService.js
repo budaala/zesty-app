@@ -58,7 +58,7 @@ const LoadAverageRating = async (recipeId) => {
 const getRecipe = async (recipeId) => {
     try {
         const response = await $http.get(`/recipes/${recipeId}`);
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Error loading data:', error);
@@ -84,7 +84,7 @@ const DeleteRecipe = async (recipeId) => {
 
 const EditRecipe = async (recipeId, recipeJson, image) => {
     try {
-        console.log(recipeJson);
+        // console.log(recipeJson);
         const formData = new FormData();
         formData.append('recipeJson', JSON.stringify(recipeJson));
         if(image)
@@ -111,7 +111,7 @@ const EditRecipe = async (recipeId, recipeJson, image) => {
 const AddRecipe = async (recipeJson, image) => {
     try {
         recipeJson.userId = localStorage.getItem('user');
-        console.log(recipeJson);
+        // console.log(recipeJson);
         const formData = new FormData();
         formData.append('recipeJson', JSON.stringify(recipeJson));
         if(image)
@@ -190,7 +190,7 @@ const addComment = async (recipeId, comment) => {
             content: comment,
             userId: 3
         };
-        console.log(commentData);
+        // console.log(commentData);
         const response = await $http.post(`/recipes/${recipeId}/comments`, commentData);
         if(response.status === 200) {
             alert('Pomyślnie dodano komentarz!');
