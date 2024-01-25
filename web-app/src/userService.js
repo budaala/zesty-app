@@ -2,7 +2,7 @@ import axios from "axios";
 import {jwtDecode} from "jwt-decode";
 
 const $http = axios.create({
-    baseURL: "http://localhost:5033/api",
+    baseURL: "https://zestyapi.azurewebsites.net/api",
     headers: {
         "Content-type": "application/json"
     }

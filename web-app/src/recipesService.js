@@ -15,7 +15,7 @@
 
 import axios from "axios";
 const $http = axios.create({
-    baseURL: "http://localhost:5033/api",
+    baseURL: "https://zestyapi.azurewebsites.net/api",
     headers: {
         "Content-type": "application/json"
     }
