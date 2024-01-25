@@ -284,6 +284,7 @@ export default {
             this.editRecipe(apiData);
             // console.log(apiData);
             // console.log(this.recipeId);
+            this.$router.push({ name: 'RecipePage', params: { id: this.recipeId } });
         },
         addRecipe() {
             const apiData = this.getApiData();

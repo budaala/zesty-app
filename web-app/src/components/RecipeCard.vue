@@ -26,7 +26,7 @@ export default {
 
 <style scoped>
 .recipe-img {
-    max-height: 200px;
+    height: 200px;
     object-fit: cover;
 }
 

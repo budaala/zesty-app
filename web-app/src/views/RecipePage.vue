@@ -1,6 +1,15 @@
 <template>
     <div class="container mt-3 mb-5">
-        <div class="card">
+        <div v-if="recipeDeleted">
+            <Alert :type="'success'" :message="'Przepis został pomyślnie usunięty.'"></Alert>
+        </div>
+        <div v-if="recipeEdited">
+            <Alert :type="'success'" :message="'Zmiany zostały naniesione.'"></Alert>
+        </div>
+        <div v-if="!recipe">
+            <Alert :type="'danger'" :message="'Nie znaleziono przepisu.'"></Alert>
+        </div>
+        <div v-else class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col mb-5">
@@ -27,8 +36,8 @@
                                     <div class="modal-footer">
                                         <!-- <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Anuluj</button> -->
-                                        <button type="button" class="btn btn-dismiss" @click="deleteRecipe">Usuń przepis</button>
-                                        <p v-if="recipeDeleted">Recipe deleted :p</p>
+                                        <button type="button" class="btn btn-dismiss" data-bs-dismiss="modal"
+                                            @click="deleteRecipe">Usuń przepis</button>
                                     </div>
                                 </div>
                             </div>
@@ -52,7 +61,8 @@
                                     </div>
                                     <div class="col text-center">
                                         <p>Ocena: </p>
-                                        <star-rating :max="max" :rating="recipe.averageRating" :recipeId="recipe.id" @addRating="handleAddRating"></star-rating>
+                                        <star-rating :max="max" :rating="recipe.averageRating" :recipeId="recipe.id"
+                                            @addRating="handleAddRating" @closeModal="showModal = false"></star-rating>
                                     </div>
                                     <div class="col text-center">
                                         <p>Typ dania:</p>
@@ -130,10 +140,11 @@
 <script>
 import recipesService from '../recipesService.js';
 import StarRating from '../components/StarRating.vue';
+import Alert from '../components/Alert.vue';
 
 export default {
     name: 'RecipePage',
-    components: { StarRating },
+    components: { StarRating, Alert },
     props: {
         Id: {
             type: Number
@@ -198,7 +209,7 @@ export default {
                 console.log('handleAddRating was called with rating: ' + rating);
                 await recipesService.addRating(this.recipe.id, rating, 3);
                 this.recipe.averageRating = await this.loadAverageRating(this.recipe.id);
-            } catch(error) {
+            } catch (error) {
                 console.log(error);
             }
         },
