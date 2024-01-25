@@ -9,7 +9,7 @@
                     <div class="col mb-5">
                         <button @click="$router.go(-1)" class="btn btn-outline-zesty">Poprzednia strona</button>
                     </div>
-                    <div v-if="recipe.userId === 3" class="col">
+                    <div v-if="recipe.userId === getUser()" class="col">
                         <div class="d-flex flex-row-reverse">
                             <button class="btn btn-dismiss" type="button" data-bs-toggle="modal"
                                 data-bs-target="#confirmDeleteModal">Usuń</button>
@@ -96,7 +96,7 @@
                         <div class="row row-cols-1 row-cols-lg-2">
                             <div class="col">
                                 <h2>Komentarze</h2>
-                                <div class="row mb-2" v-for="comment in recipe.Comments">
+                                <div class="row mb-2" v-for="comment in sortedComments">
                                     <div class="col">
                                         <div class="card">
                                             <!-- <p>{{ recipe.Comments }}</p> -->
@@ -148,6 +148,16 @@ export default {
             default: 5
         }
     },
+    computed: {
+        sortedComments() {
+        if (this.recipe && this.recipe.Comments) {
+            return this.recipe.Comments.sort((a, b) => {
+                return new Date(b.createdAt) - new Date(a.createdAt);
+            });
+        } else {
+            return [];
+        }
+    }},
     data() {
         return {
             recipe: {
@@ -164,7 +174,6 @@ export default {
                 averageRating: 0,
                 Comments: []
             },
-            // averageRating: 0,
             recipeDeleted: false,
             recipeId: null,
             ratingAdded: false,
@@ -235,10 +244,16 @@ export default {
             try{
                 await recipesService.addComment(this.recipe.id, comment);
                 this.commentText = '';
+                alert('Komentarz został dodany!');
                 this.loadRecipe();
             } catch(error) {
                 console.log(error);
             }
+        },
+        getUser() {
+            let user = Number(localStorage.getItem('user'));
+            console.log(typeof user + '' + this.recipe.userId);
+            return user;
         }
     }
 }

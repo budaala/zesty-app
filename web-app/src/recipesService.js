@@ -38,7 +38,6 @@ const loadRecipes = async () => {
 const LoadAllRecipes = async () => {
     try {
         const response = await $http.get('/recipes');
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Error loading data:', error);
@@ -105,9 +104,8 @@ const EditRecipe = async (recipeId, recipeJson, image) => {
 
 const AddRecipe = async (recipeJson, image) => {
     try {
-        recipeJson.userId = 3;
+        recipeJson.userId = localStorage.getItem('user');
         console.log(recipeJson);
-        // recipeJson.mealTypeId = 5;
         const formData = new FormData();
         formData.append('recipeJson', JSON.stringify(recipeJson));
         if(image)
@@ -148,7 +146,6 @@ const addRating = async (recipeId, rating, userId) => {
 const getMealTypes = async () => {
     try {
         const response = await $http.get('/recipes/mealtypes');
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Error loading data:', error);
@@ -170,7 +167,6 @@ const checkUserRating = async (recipeId, userId) => {
 const loadComments = async (recipeId) => {
     try {
         const response = await $http.get(`/recipes/${recipeId}/comments`);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Error loading data:', error);

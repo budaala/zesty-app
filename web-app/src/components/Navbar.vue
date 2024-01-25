@@ -36,10 +36,10 @@
                             <div class="dropdown-menu">
                                 <div class="user-menu">
                                     <div class="user-info">
-                                        <div class="user-name">Jan Kowalski</div>
+                                        <div class="user-name" >{{ login }}</div>
                                     </div>
                                     <hr>
-                                    <button class="btn user-menu-btn btn-dismiss">Wyloguj się</button>
+                                    <button class="btn user-menu-btn btn-dismiss" @click="logout">Wyloguj się</button>
                                 </div>
                             </div>
                         </div>
@@ -51,17 +51,41 @@
 </template>
 
 <script>
+import userService from '@/userService';
 import recipesService from '../recipesService.js';
+
 export default {
     name: 'Navbar',
     data() {
         return {
-            loggedIn: false,
             mealTypes: null,
+            isLoggedIn: false,
+            login: null
         }
     },
     async mounted() {
+        this.checkIfLoggedIn();
         this.mealTypes = await recipesService.getMealTypes();
+    },
+    computed: {
+    loggedIn() {
+        return localStorage.getItem('user') !== null && localStorage.getItem('user') !== undefined;
+    },
+    username() {
+        return localStorage.getItem('username');
+    }
+},
+    methods: {
+        async checkIfLoggedIn() {
+            if (localStorage.getItem('user') !== null && localStorage.getItem('user') !== undefined){
+                this.isLoggedIn = this.loggedIn;
+                this.login = this.username;
+            }
+        },
+        async logout() {
+            await userService.logout();
+            this.$router.push({path: '/'});
+        }
     },
 
 }

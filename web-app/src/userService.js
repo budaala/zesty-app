@@ -1,4 +1,5 @@
 import axios from "axios";
+import {jwtDecode} from "jwt-decode";
 
 const $http = axios.create({
     baseURL: "http://localhost:5033/api",
@@ -17,6 +18,7 @@ const login = async (username, password) => {
         if(response.status === 200)
         {
             localStorage.setItem('token', response.data);
+            setUser();
             alert('Zalogowano!');
             return true;
         }
@@ -41,7 +43,32 @@ const register = async (username, password, email) => {
     }
 }
 
+const logout = async () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('username');
+    alert('Wylogowano!');
+}
+
+const setUser = () => {
+    var token = localStorage.getItem('token');
+    if (token) {
+        var decodedToken = jwtDecode(token);
+        // console.log(decodedToken);
+        var nameidentifier = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+        var username = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+        localStorage.setItem('user', nameidentifier);
+        localStorage.setItem('username', username);
+        // console.log(localStorage.getItem('user') + ' ' + localStorage.getItem('username'));
+    }
+    else
+    console.log('token not found');
+}
+
+
+
 export default {
     login,
-    register
+    register,
+    logout
 };
