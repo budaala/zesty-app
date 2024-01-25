@@ -178,6 +178,24 @@ const loadComments = async (recipeId) => {
     }
 }
 
+const addComment = async (recipeId, comment) => {
+    try {
+        const commentData = {
+            content: comment,
+            userId: 3
+        };
+        console.log(commentData);
+        const response = await $http.post(`/recipes/${recipeId}/comments`, commentData);
+        if(response.status === 200)
+            return true;
+        else
+            return false;
+    } catch (error) {
+        console.error('Error loading data:', error);
+        return [];
+    }
+}
+
 export default {
     loadRecipes,
     LoadAllRecipes,
@@ -189,5 +207,6 @@ export default {
     addRating,
     getMealTypes,
     checkUserRating,
-    loadComments
+    loadComments,
+    addComment
 };

@@ -203,8 +203,8 @@ namespace zesty_api.Controllers
         {
             try
             {
-                _commentsService.GetComments(id);
-                return Ok();
+                var comments = _commentsService.GetComments(id);
+                return Ok(comments);
             }
             catch (Exception ex)
             {
