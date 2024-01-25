@@ -36,7 +36,7 @@
                             <div class="dropdown-menu">
                                 <div class="user-menu">
                                     <div class="user-info">
-                                        <div class="user-name" >{{ login }}</div>
+                                        <div class="user-name" >{{ username }}</div>
                                     </div>
                                     <hr>
                                     <button class="btn user-menu-btn btn-dismiss" @click="logout">Wyloguj się</button>
@@ -59,31 +59,27 @@ export default {
     data() {
         return {
             mealTypes: null,
-            isLoggedIn: false,
-            login: null
+            loggedIn: false,
+            username: null
         }
     },
     async mounted() {
         this.checkIfLoggedIn();
         this.mealTypes = await recipesService.getMealTypes();
     },
-    computed: {
-    loggedIn() {
-        return localStorage.getItem('user') !== null && localStorage.getItem('user') !== undefined;
+    watch: {
+        '$route': 'checkIfLoggedIn'
     },
-    username() {
-        return localStorage.getItem('username');
-    }
-},
     methods: {
         async checkIfLoggedIn() {
             if (localStorage.getItem('user') !== null && localStorage.getItem('user') !== undefined){
-                this.isLoggedIn = this.loggedIn;
-                this.login = this.username;
+                this.loggedIn = true;
+                this.username = localStorage.getItem('username');
             }
         },
         async logout() {
             await userService.logout();
+            this.loggedIn = false;
             this.$router.push({path: '/'});
         }
     },
