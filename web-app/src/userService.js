@@ -14,7 +14,14 @@ const login = async (username, password) => {
             password: password
         };
         const response = await $http.post('/auth/login', loginData);
-        return response.data;
+        if(response.status === 200)
+        {
+            localStorage.setItem('token', response.data);
+            alert('Zalogowano!');
+            return true;
+        }
+        else
+            return false;
     } catch (error) {
         console.error('Error loading data:', error);
         return [];
@@ -24,21 +31,15 @@ const login = async (username, password) => {
 const register = async (username, password, email) => {
     try {
         const response = await $http.post('/auth/register', { username, password, email });
-        return response.data;
+        if(response.status === 200){
+            return true;
+        }
+        return false;
     } catch (error) {
         console.error('Error loading data:', error);
         return [];
     }
 }
-
-
-
-
-
-
-
-
-
 
 export default {
     login,

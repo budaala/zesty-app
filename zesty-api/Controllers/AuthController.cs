@@ -16,13 +16,11 @@ namespace zesty_api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IConfiguration _configuration;
         private readonly IAuthService _authService;
 
-        public AuthController(IConfiguration configuration,IAuthService authService) 
+        public AuthController(IAuthService authService) 
         {
-            this._configuration = configuration;
-            this._authService = authService;
+            _authService = authService;
         }
 
         [HttpPost("register")]

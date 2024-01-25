@@ -7,6 +7,7 @@
         public int UserId { get; set; }
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
+        public UserEntity User { get; set; }
 
         public static CommentEntity Create(int RecipeId, int UserId, string Content)
         {

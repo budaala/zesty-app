@@ -100,8 +100,8 @@ export default {
         async validateInput() {
             if (this.isNotEmpty('username') && this.isNotEmpty('password')) {
                 // walidacja z bazą danych
-                this.loggedIn = true;
-                this.validInput = true;
+                this.validInput = false;
+                this.message.all = 'Pomyślnie zalogowano.';
                 await this.logIn();
             }
             else {
@@ -115,12 +115,11 @@ export default {
         },
         async logIn() {
             try {
-                // console.log('Próba logowania...'+ this.form.username + ' ' + this.form.password);
-                var token = await userService.login(this.form.username, this.form.password);
-                localStorage.setItem('token', token);
-                console.log('Zalogowano ' + token);
-                this.$router.push({ path: '/' });
+                this.loggedIn = await userService.login(this.form.username, this.form.password);
+                console.log(this.loggedIn);
+                this.$router.push({ path: '/'});
             } catch (error) {
+                
                 console.log(error);
             }
         },

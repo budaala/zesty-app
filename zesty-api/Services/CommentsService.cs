@@ -1,4 +1,5 @@
-﻿using zesty_api.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using zesty_api.Data;
 using zesty_api.Data.Entities;
 using zesty_api.Interfaces;
 using zesty_api.Models;
@@ -17,7 +18,9 @@ namespace zesty_api.Services
 
         Comment ICommentsService.AddComment(Comment comment)
         {
+            var user = db.Users.Find(comment.UserId) ?? throw new Exception("User not found");
             var commentEntity = CommentEntity.Create(comment.RecipeId, comment.UserId, comment.Content);
+            commentEntity.User = user;
             db.Comments.Add(commentEntity);
             db.SaveChanges();
             comment.Id = commentEntity.Id;
@@ -34,7 +37,7 @@ namespace zesty_api.Services
 
         public IEnumerable<Comment> GetComments(int RecipeId)
         {
-            var comments = db.Comments.Where(c => c.RecipeId == RecipeId).ToList();
+            var comments = db.Comments.Include(c => c.User).Where(c => c.RecipeId == RecipeId).ToList();
             return comments.Select(MapToDTO);
         }
 
@@ -45,6 +48,7 @@ namespace zesty_api.Services
                 Id = entity.Id,
                 RecipeId = entity.RecipeId,
                 UserId = entity.UserId,
+                Username = entity.User?.Username ?? "",
                 Content = entity.Content,
                 CreatedAt = entity.CreatedAt
             };

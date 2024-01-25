@@ -79,6 +79,7 @@
 </template>
 
 <script>
+import userService from '@/userService';
 export default {
     name: 'Register',
     data() {
@@ -107,13 +108,34 @@ export default {
         }
     },
     methods: {
-        validateInput() {
+        async validateInput() {
             this.formSubmitted = true;
 
             if (this.isValid('username') && this.isValid('email') && this.isValid('password') && this.isValid('repeatPassword')) {
                 // rejestracja
-                this.registered = true;
-                this.message.all = 'Pomyślnie utworzono konto';
+                var response = await this.register();
+                if(response === true)
+                {
+                    this.message.all = 'Zarejestrowano pomyślnie';
+                    // this.form = {
+                    //     username: '',
+                    //     email: '',
+                    //     password: '',
+                    //     repeatPassword: ''
+                    // };
+                    this.registered = true;
+                }
+                else
+                {
+                    this.message.all = 'Wystąpił błąd podczas rejestracji';
+                    // this.form = {
+                    //     username: '',
+                    //     email: '',
+                    //     password: '',
+                    //     repeatPassword: ''
+                    // };
+                    this.registered = false;
+                }
             }
             else {
                 for (let field in this.touched) {
@@ -197,6 +219,10 @@ export default {
             }
             return true;
         },
+        async register() {
+            var response = await userService.register(this.form.username, this.form.password, this.form.email);
+            return response;
+        }
     }
 
 }
