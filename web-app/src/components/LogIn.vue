@@ -14,7 +14,7 @@
                             <input type="text" class="form-control" v-model="form.username" @blur="setTouched('username')"
                                 :class="{ 'is-invalid': !isNotEmpty('username') && touched.username }" id="logInusername"
                                 placeholder="Adres username" required>
-                            <label for="logInusername">Adres username</label>
+                            <label for="logInusername">Nazwa użytkownika</label>
                             <div v-if="!isNotEmpty('username') && touched.username">
                                 <small class="text-danger">{{ message.username }}</small>
                             </div>
@@ -100,7 +100,6 @@ export default {
         async validateInput() {
             if (this.isNotEmpty('username') && this.isNotEmpty('password')) {
                 // walidacja z bazą danych
-                this.loggedIn = true;
                 this.validInput = false;
                 this.message.all = 'Pomyślnie zalogowano.';
                 await this.logIn();
@@ -116,12 +115,11 @@ export default {
         },
         async logIn() {
             try {
-                // console.log('Próba logowania...'+ this.form.username + ' ' + this.form.password);
-                var token = await userService.login(this.form.username, this.form.password);
-                localStorage.setItem('token', token);
-                console.log('Zalogowano ' + token);
-                this.$router.push({ name: 'RecipeListPage' });
+                this.loggedIn = await userService.login(this.form.username, this.form.password);
+                console.log(this.loggedIn);
+                this.$router.push({ path: '/'});
             } catch (error) {
+                
                 console.log(error);
             }
         },
