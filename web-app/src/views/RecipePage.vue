@@ -1,8 +1,8 @@
 <template>
     <div class="container mt-3 mb-5">
-            <Alert v-if="recipeDeleted" :type="'success'" :message="'Przepis został pomyślnie usunięty. Strona zostanie odświeżona. '"></Alert>
-            <Alert v-if="ratingAdded" :type="'success'" :message="'Ocena została dodana. Strona zostanie odświeżona. '"></Alert>
-            <Alert v-if="!recipe" :type="'danger'" :message="'Nie znaleziono przepisu.'"></Alert>
+        <Alert v-if="recipeDeleted === false" :type="'danger'"
+            :message="'Coś poszło nie tak! Przepis nie został usunięty.'"></Alert>
+        <Alert v-if="!recipe" :type="'danger'" :message="'Nie znaleziono przepisu.'"></Alert>
         <div v-else class="card">
             <div class="card-body">
                 <div class="row">
@@ -116,10 +116,11 @@
                                 <div class="d-flex flex-column p-0">
                                     <h3>Dodaj własny komentarz</h3>
                                     <textarea style="height: 100px" class="form-control mb-2" placeholder="Dodaj komentarz"
-                                        aria-label="Dodaj komentarz" aria-describedby="buttonAddComment" v-model="commentText"></textarea>
+                                        aria-label="Dodaj komentarz" aria-describedby="buttonAddComment"
+                                        v-model="commentText"></textarea>
                                     <span class="d-flex flex-row-reverse">
-                                        <button class="btn btn-outline-zesty" type="button"
-                                            id="buttonAddComment" @click="addComment(commentText)">Dodaj</button>
+                                        <button class="btn btn-outline-zesty" type="button" id="buttonAddComment"
+                                            @click="addComment(commentText)">Dodaj</button>
                                     </span>
                                 </div>
                             </div>
@@ -174,9 +175,11 @@ export default {
                 averageRating: 0,
                 Comments: []
             },
-            recipeDeleted: false,
+            // averageRating: 0,
+            recipeDeleted: null,
             recipeId: null,
-            ratingAdded: false,
+            ratingAdded: null,
+            commentAdded: null,
             commentText: ''
         }
     },
@@ -212,13 +215,16 @@ export default {
         },
         async handleAddRating(rating) {
             try {
-                console.log('handleAddRating was called with rating: ' + rating);
+                // console.log('handleAddRating was called with rating: ' + rating);
                 this.ratingAdded = await recipesService.addRating(this.recipe.id, rating, 3);
-                this.recipe.averageRating = await this.loadAverageRating(this.recipe.id);
-                // refresh page
-                setTimeout(() => {
-                    this.$router.go(0);
-                }, 2000);
+                if (this.ratingAdded === true) {
+                    this.recipe.averageRating = await this.loadAverageRating(this.recipe.id);
+                    console.log('Ocena została dodana.');
+                    this.$router.go();
+                }
+                else {
+                    console.log('Nie udało się dodać oceny.');
+                }
             } catch (error) {
                 console.log(error);
             }
@@ -228,25 +234,33 @@ export default {
         },
         async deleteRecipe() {
             this.recipeDeleted = await recipesService.DeleteRecipe(this.recipe.id);
-            setTimeout(() => {
-                this.$router.go(0);
-            }, 2000);
+            if (this.recipeDeleted) {
+                this.$router.push({ path: '/myRecipes' });
+            }
+            else {
+                console.log('Nie udało się usunąć przepisu.');
+            }
         },
         async loadComments() {
-            try{
+            try {
                 let comments = await recipesService.loadComments(this.recipe.id);
                 this.recipe.Comments = comments;
-            } catch(error) {
+            } catch (error) {
                 console.log(error);
             }
         },
         async addComment(comment) {
-            try{
-                await recipesService.addComment(this.recipe.id, comment);
-                this.commentText = '';
-                alert('Komentarz został dodany!');
-                this.loadRecipe();
-            } catch(error) {
+            try {
+                this.commentAdded = await recipesService.addComment(this.recipe.id, comment);
+                if (this.commentAdded === true) {
+                    console.log('Komentarz został dodany.');
+                    this.commentText = '';
+                    this.loadRecipe();
+                }
+                else {
+                    console.log('Nie udało się dodać komentarza.');
+                }
+            } catch (error) {
                 console.log(error);
             }
         },
