@@ -2,8 +2,8 @@
     <div class="container-md mt-3 mb-5">
         <h1>Gotuj z Zesty!</h1>
         <h2 v-if="RecipeType">{{ RecipeType }}</h2>
-        <p v-if="!items.length">Nie znaleźliśmy przepisów w tej kategorii. <RouterLink class="r-link" to="/">Przejdź do strony głównej</RouterLink></p>
-        <RecipeList :recipes="pagedItems"></RecipeList>
+        <p v-if="!recipes">Nie znaleźliśmy przepisów w tej kategorii. <RouterLink class="r-link" to="/">Przejdź do strony głównej</RouterLink></p>
+        <RecipeList v-if="recipes" :recipes="pagedItems"></RecipeList>
         <nav v-show="totalPages > 1">
             <ul class="pagination justify-content-center">
                 <li class="page-item" :class="{ disabled: currentPage === 1 }">
