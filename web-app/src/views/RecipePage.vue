@@ -114,7 +114,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col mt-1">
+                            <div v-if="getUser() != null && getUser() != undefined && getUser() != 0" class="col mt-1">
                                 <div class="d-flex flex-column p-0">
                                     <h3>Dodaj własny komentarz</h3>
                                     <textarea style="height: 100px" class="form-control mb-2" placeholder="Dodaj komentarz"
@@ -268,7 +268,7 @@ export default {
         },
         getUser() {
             let user = Number(localStorage.getItem('user'));
-            console.log(typeof user + '' + this.recipe.userId);
+            console.log(user);
             return user;
         }
     }

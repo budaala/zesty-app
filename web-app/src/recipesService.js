@@ -188,7 +188,7 @@ const addComment = async (recipeId, comment) => {
     try {
         const commentData = {
             content: comment,
-            userId: 3
+            userId: Number(localStorage.getItem('user'))
         };
         // console.log(commentData);
         const response = await $http.post(`/recipes/${recipeId}/comments`, commentData);
