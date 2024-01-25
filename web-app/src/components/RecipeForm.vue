@@ -24,12 +24,8 @@
                                     :class="{ 'is-valid': isValid('recipeType'), 'is-invalid': !isValid('recipeType') && touched.recipeType }"
                                     id="floatingSelect" aria-label="Floating label select example">
                                     <option value="" selected>Wybierz kategorię</option>
-                                    <option value="1">Śniadania</option>
-                                    <option value="2">Dania główne</option>
-                                    <option value="3">Desery</option>
-                                    <option value="4">Napoje</option>
-                                    <option value="5">Przekąski</option>
-                                    <option value="6">Inne</option>
+                                    <option v-for="mealType in mealTypes" :key="mealType.id"
+                                        :value="mealType.id">{{ mealType.name }}</option>
                                 </select>
                                 <label for="floatingSelect">Kategoria</label>
                                 <div v-if="!isValid('recipeType') && touched.recipeType">
@@ -136,8 +132,12 @@ export default {
                 Instructions: '',
                 Image: '',
                 all: ''
-            }
+            },
+            mealTypes: []
         }
+    },
+    mounted() {
+        this.getMealTypes();
     },
     methods: {
         setTouched(field) {
@@ -206,10 +206,10 @@ export default {
             return true;
         },
         validateRecipeType(recipeType) {
-            if (recipeType.trim() === '') {
-                this.message.recipeType = 'Wybierz kategorię';
-                return false;
-            }
+            // if (recipeType.trim() === '') {
+            //     this.message.recipeType = 'Wybierz kategorię';
+            //     return false;
+            // }
             return true;
         },
         validateDescription(Description) {
@@ -299,14 +299,21 @@ export default {
         },
         getApiData() {
             const apiData = {
-                title: this.form.recipeTitle,
-                mealTypeName: this.form.recipeType,
-                description: this.form.Description,
-                ingredients: this.form.Ingredients,
-                instructions: this.form.Instructions
+                Title: this.form.recipeTitle,
+                MealTypeId: this.form.recipeType,
+                Description: this.form.Description,
+                Ingredients: this.form.Ingredients,
+                Instructions: this.form.Instructions
             };
             return apiData;
+        },
+        async getMealTypes()
+        {
+            this.mealTypes = await recipesService.getMealTypes();
+            console.log(this.mealTypes);
+            // return this.mealTypes;
         }
+    
 
     },
     watch: {
@@ -315,7 +322,7 @@ export default {
                 if (newRecipe) {
                     this.recipeId = newRecipe.id;
                     this.form.recipeTitle = newRecipe.title;
-                    this.form.recipeType = newRecipe.mealTypeName;
+                    this.form.recipeType = newRecipe.mealTypeId;
                     this.form.Description = newRecipe.description;
                     this.form.Ingredients = newRecipe.ingredients;
                     this.form.Instructions = newRecipe.instructions;

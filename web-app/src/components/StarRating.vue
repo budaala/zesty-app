@@ -64,8 +64,9 @@ export default {
         }
     },
     async mounted() {
-        const userRating = await this.checkUserRating(this.recipeId);
-        this.userHasRated = userRating !== 0;
+        console.log(this.recipeId + ' recipeID');
+    const userRating = await this.checkUserRating(this.recipeId);
+    this.userHasRated = userRating !== 0;
     },
     computed: {
         getRatingWidth() {

@@ -69,13 +69,63 @@ const getRecipe = async (recipeId) => {
 
 
 const DeleteRecipe = async (recipeId) => {
-    console.log(recipeId);
+    try {
+        const response = await $http.delete(`/recipes/${recipeId}`);
+        if(response.status === 200)
+            return true;
+        else
+            return false;
+    } catch (error) {
+        console.error('Error loading data:', error);
+        return [];
+    }
 }
 
 const EditRecipe = async (recipeId, recipeJson, image) => {
-    console.log(recipeJson);
-    console.log(recipeId);
-    console.log(image);
+    try {
+        console.log(recipeJson);
+        const formData = new FormData();
+        formData.append('recipeJson', JSON.stringify(recipeJson));
+        if(image)
+            formData.append('image', image);
+        const response = await $http.put(`/recipes/${recipeId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        if(response.status === 200)
+            return true;
+        else
+            return false;
+    } catch (error) {
+        console.error('Error loading data:', error);
+        return [];
+    }
+}
+
+const AddRecipe = async (recipeJson, image) => {
+    try {
+        recipeJson.userId = 3;
+        console.log(recipeJson);
+        // recipeJson.mealTypeId = 5;
+        const formData = new FormData();
+        formData.append('recipeJson', JSON.stringify(recipeJson));
+        if(image)
+            formData.append('image', image);
+        const response = await $http.post('/recipes', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        if(response.status === 200)
+            return true;
+        else
+            return false;
+    } catch (error) {
+        console.error('Error loading data:', error);
+        return [];
+    }
+
 }
 
 const addRating = async (recipeId, rating, userId) => {
@@ -85,8 +135,10 @@ const addRating = async (recipeId, rating, userId) => {
             userId: userId
         };
         const response = await $http.post(`/recipes/${recipeId}/rating`, ratingData);
-        console.log(response.data);
-        return response.data;
+        if(response.status === 200)
+            return true;
+        else
+            return false;
     } catch (error) {
         console.error('Error loading data:', error);
         return [];
@@ -95,7 +147,7 @@ const addRating = async (recipeId, rating, userId) => {
 
 const getMealTypes = async () => {
     try {
-        const response = await $http.get('/mealtypes');
+        const response = await $http.get('/recipes/mealtypes');
         console.log(response.data);
         return response.data;
     } catch (error) {
@@ -108,7 +160,6 @@ const getMealTypes = async () => {
 const checkUserRating = async (recipeId, userId) => {
     try {
         const response = await $http.get(`/recipes/${recipeId}/rating/${userId}`);
-        console.log(response.data);
         return response.data;
     } catch (error) {
         console.error('Error loading data:', error);
@@ -116,9 +167,15 @@ const checkUserRating = async (recipeId, userId) => {
     }
 }
 
-const AddRecipe = async (recipeJson, image) => {
-    console.log(recipeJson);
-    console.log(image);
+const loadComments = async (recipeId) => {
+    try {
+        const response = await $http.get(`/recipes/${recipeId}/comments`);
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Error loading data:', error);
+        return [];
+    }
 }
 
 export default {
@@ -131,5 +188,6 @@ export default {
     AddRecipe,
     addRating,
     getMealTypes,
-    checkUserRating
+    checkUserRating,
+    loadComments
 };
