@@ -1,10 +1,4 @@
 <template>
-    <Alert v-if="recipeAdded" :type="'success'" :message="'Przepis został dodany.'"></Alert>
-    <Alert v-else-if="recipeAdded === false" :type="'danger'" :message="'Nie udało się dodać przepisu.'"></Alert>
-
-    <Alert v-if="recipeEdited" :type="'success'" :message="'Przepis został zedytowany.'"></Alert>
-    <Alert v-else-if="recipeEdited === false" :type="'danger'" :message="'Nie udało się zedytować przepisu.'"></Alert>
-
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-center">
@@ -89,7 +83,7 @@
                         <small class="text-danger">{{ message.all }}</small>
                     </div>
                     <button type="submit" class="btn btn-outline-zesty" @click.prevent="validateForm"
-                        :disabled="recipeAdded || recipeEdited"  :style="{ cursor: isLoading ? 'wait' : 'default' }">
+                        :disabled="recipeAdded" :style="{ cursor: isLoading ? 'wait' : 'default' }">
                         {{ editMode ? 'Edytuj przepis' : 'Dodaj przepis' }} </button>
                 </div>
             </div>
@@ -290,9 +284,6 @@ export default {
         updateRecipe() {
             const apiData = this.getApiData();
             this.editRecipe(apiData);
-            setTimeout(() => {
-                this.$router.push({ name: 'RecipePage', params: { id: this.recipeId } });
-            }, 4000);
         },
         addRecipe() {
             const apiData = this.getApiData();
@@ -300,9 +291,25 @@ export default {
         },
         async editRecipe(apiData) {
             this.recipeEdited = await recipesService.EditRecipe(this.recipeId, apiData, this.form.Image);
+            if (this.recipeEdited === true) {
+                this.message.all = 'Przepis został edytowany pomyślnie';
+                this.$router.push({ name: 'RecipePage', params: { id: this.recipeId } });
+            }
+            else {
+                this.validateForm = false;
+                this.message.all = 'Wystąpił błąd podczas edycji przepisu';
+            }
         },
         async addRecipeApi(apiData) {
             this.recipeAdded = await recipesService.AddRecipe(apiData, this.form.Image);
+            if (this.recipeAdded === true) {
+                this.message.all = 'Przepis został dodany pomyślnie';
+                this.$router.push({ path: '/myRecipes'});
+            }
+            else {
+                this.validateForm = false;
+                this.message.all = 'Wystąpił błąd podczas dodawania przepisu';
+            }
         },
         getApiData() {
             const apiData = {
@@ -317,7 +324,6 @@ export default {
         async getMealTypes() {
             this.mealTypes = await recipesService.getMealTypes();
             console.log(this.mealTypes);
-            // return this.mealTypes;
         }
 
 

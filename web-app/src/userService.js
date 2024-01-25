@@ -32,6 +32,7 @@ const register = async (username, password, email) => {
     try {
         const response = await $http.post('/auth/register', { username, password, email });
         if(response.status === 200){
+            alert('Rejestracja przebiegła pomyślnie! Teraz możesz się zalogować.');
             return true;
         }
         return false;
