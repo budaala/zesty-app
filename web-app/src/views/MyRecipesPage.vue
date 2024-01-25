@@ -26,7 +26,7 @@ export default {
         async loadRecipes() {
             try {
                 this.recipes = await recipesService.LoadAllRecipes();
-                this.items = this.recipes.filter((recipe) => recipe.userId === 3);
+                this.items = this.recipes.filter((recipe) => recipe.userId === Number(localStorage.getItem('user')));
                 console.log(this.items)
             } catch (error) {
                 // Obsługa błędu
