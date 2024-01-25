@@ -75,10 +75,10 @@ namespace zesty_api.Services
             {
                 Id = entity.Id,
                 UserId = entity.UserId,
-                Username = entity.User.Username ?? "",
+                Username = entity.User?.Username ?? "",
                 Title = entity.Title,
                 MealTypeId = entity.MealTypeId,
-                MealTypeName = entity.MealType.Name ?? "",
+                MealTypeName = entity.MealType?.Name ?? "",
                 Description = entity.Description,
                 Ingredients = entity.Ingredients,
                 Instructions = entity.Instructions,

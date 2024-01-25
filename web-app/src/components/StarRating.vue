@@ -71,6 +71,7 @@ export default {
         }
     },
     async mounted() {
+        console.log(this.recipeId + ' recipeID');
     const userRating = await this.checkUserRating(this.recipeId);
     this.userHasRated = userRating !== 0;
     },
