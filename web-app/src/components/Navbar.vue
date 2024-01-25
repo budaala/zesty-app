@@ -14,9 +14,10 @@
                         <router-link class="nav-link" active-class="active" aria-current="page" to="/">Strona
                             główna</router-link>
                     </li>
-                    <li class="nav-item"  v-for="mealType in mealTypes" :key="mealType.id">
+                    <li class="nav-item" v-for="mealType in mealTypes" :key="mealType.id">
                         <router-link class="nav-link" active-class="active" aria-current="page"
-                            :to="{ name: 'RecipeListPage', params: { RecipeType: mealType.name } }">{{ mealType.name }}</router-link>
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: mealType.name } }">{{ mealType.name
+                            }}</router-link>
                     </li>
                     <div class="vr" style="color:aliceblue" v-if="loggedIn"></div>
                     <li class="nav-item" v-if="loggedIn">
@@ -29,11 +30,11 @@
                         <router-link class="btn btn-outline-zesty me-2" to="/addRecipe">Dodaj przepis</router-link>
                         <router-link class="btn btn-outline-zesty" to="/logIn" v-if="!loggedIn">Zaloguj się</router-link>
                     </div>
-                    <div class="flex-column me-2" v-if="loggedIn">
+                    <div v-if="loggedIn">
                         <div class="btn-group">
                             <font-awesome-icon icon="user" class="user-icon dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false" size="lg" />
-                            <div class="dropdown-menu">
+                            <div class="dropdown-menu dropdown-menu-lg-end">
                                 <div class="user-menu">
                                     <div class="user-info">
                                         <div class="user-name" >{{ username }}</div>
@@ -131,8 +132,8 @@ export default {
 
 .dropdown-menu {
     position: absolute;
-    top: 130% !important;
-    right: 10% !important;
+    top: 170% !important;
+    right: 50% !important;
     width: 250px;
     overflow: hidden;
     background-color: white;
