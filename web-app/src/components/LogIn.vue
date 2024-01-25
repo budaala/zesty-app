@@ -140,19 +140,3 @@ export default {
 }
 
 </style>
-
-
-
-<!-- import axios from 'axios';
-
-const apiClient = axios.create();
-
-apiClient.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token'); // Or get the token from Vuex
-    if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
-    }
-    return config;
-}, (error) => {
-    return Promise.reject(error);
-}); -->
