@@ -2,14 +2,16 @@
     <div class="container mt-3 mb-5">
         <Alert v-if="recipeDeleted === false" :type="'danger'"
             :message="'Coś poszło nie tak! Przepis nie został usunięty.'"></Alert>
-        <Alert v-if="!recipe" :type="'danger'" :message="'Nie znaleziono przepisu.'"></Alert>
-        <div v-else class="card">
+        <!-- <Alert v-if="!recipe" :type="'danger'" :message="'Nie znaleziono przepisu.'"></Alert> -->
+        <div v-if="recipe.id != 0" class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col mb-5">
                         <button @click="$router.go(-1)" class="btn btn-outline-zesty">Poprzednia strona</button>
                     </div>
-                    <div v-if="recipe.userId === getUser()" class="col">
+                    <div v-if="recipe.userId !== getUser()" class="col">
+                        </div>
+                    <div v-else class="col">
                         <div class="d-flex flex-row-reverse">
                             <button class="btn btn-dismiss" type="button" data-bs-toggle="modal"
                                 data-bs-target="#confirmDeleteModal">Usuń</button>
