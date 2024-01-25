@@ -7,16 +7,16 @@
                 <p class="card-text"> Zaloguj się, by móc dodawać przepisy</p>
                 <br>
             </div>
-            <form @submit.prevent="register">
+            <form @submit.prevent="login">
                 <div class="d-flex justify-content-center">
                     <div class="col-lg-6 col-md-8 mb-3">
                         <div class="form-floating">
-                            <input type="email" class="form-control" v-model="form.email" @blur="setTouched('email')"
-                                :class="{ 'is-invalid': !isNotEmpty('email') && touched.email }" id="logInEmail"
-                                placeholder="Adres email" required>
-                            <label for="logInEmail">Adres email</label>
-                            <div v-if="!isNotEmpty('email') && touched.email">
-                                <small class="text-danger">{{ message.email }}</small>
+                            <input type="text" class="form-control" v-model="form.username" @blur="setTouched('username')"
+                                :class="{ 'is-invalid': !isNotEmpty('username') && touched.username }" id="logInUsername"
+                                placeholder="Nazwa użytkownika" required>
+                            <label for="logInUsername">Nazwa użytkownika</label>
+                            <div v-if="!isNotEmpty('username') && touched.username">
+                                <small class="text-danger">{{ message.username }}</small>
                             </div>
                         </div>
                     </div>
@@ -62,16 +62,16 @@ export default {
             },
             loggedIn: false,
             message: {
-                email: '',
+                username: '',
                 password: '',
                 all: ''
             },
             form: {
-                email: '',
+                username: '',
                 password: ''
             },
             touched: {
-                email: false,
+                username: false,
                 password: false
             },
         }
@@ -81,9 +81,9 @@ export default {
             this.touched[field] = true;
         },
         isNotEmpty(field) {
-            if (field === 'email') {
-                if (this.form.email.trim() === '') {
-                    this.message.email = 'Wypełnij to pole!';
+            if (field === 'username') {
+                if (this.form.username.trim() === '') {
+                    this.message.username = 'Wypełnij to pole!';
                     return false;
                 }
                 return true;
@@ -98,11 +98,10 @@ export default {
 
         },
         async validateInput() {
-            if (this.isNotEmpty('email') && this.isNotEmpty('password')) {
+            if (this.isNotEmpty('username') && this.isNotEmpty('password')) {
                 // walidacja z bazą danych
                 this.loggedIn = true;
-                this.validInput = false;
-                this.message.all = 'Pomyślnie zalogowano.';
+                this.validInput = true;
                 await this.logIn();
             }
             else {
@@ -116,8 +115,8 @@ export default {
         },
         async logIn() {
             try {
-                // console.log('Próba logowania...'+ this.form.email + ' ' + this.form.password);
-                var token = await userService.login(this.form.email, this.form.password);
+                // console.log('Próba logowania...'+ this.form.username + ' ' + this.form.password);
+                var token = await userService.login(this.form.username, this.form.password);
                 localStorage.setItem('token', token);
                 console.log('Zalogowano ' + token);
                 this.$router.push({ path: '/' });
