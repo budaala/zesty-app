@@ -1,14 +1,8 @@
 <template>
     <div class="container mt-3 mb-5">
-        <div v-if="recipeDeleted">
-            <Alert :type="'success'" :message="'Przepis został pomyślnie usunięty.'"></Alert>
-        </div>
-        <div v-if="recipeEdited">
-            <Alert :type="'success'" :message="'Zmiany zostały naniesione.'"></Alert>
-        </div>
-        <div v-if="!recipe">
-            <Alert :type="'danger'" :message="'Nie znaleziono przepisu.'"></Alert>
-        </div>
+            <Alert v-if="recipeDeleted" :type="'success'" :message="'Przepis został pomyślnie usunięty. Strona zostanie odświeżona. '"></Alert>
+            <Alert v-if="ratingAdded" :type="'success'" :message="'Ocena została dodana. Strona zostanie odświeżona. '"></Alert>
+            <Alert v-if="!recipe" :type="'danger'" :message="'Nie znaleziono przepisu.'"></Alert>
         <div v-else class="card">
             <div class="card-body">
                 <div class="row">
@@ -61,8 +55,8 @@
                                     </div>
                                     <div class="col text-center">
                                         <p>Ocena: </p>
-                                        <star-rating :max="max" :rating="recipe.averageRating" :recipeId="recipe.id"
-                                            @addRating="handleAddRating" @closeModal="showModal = false"></star-rating>
+                                        <star-rating :max="max" :rating="recipe.averageRating" :recipe-id="recipeId"
+                                            @addRating="handleAddRating"></star-rating>
                                     </div>
                                     <div class="col text-center">
                                         <p>Typ dania:</p>
@@ -152,11 +146,7 @@ export default {
         max: {
             type: Number,
             default: 5
-        },
-        recipeId: {
-            type: Number,
-            default: 0
-        },
+        }
     },
     data() {
         return {
@@ -176,11 +166,16 @@ export default {
             },
             // averageRating: 0,
             recipeDeleted: false,
+            recipeId: null,
+            ratingAdded: false,
             commentText: ''
         }
     },
     mounted() {
         this.loadRecipe();
+    },
+    async created() {
+        this.recipeId = Number(this.$route.params.Id);
     },
     methods: {
         async loadRecipe() {
@@ -209,8 +204,12 @@ export default {
         async handleAddRating(rating) {
             try {
                 console.log('handleAddRating was called with rating: ' + rating);
-                await recipesService.addRating(this.recipe.id, rating, 3);
+                this.ratingAdded = await recipesService.addRating(this.recipe.id, rating, 3);
                 this.recipe.averageRating = await this.loadAverageRating(this.recipe.id);
+                // refresh page
+                setTimeout(() => {
+                    this.$router.go(0);
+                }, 2000);
             } catch (error) {
                 console.log(error);
             }
@@ -219,8 +218,10 @@ export default {
             this.$router.push({ name: 'EditRecipePage', params: { Id: this.recipe.id } });
         },
         async deleteRecipe() {
-            await recipesService.DeleteRecipe(this.recipe.id);
-            this.recipeDeleted = true;
+            this.recipeDeleted = await recipesService.DeleteRecipe(this.recipe.id);
+            setTimeout(() => {
+                this.$router.go(0);
+            }, 2000);
         },
         async loadComments() {
             try{
@@ -286,4 +287,5 @@ img {
 
 #starIcon {
     color: #7D8A51 !important;
-}</style>
+}
+</style>

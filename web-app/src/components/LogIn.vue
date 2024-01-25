@@ -7,14 +7,14 @@
                 <p class="card-text"> Zaloguj się, by móc dodawać przepisy</p>
                 <br>
             </div>
-            <form @submit.prevent="register">
+            <form @submit.prevent="login">
                 <div class="d-flex justify-content-center">
                     <div class="col-lg-6 col-md-8 mb-3">
                         <div class="form-floating">
                             <input type="text" class="form-control" v-model="form.username" @blur="setTouched('username')"
-                                :class="{ 'is-invalid': !isNotEmpty('username') && touched.username }" id="logInusername"
-                                placeholder="Adres username" required>
-                            <label for="logInusername">Nazwa użytkownika</label>
+                                :class="{ 'is-invalid': !isNotEmpty('username') && touched.username }" id="logInUsername"
+                                placeholder="Nazwa użytkownika" required>
+                            <label for="logInUsername">Nazwa użytkownika</label>
                             <div v-if="!isNotEmpty('username') && touched.username">
                                 <small class="text-danger">{{ message.username }}</small>
                             </div>

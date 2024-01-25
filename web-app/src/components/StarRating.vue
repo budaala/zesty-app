@@ -8,9 +8,9 @@
         </span>
     </div>
     <span class="m-2">{{ rating }}</span>
-    <div v-if="!userHasRated" class="modal fade" id="star-rating-modal" tabindex="-1" aria-labelledby="starRatingModalLabel" aria-hidden="true">
+    <div class="modal fade" id="star-rating-modal" tabindex="-1" aria-labelledby="starRatingModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div v-if="!userHasRated" class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="starRatingModalLabel">Oceń przepis</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -29,10 +29,31 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-dismiss" data-bs-dismiss="modal">Anuluj</button>
                     <button type="button" class="btn btn-outline-zesty" @click.prevent="submitRating()"
-                        :disabled="userHasRated" data-bs-dismiss="modal">Oceń</button>
+                        data-bs-dismiss="modal">Oceń</button>
                 </div>
             </div>
-        </div>p
+            <div v-if="userHasRated" class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="starRatingModalLabel">Twoja ocena</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Już oceniłeś/aś ten przepis. Twoja ocena to:</p>
+                    <div class="star-rating">
+                        <span>
+                            <span v-for="n in max">&star;</span>
+                            <div class="star-rating_thisRecipe" :style="{ width: getUserRatingWidth + '%' }">
+                                <span v-for="n in max">&starf;</span>
+                            </div>
+                        </span>
+                    </div>
+                    <span class="m-3">{{ userRating }}</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dismiss" data-bs-dismiss="modal">Zamknij</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -41,7 +62,7 @@ import recipesService from '../recipesService.js';
 
 export default {
     name: "StarRating",
-    emits: ['addRating', 'closeModal'],
+    emits: ['addRating'],
     props: {
         max: {
             type: Number,
@@ -53,20 +74,19 @@ export default {
         },
         recipeId: {
             type: Number,
-            default: 0
-        },
+            required: true
+        }
     },
     data() {
         return {
             userRating: 0,
-            submitted: false,
-            userHasRated: false
+            userHasRated: false,
+            test: false
         }
     },
-    async mounted() {
-        console.log(this.recipeId + ' recipeID');
-    const userRating = await this.checkUserRating(this.recipeId);
-    this.userHasRated = userRating !== 0;
+    async created() {
+        this.userRating = await this.checkUserRating();
+        this.userHasRated = this.userRating !== 0;
     },
     computed: {
         getRatingWidth() {
@@ -83,14 +103,10 @@ export default {
         },
         submitRating() {
             this.$emit('addRating', this.userRating);
-            this.submitted = true;
-            this.checkUserRating(this.recipeId);
+            this.checkUserRating();
         },
-        async checkUserRating(recipeId) {
-            console.log(recipeId + ' recipeID');
-            var userRating = recipesService.checkUserRating(recipeId, 3);
-            this.userHasRated = userRating !== 0;
-            console.log(userRating);
+        async checkUserRating() {
+            let userRating = await recipesService.checkUserRating(this.recipeId, 3);
             return userRating;
         }
     }

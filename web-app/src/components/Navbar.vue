@@ -14,29 +14,9 @@
                         <router-link class="nav-link" active-class="active" aria-current="page" to="/">Strona
                             główna</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item"  v-for="mealType in mealTypes" :key="mealType.id">
                         <router-link class="nav-link" active-class="active" aria-current="page"
-                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'Śniadania' } }">Śniadania</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" aria-current="page"
-                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'Dania główne' } }">Dania główne</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" aria-current="page"
-                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'Desery' } }">Desery</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" aria-current="page"
-                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'Napoje' } }">Napoje</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" aria-current="page"
-                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'Przekąski' } }">Przekąski</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" active-class="active" aria-current="page"
-                            :to="{ name: 'RecipeListPage', params: { RecipeType: 'Inne' } }">Inne</router-link>
+                            :to="{ name: 'RecipeListPage', params: { RecipeType: mealType.name } }">{{ mealType.name }}</router-link>
                     </li>
                     <div class="vr" style="color:aliceblue"></div>
                     <li class="nav-item">
@@ -71,13 +51,19 @@
 </template>
 
 <script>
+import recipesService from '../recipesService.js';
 export default {
     name: 'Navbar',
     data() {
         return {
-            loggedIn: false
+            loggedIn: false,
+            mealTypes: null,
         }
-    }
+    },
+    async mounted() {
+        this.mealTypes = await recipesService.getMealTypes();
+    },
+
 }
 </script>
 
