@@ -1,13 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace zesty_api.Models;
 
-namespace zesty_api.Models
+public class User
 {
-    public class User
-    {
-        public int Id { get; set; }
-        public string? Username { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-
-    }
+    public int Id { get; set; }
+    public string? Username { get; init; }
+    public string Email { get; init; } = string.Empty;
+    public string Password { get; init; } = string.Empty;
 }

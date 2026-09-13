@@ -1,28 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿namespace zesty_api.Data.Entities;
 
-namespace zesty_api.Data.Entities
+public class UserEntity
 {
-    public class UserEntity
+    public int Id { get; init; }
+    public string Username { get; init; } = string.Empty;
+    public string Email { get; init; } = string.Empty;
+    public string Password { get; init; } = string.Empty;
+
+    public ICollection<CommentEntity> Comments { get; init; } = new List<CommentEntity>();
+
+    public static UserEntity Create(string username, string email, string password)
     {
-        public int Id { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-
-        public ICollection<CommentEntity> Comments { get; set; }
-        public ICollection<RecipeEntity> GetRecipes(DbContext dbContext)
+        return new UserEntity
         {
-            return dbContext.Set<RecipeEntity>().Where(r => r.UserId == Id).ToList();
-        }
-
-        public static UserEntity Create(string username, string email, string password)
-        {
-            return new UserEntity
-            {
-                Username = username,
-                Email = email,
-                Password = password
-            };
-        }
+            Username = username,
+            Email = email,
+            Password = password
+        };
     }
 }

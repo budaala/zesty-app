@@ -1,96 +1,93 @@
 ﻿using zesty_api.Data;
 using zesty_api.Data.Entities;
 
-namespace zesty_api
+namespace zesty_api;
+
+public class Seed
 {
-    public class Seed
+    private readonly DataContext _context;
+
+    public Seed(DataContext context)
     {
+        _context = context;
+    }
 
-        private readonly DataContext context;
-        public Seed(DataContext context)
+    public void SeedDataContext()
+    {
+        if (!_context.Users.Any())
         {
-            this.context = context;
+            var users = new List<UserEntity>
+            {
+                new()
+                {
+                    Username = "test",
+                    Email = "test@test",
+                    Password = "test"
+                },
+                new()
+                {
+                    Username = "test2",
+                    Email = "test2@test",
+                    Password = "test2"
+                }
+            };
+
+            _context.Users.AddRange(users);
+            _context.SaveChanges();
         }
 
-        public void SeedDataContext()
+        if (!_context.MealTypes.Any())
         {
-            if (!context.Users.Any())
+            var mealTypes = new List<MealTypeEntity>
             {
-                var users = new List<UserEntity>
-                 {
-                     new UserEntity
-                     {
-                         Username = "test",
-                         Email = "test@test",
-                         Password = "test"
-                     },
-                     new UserEntity
-                     {
-                         Username = "test2",
-                         Email = "test2@test",
-                         Password = "test2"
-                     }
-                 };
+                new()
+                {
+                    Name = "Breakfast"
+                },
+                new()
+                {
+                    Name = "Lunch"
+                },
+                new()
+                {
+                    Name = "Dinner"
+                },
+                new()
+                {
+                    Name = "Snack"
+                }
+            };
 
-                context.Users.AddRange(users);
-                context.SaveChanges();
-            }
-
-            if (!context.MealTypes.Any())
-            {
-                var mealTypes = new List<MealTypeEntity>
-                 {
-                     new MealTypeEntity
-                     {
-                         Name = "Breakfast"
-                     },
-                     new MealTypeEntity
-                     {
-                         Name = "Lunch"
-                     },
-                     new MealTypeEntity
-                     {
-                         Name = "Dinner"
-                     },
-                     new MealTypeEntity
-                     {
-                         Name = "Snack"
-                     }
-                 };
-
-                context.MealTypes.AddRange(mealTypes);
-                context.SaveChanges();
-            }
-
-            if (!context.Recipes.Any())
-            {
-                var recipes = new List<RecipeEntity>
-                 {
-                     new RecipeEntity
-                     {
-                         Title = "Test Recipe",
-                         Description = "Test Description",
-                         Ingredients = "Test Ingredients",
-                         Instructions = "Test Instructions",
-                         ImageUrl = "Test ImageUrl",
-                         UserId = 1,
-                         MealTypeId = 1
-                     },
-                     new RecipeEntity
-                     {
-                         Title = "Test Recipe 2",
-                         Description = "Test Description 2",
-                         Ingredients = "Test Ingredients 2",
-                         Instructions = "Test Instructions 2",
-                         ImageUrl = "Test ImageUrl 2",
-                         UserId = 2,
-                         MealTypeId = 2
-                     }
-                };
-             
-                context.Recipes.AddRange(recipes);
-                context.SaveChanges();
-            }
+            _context.MealTypes.AddRange(mealTypes);
+            _context.SaveChanges();
         }
+
+        if (_context.Recipes.Any()) return;
+        var recipes = new List<RecipeEntity>
+        {
+            new()
+            {
+                Title = "Test Recipe",
+                Description = "Test Description",
+                Ingredients = "Test Ingredients",
+                Instructions = "Test Instructions",
+                ImageUrl = "Test ImageUrl",
+                UserId = 1,
+                MealTypeId = 1
+            },
+            new()
+            {
+                Title = "Test Recipe 2",
+                Description = "Test Description 2",
+                Ingredients = "Test Ingredients 2",
+                Instructions = "Test Instructions 2",
+                ImageUrl = "Test ImageUrl 2",
+                UserId = 2,
+                MealTypeId = 2
+            }
+        };
+
+        _context.Recipes.AddRange(recipes);
+        _context.SaveChanges();
     }
 }

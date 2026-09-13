@@ -1,25 +1,24 @@
-﻿namespace zesty_api.Data.Entities
+﻿namespace zesty_api.Data.Entities;
+
+public class CommentEntity
 {
-    public class CommentEntity
+    public int Id { get; init; }
+    public int RecipeId { get; init; }
+    public int UserId { get; init; }
+    public string Content { get; init; }
+    public DateTime CreatedAt { get; init; }
+    public UserEntity User { get; set; }
+
+    public static CommentEntity Create(int recipeId, int userId, string content)
     {
-        public int Id { get; set; }
-        public int RecipeId { get; set; }
-        public int UserId { get; set; }
-        public string Content { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public UserEntity User { get; set; }
-
-        public static CommentEntity Create(int RecipeId, int UserId, string Content)
+        var entity = new CommentEntity
         {
-            var entity = new CommentEntity
-            {
-                RecipeId = RecipeId,
-                UserId = UserId,
-                Content = Content,
-                CreatedAt = DateTime.Now
-            };
+            RecipeId = recipeId,
+            UserId = userId,
+            Content = content,
+            CreatedAt = DateTime.Now
+        };
 
-            return entity;
-        }
+        return entity;
     }
 }

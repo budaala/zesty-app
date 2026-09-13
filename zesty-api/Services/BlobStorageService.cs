@@ -1,65 +1,45 @@
 ﻿using Azure.Storage.Blobs;
-using Microsoft.AspNetCore.Mvc;
-using System.Text.Json.Serialization;
 using zesty_api.Interfaces;
 
-namespace zesty_api.Services
+namespace zesty_api.Services;
+
+public class BlobStorageService : IBlobStorageService
 {
-    public class BlobStorageService : IBlobStorageService
+    private const string ContainerName = "zestyappimages";
+    private readonly string? _connectionString;
+
+    public BlobStorageService(IConfiguration config)
     {
-        private readonly string _connectionString;
-        private readonly string _containerName = "zestyappimages";
+        _connectionString = config.GetConnectionString("AzureBlobStorageConnection");
+    }
 
-        public BlobStorageService(IConfiguration config)
+    public async Task<string> UploadFile(IFormFile file)
+    {
+        var blobServiceClient = new BlobServiceClient(_connectionString);
+        var blobContainerClient = blobServiceClient.GetBlobContainerClient(ContainerName);
+
+        var fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+        var blobClient = blobContainerClient.GetBlobClient(fileName);
+
+        await using (var stream = file.OpenReadStream())
         {
-            _connectionString = config.GetConnectionString("AzureBlobStorageConnection");
+            await blobClient.UploadAsync(stream, true);
         }
 
-        public async Task<string> UploadFile(IFormFile file)
-        {
-            try
-            {
-                var blobServiceClient = new BlobServiceClient(_connectionString);
-                var blobContainerClient = blobServiceClient.GetBlobContainerClient(_containerName);
+        var url = blobClient.Uri.ToString();
 
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                var blobClient = blobContainerClient.GetBlobClient(fileName);
+        return url;
+    }
 
-                using (var stream = file.OpenReadStream())
-                {
-                    await blobClient.UploadAsync(stream, true);
-                }
+    public async Task DeleteFile(string fileUrl)
+    {
+        if (fileUrl == "https://zestyappblob.blob.core.windows.net/zestyappimages/placeholder.png") return;
+        var blobServiceClient = new BlobServiceClient(_connectionString);
+        var blobContainerClient = blobServiceClient.GetBlobContainerClient(ContainerName);
 
-                var url = blobClient.Uri.ToString();
+        var fileName = Path.GetFileName(fileUrl);
+        var blobClient = blobContainerClient.GetBlobClient(fileName);
 
-                return url;
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
-        }
-
-        public async Task DeleteFile(string fileUrl)
-        {
-            try
-            {
-                if(fileUrl == "https://zestyappblob.blob.core.windows.net/zestyappimages/placeholder.png")
-                {
-                    return;
-                }
-                var blobServiceClient = new BlobServiceClient(_connectionString);
-                var blobContainerClient = blobServiceClient.GetBlobContainerClient(_containerName);
-
-                var fileName = Path.GetFileName(fileUrl);
-                var blobClient = blobContainerClient.GetBlobClient(fileName);
-
-                await  blobClient.DeleteIfExistsAsync();
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
-        }
+        await blobClient.DeleteIfExistsAsync();
     }
 }

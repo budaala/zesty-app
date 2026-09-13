@@ -1,9 +1,9 @@
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Swashbuckle.AspNetCore.Filters;
-using System.Text;
 using zesty_api;
 using zesty_api.Data;
 using zesty_api.Interfaces;
@@ -13,12 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(builder =>
-        builder.WithOrigins("*")
+    options.AddDefaultPolicy(corsPolicyBuilder =>
+        corsPolicyBuilder.WithOrigins("*")
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
-
 builder.Services.AddControllers();
 builder.Services.AddTransient<Seed>();
 builder.Services.AddEndpointsApiExplorer();
@@ -33,11 +32,13 @@ builder.Services.AddSwaggerGen(options =>
     });
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Token").Value)),
+        IssuerSigningKey =
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Token").Value ?? throw new InvalidOperationException())),
         ValidateIssuer = false,
         ValidateAudience = false
     };
@@ -56,18 +57,8 @@ var app = builder.Build();
 
 app.UseCors();
 
-if (args.Length == 1 && args[0].ToLower() == "seeddata")
+if (args.Length == 1 && args[0].Equals("seeddata", StringComparison.CurrentCultureIgnoreCase))
     SeedData(app);
-void SeedData(IHost app)
-{
-    var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-
-    using (var scope = scopedFactory.CreateScope())
-    {
-        var service = scope.ServiceProvider.GetService<Seed>();
-        service.SeedDataContext();
-    }
-}
 
 app.UseSwagger();
 app.UseSwaggerUI();
@@ -82,3 +73,13 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+return;
+
+void SeedData(IHost application)
+{
+    var scopedFactory = application.Services.GetService<IServiceScopeFactory>();
+
+    using var scope = scopedFactory?.CreateScope();
+    var service = scope?.ServiceProvider.GetService<Seed>();
+    service?.SeedDataContext();
+}

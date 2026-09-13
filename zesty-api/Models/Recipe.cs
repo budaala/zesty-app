@@ -1,17 +1,16 @@
-﻿namespace zesty_api.Models
+﻿namespace zesty_api.Models;
+
+public class Recipe
 {
-    public class Recipe
-    {
-        public int Id { get; set; }
-        public int MealTypeId { get; set; }
-        public string MealTypeName { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Ingredients { get; set; }
-        public string Instructions { get; set; }
-        public string ImageUrl { get; set; }
-        public int UserId { get; set; }
-        public string Username { get; set; }
-        public DateTime CreatedAt { get; set; }
-    }
+    public int Id { get; set; }
+    public int MealTypeId { get; init; }
+    public string MealTypeName { get; set; } = string.Empty;
+    public string Title { get; init; } = string.Empty;
+    public string Description { get; init; } = string.Empty;
+    public string Ingredients { get; init; } = string.Empty;
+    public string Instructions { get; init; } = string.Empty;
+    public string ImageUrl { get; set; } = string.Empty;
+    public int UserId { get; init; }
+    public string Username { get; set; } = string.Empty;
+    public DateTime CreatedAt { get; set; }
 }

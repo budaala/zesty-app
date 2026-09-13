@@ -1,8 +1,7 @@
-﻿namespace zesty_api.Interfaces
+﻿namespace zesty_api.Interfaces;
+
+public interface IBlobStorageService
 {
-    public interface IBlobStorageService
-    {
-        Task<string> UploadFile(IFormFile file);
-        Task DeleteFile(string fileUrl);
-    }
+    Task<string> UploadFile(IFormFile file);
+    Task DeleteFile(string fileUrl);
 }

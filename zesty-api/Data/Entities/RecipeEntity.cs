@@ -1,38 +1,36 @@
-﻿using Microsoft.Identity.Client;
+﻿namespace zesty_api.Data.Entities;
 
-namespace zesty_api.Data.Entities
+public class RecipeEntity
 {
-    public class RecipeEntity
+    public int Id { get; init; }
+    public int MealTypeId { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string Ingredients { get; set; } = string.Empty;
+    public string Instructions { get; set; } = string.Empty;
+    public string ImageUrl { get; set; } = string.Empty;
+    public int UserId { get; init; }
+    public DateTime CreatedAt { get; init; }
+    public ICollection<CommentEntity> Comments { get; init; } 
+    public ICollection<RatingEntity> Ratings { get; init; }
+    public MealTypeEntity MealType { get; init; }
+    public UserEntity User { get; init; }
+
+    public static RecipeEntity Create(int mealTypeId, string title, string description, string ingredients,
+        string instructions, string imageUrl, int userId)
     {
-        public int Id { get; set; }
-        public int MealTypeId { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Ingredients { get; set; }
-        public string Instructions { get; set; }
-        public string ImageUrl { get; set; }
-        public int UserId { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public ICollection<CommentEntity> Comments { get; set; }
-        public ICollection<RatingEntity> Ratings { get; set; }
-        public MealTypeEntity MealType { get; set; }
-        public UserEntity User { get; set; }
-
-        public static RecipeEntity Create(int MealTypeId, string Title, string Description, string Ingredients, string Instructions, string ImageUrl, int UserId)
+        var entity = new RecipeEntity
         {
-            var entity = new RecipeEntity
-            {
-                MealTypeId = MealTypeId,
-                Title = Title,
-                Description = Description,
-                Ingredients = Ingredients,
-                Instructions = Instructions,
-                ImageUrl = ImageUrl,
-                UserId = UserId,
-                CreatedAt = DateTime.Now
-            };
+            MealTypeId = mealTypeId,
+            Title = title,
+            Description = description,
+            Ingredients = ingredients,
+            Instructions = instructions,
+            ImageUrl = imageUrl,
+            UserId = userId,
+            CreatedAt = DateTime.Now
+        };
 
-            return entity;
-        }
+        return entity;
     }
 }
